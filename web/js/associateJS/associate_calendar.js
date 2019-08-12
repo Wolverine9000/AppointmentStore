@@ -316,7 +316,7 @@ function newEvent(start, end, jsEvent, view) {
         $("#pastTable tbody").html(
                 "<tr>" + "<td>" + "date:" + "</td>" + "<td>" + jsDate.formatDate(start) + "</td>" + "</tr>"
                 + "<tr>" + "<td>" + "time:" + "</td>" + "<td>" + jsTime.formatTime(start) + "&nbsp;&nbsp;" + jsTime.formatTime(end) + "</td>" + "</tr>");
-        $("#pastTable tfoot").html("<tr>" + "<th colspan='2'>" + " is a Date &#38; Time that is in the past." + "</th>" + "</tr>");
+        $("#pastTable tfoot").html("<tr>" + "<th colspan='2'>" + " select a future date &#38; time" + "</th>" + "</tr>");
     }
     else {
         var svcOpt = services.getSvcsStringify(); // list services select group

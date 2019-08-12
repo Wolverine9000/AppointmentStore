@@ -1,17 +1,13 @@
 package store.util;
 
-import com.sun.mail.smtp.SMTPMessage;
-import static com.sun.tools.doclint.Entity.prop;
 import java.io.IOException;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.Address;
-import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.Message.RecipientType;
 import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
@@ -47,8 +43,9 @@ public class MailUtil
             session.setDebug(true);
 
             // 2 - create a message  
-//            Message message = new MimeMessage(session);
-            SMTPMessage message = new SMTPMessage(session);
+            MimeMessage message;
+            message = new MimeMessage(session);
+//            SMTPMessage message = new SMTPMessage(session);
             MimeMultipart content = new MimeMultipart("related");
 
             message.setSubject(subject);
@@ -90,7 +87,7 @@ public class MailUtil
             message.setRecipients(RecipientType.BCC, addressArray);
             // 4 - send the message
             Transport transport = session.getTransport();
-            transport.connect("whdobbs", "osklgjecuoufhaxc");
+            transport.connect("whdobbs", "wzpyidenzuyzdgzs");
             transport.sendMessage(message, message.getAllRecipients());
         }
         catch (MessagingException ex)
