@@ -5,7 +5,7 @@
  */
 var sortBy; // client-side sort order
 var startAtMsg = 0, limitMsgs = 20;
-var orderBy = "DESC"; // this order by is done on the server-side new work--
+var orderBy = "DESC"; // this order by is done on the server-side new work
 
 // settings tabs
 $(function () {
