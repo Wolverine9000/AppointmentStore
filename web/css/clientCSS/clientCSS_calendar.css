@@ -1,0 +1,165 @@
+/* 
+    Document   : clientCSS_calendar
+    Created on : Jun 2, 2013, 7:59:25 AM
+    Author     : williamdobbs
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/*#datepicker {
+    float: right
+}*/
+
+#calendar figcaption {
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+    text-align: center;
+    font-size: 120%;
+    padding-bottom: .25em; 
+    border: none
+}
+#calendarTable {
+    padding: 15px;
+    background-color: #f5eabe;
+    float: left;
+    border-radius: 4px;
+    box-shadow: 2px 2px 4px 2px rgba(0, 0,0, 0.5);
+}
+#calendar thead, tfoot {
+    background-color: tan;
+}
+#calendarTable th {
+    width: 200px;
+    text-align: center;
+}
+#calendarTable thead th:nth-child(4) {
+    text-align: center;
+}
+
+#calendarTable td {
+    border: 1px solid tan;
+    height: 20px;
+    padding:  5px 3px;
+    text-align: left;
+    font-size: small;
+    line-height: 2px;
+    vertical-align: top;
+    overflow: auto;
+}
+#backArrow {
+    /*    float: right;*/
+    vertical-align: middle
+}
+#nextArrow { 
+    /*    float: left;*/
+    vertical-align: middle
+}
+/* week view styles*/
+#weekView figcaption {
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+    text-align: center;
+    font-size: 120%;
+    padding-bottom: .25em; 
+    border: none
+}
+#weekTable {
+    padding: 15px;
+    background-color: #f5eabe;
+    float: left;
+    border-radius: 4px;
+    box-shadow: 2px 2px 4px 2px rgba(0, 0,0, 0.5);
+}
+#weekTable thead, tfoot {
+    background-color: tan;
+}
+#weekTable th {
+    width: 150px;
+    text-align: center;
+}
+#weekTable td:first-child {
+    text-align: center;
+    vertical-align: middle
+}
+#weekTable th:first-child, td:first-child {
+    width: auto;
+}
+#weekTable td {
+    border: 1px solid tan;
+    height: 2px;
+    padding:  5px 3px;
+    text-align: left;
+    font-size: small;
+    line-height: 14px;
+    vertical-align: top
+}
+#weekTable tbody tr:nth-child(4n+2) td:first-child {
+    font-weight: bold
+}
+#weekBackArrow {
+    /*    float: left;*/
+    vertical-align: middle
+}
+#weekNextArrow { 
+    /*    float: right;*/
+    vertical-align: middle
+}
+
+/* day view styles*/
+#dayView figcaption {
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+    text-align: center;
+    font-size: 120%;
+    padding-bottom: .25em; 
+    border: none
+}
+#dayTable {
+    padding: 15px;
+    background-color: #f5eabe;
+    margin: auto;
+    border-radius: 4px;
+    box-shadow: 2px 2px 4px 2px rgba(0, 0,0, 0.5);
+}
+#dayTable thead, tfoot {
+    background-color: tan;
+    height: 10px;
+}
+#dayTable th {
+    width: 600px;
+    text-align: center;
+    height: 20px
+}
+#dayTable td:first-child {
+    text-align: center;
+    vertical-align: middle
+}
+#dayTable th:first-child, td:first-child {
+    width: auto;
+}
+#dayTable td {
+    border: 1px solid tan;
+    height: 1em;
+    padding:  5px 3px;
+    text-align: left;
+    font-size: small;
+    line-height: 4px;
+    vertical-align: top
+}
+#dayTable tr:nth-child(2n) {
+    background-color: lightgoldenrodyellow;
+}
+#dayTable tbody tr:nth-child(4n+2) td:first-child {
+    font-weight: bold
+}
+#dayBackArrow {
+    /*    float: left;*/
+    vertical-align: middle
+}
+#dayNextArrow { 
+    /*    float: right;*/
+    vertical-align: middle
+}

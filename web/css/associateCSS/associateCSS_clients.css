@@ -1,0 +1,233 @@
+/* 
+    Document   : associateCSS_services
+    Created on : May 17, 2013, 10:03:52 AM
+    Author     : williamdobbs
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+table * { color: #555; }
+
+.send-now-label {color: green;}
+
+.ui-autocomplete { z-index:  10000; }
+
+ul#ui-id-2 li:nth-child(odd) {
+    background-color: #EEEEEE;
+    padding: .5em 0;
+    white-space: nowrap;
+}
+ul#ui-id-2 {
+    border-radius: 5px;
+}
+
+div#accordion-2 { margin-top: 10px;}
+
+ul#ui-id-2 li#ui-id-21.ui-menu-item { white-space: nowrap;}
+
+.disabledTextColor { color: gray}
+
+.enabledTextColor {border: 1px solid #CCCCCC;}
+
+/* click on event info styles*/
+#client-list-table img {
+    border-radius: 5px;
+    height: 40px;
+    width:  40px;
+}
+.editUserTable img {
+    border-radius: 5px;
+    height: 40px;
+    width:  40px; 
+}
+
+/*#client-list-table { width: 1200px; }*/
+table#client-list-table { width: 100%; }
+
+#client-list-table td:last-child, th:last-child { 
+    text-align: center; 
+    padding-left: 0;
+    padding-right: 0;
+}
+#client-list-table td:first-child {  width: 50px; padding-right: 0; margin-right: 0; } 
+
+#client-list-table th, thead, tfoot {
+    border-top: 1px solid #ccc;
+}
+
+#client-list-table tbody tr:nth-child(odd) {
+    background-color: #EEEEEE;
+}
+#client-list-table th:nth-child(-n+8):hover { cursor: pointer; color:#F7941D; }
+
+#client-list-table th:nth-child(6) { padding-left: 12px;}
+
+#client-list-table th:first-child { border-top-left-radius: 5px }
+#client-list-table th:last-child { border-top-right-radius: 5px }
+#client-list-table td:first-child { 
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+#client-list-table td:last-child { 
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+.clientInfo.ui-dialog-content.ui-widget-content { padding: 5px 2px;}
+
+.clickable {
+    cursor:pointer;
+}
+.stripe1 {
+    background-color: #EBF5FF;
+}
+.stripe2 {
+    background-color: #ffffff;
+}
+/*.highlight-user {
+    background-color: #eee;
+        font-weight:bold;
+    cursor:pointer;
+}*/
+/* over-ride event info tabel styles from main css file*/
+.eventInfoTable tr:last-child {
+    font-weight: normal;
+}
+
+.statusTable thead { background: none }
+
+.statusTable .updateStatus { background: none }
+
+div#msgBar { margin-bottom: 15px; }
+
+#client-list-table tbody tr:hover { 
+    background-color: #FFEBCC;
+}
+#client-list-table tbody tr td:nth-child(-n+6) { 
+    cursor:pointer;
+}
+
+/*auto complete pin-wheel animation*/
+.ui-autocomplete-loading {
+    background: white url('../ui-anim_basic_16x16.gif') right center no-repeat;
+}
+.ui-autocomplete {text-align: left}
+
+#memberLevels { float: left;}
+
+#showAllClients:hover{ color:#0066FF; cursor:pointer; }
+div#showAllClients { float: left; margin-right: 20px }
+div#search { float: left; margin: 0 20px 0 4px; }
+#add-client:hover { color:#0066FF; cursor:pointer; }
+input#search-client { outline: none; padding: 2px 5px; font-size: 12px; border-color: lightgray;}
+
+/*edit user table styles*/
+table.editUserTable, .confirmUserTable { width: 100%; }
+table.editUserTable tr { height: 30px; }
+table.editUserTable tr:first-child { vertical-align: bottom; }
+
+.editUser.ui-dialog-content.ui-widget-content { padding: 0 2px; }
+
+.editUserTable input {
+    text-align: left;
+    width: 95%;
+    padding: 1px 5px;
+    margin: 3px 0;
+}
+.editUserTable td { padding: .2em .6em 0 .1em; }
+
+div#assoImg { vertical-align: bottom; display: inline-block; }
+
+.editUserTable td:first-child { border-top-left-radius: 5px; }
+.editUserTable td:last-child { border-top-right-radius: 5px }
+.editUserTable td:first-child { border-top-left-radius: 5px; border-bottom-left-radius: 5px; }
+.editUserTable td:last-child { border-top-right-radius: 5px; border-bottom-right-radius: 5px; }
+
+legend.validateTips { margin: 5px; text-align: center; width: 100%; }
+
+/* confirmUser table styles */
+table.confirmUserTable, .confirmUserTable { width: 100%; }
+table.confirmUserTable, .confirmUserTable tr { height: 30px; }
+table.confirmUserTable tr:first-child { vertical-align: bottom; }
+
+.confirmUserTable tr:nth-child(14) { vertical-align: baseline}
+.confirmUser.ui-dialog-content { padding: .5em .1em; }
+
+.confirmUser td:first-child {border-right: solid 1px #000000; }
+
+.confirmUser .confirmUserTable tbody td:nth-child(2) { padding-left: 5px }
+
+
+.confirmUserTable td:first-child {
+    padding-right: 5px;
+}
+
+.confirmUserTable td { padding: .2em .6em 0 .1em; }
+
+div#assoImg { vertical-align: bottom; display: inline-block; }
+
+.confirmUserTable td:first-child { border-top-left-radius: 5px; }
+.confirmUserTable td:last-child { border-top-right-radius: 5px }
+.confirmUserTable td:first-child { border-top-left-radius: 5px; border-bottom-left-radius: 5px; }
+.confirmUserTable td:last-child { border-top-right-radius: 5px; border-bottom-right-radius: 5px; }
+
+
+/*alert prefs accordion*/
+.alert-prefs.ui-accordion.ui-accordion-content { padding: .4em 2.2em; }
+.alert-prefs-table td {
+    padding: .1em .3em;
+    background-color: white;
+}
+.alert-prefs-table tr {
+    background-color: white;
+}
+.ui-accordion .ui-accordion-content  {padding: .2em .1em .2em 3em;}
+#accordion-3 table.alert-prefs-table td {border: none}
+
+/*msg menu styles*/
+#select-client-options {border: none}
+#select-client-div {float: right; margin-top: -1em; margin-right: .7em;}
+#select-client-options label {margin-right: -.3em;}
+
+#c-options, #filterOpt {outline: none;}
+fieldset#send-message-field.ui-dialog-content.ui-widget-content { padding: 0 5px}
+#message-to-send {
+    width: 100%;
+    height: 5em;
+    outline: none;
+}
+#messageHeader {margin-bottom: 20px; text-align: center;}
+#send-message-field label { margin-bottom: 2px; }
+#msgName { margin-bottom: 2px;}
+
+#send-message-field textArea {
+    
+    border: 1px solid #CCCCCC;
+    border-radius: 5px;
+}
+
+#send-message-field input#subject {width: 100%; margin-bottom: 10px; }
+
+div#add-client {float: left; margin-top: -1.12em;}
+
+fieldset#select-client-options { margin-top: 0;}
+
+fieldset#clients-del-fieldset.ui-dialog-content.ui-widget-content {padding: .5em 0;}
+
+table#delete-client-list {width: 100%}
+table#delete-client-list tbody tr:nth-child(odd) {
+    background-color: #EEE;
+}
+
+fieldset#clients-del-fieldset legend { 
+    text-align: center;
+    width: 100%;
+    padding-left: .3em;
+    margin-bottom: .6em;
+}
+
+span.ui-icon.ui-icon-alert {
+    float: left; 
+    margin-top: -2.2em;
+    margin-left: 2%;
+    margin-right: 2em;
+}

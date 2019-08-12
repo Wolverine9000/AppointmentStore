@@ -1,0 +1,188 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="shortcut icon" href="/AppointmentStore/img/favicon.ico">
+        <!--        <link type="text/css" href="css/themes/redmond/jquery-ui.css" rel="Stylesheet" />-->
+
+        <!-- ======================= Themes  ======================== -->
+        <!-- ---------------------------------- Microsoft CDN Themes --------------------------------- -->
+        <!--        <link rel="Stylesheet" href="//ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/themes/smoothness/jquery-ui.css" />-->
+        <!-- ---------------------------------- Local Themes  --------------------------------- -->
+        <!--        <link type="text/css" href="../css/themes/redmond/jquery-ui.css" rel="Stylesheet" />-->
+        <link type="text/css" href="css/themes/smoothness/jquery-ui.min.css" rel="Stylesheet" />
+        <!-- -------------------------------- Google and JQuery CDN Themes ---------------------- -->
+        <!--        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css" />-->
+        <!--        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" />    -->
+
+        <!-- ======================= JQuery CDN ======================== -->
+        <!--        <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>-->
+        <!-- ========================= Google CDNs ======================== -->
+        <!--        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>-->
+        <!--        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+                <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>-->
+        <!-- ========================= Microsoft CDNs ======================== -->
+        <!-- <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.4.min.js"></script>
+        <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.4.min.map"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.11.4/jquery-ui.min.js"></script>-->
+
+        <!-- ========================= JQuery Local Files ======================== -->
+        <script src="js/jquery-2.1.4.min.js"></script>
+        <script src="js/jquery-ui-1.11.4.min.js" type="text/javascript"></script>
+        <!-- ========================= Local CSS ======================== -->
+        <link rel="stylesheet" type="text/css" href="css/appointment.css">
+        <!-- ========================Validate Local and CDN ======================== -->
+        <script src="js/jquery.validate.js" type="text/javascript"></script>
+        <!--        <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>-->
+        <!-- ========================= moment.js ======================== -->
+        <script src="js/fullcalendar2/lib/moment.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('a.categoryButton').hover(
+                        function () {
+                            $(this).animate({backgroundColor: '#b2d2d2'});
+                        },
+                        function () {
+                            $(this).animate({backgroundColor: '#d3ede8'});
+                        }
+                );
+
+                $('div.categoryBox').hover(over, out);
+
+                function over() {
+                    var span = this.getElementsByTagName('span');
+                    $(span[0]).animate({opacity: 0.3});
+                    $(span[1]).animate({color: 'white'});
+
+                }
+
+                function out() {
+                    var span = this.getElementsByTagName('span');
+                    $(span[0]).animate({opacity: 0.7});
+                    $(span[1]).animate({color: '#444'});
+                }
+            });
+        </script>
+
+        <title>The Appointment System</title>
+    </head>
+    <body>
+        <div id="main">
+            <div id="header">
+                <div id="widgetBar">
+
+                    <div class="headerWidget">
+                        <c:if test="${loggedInFlag == false &&
+
+                                      !fn:contains(pageContext.request.servletPath,'/userlogin') &&
+                                      requestScope['javax.servlet.forward.servlet_path'] ne '/userlogin'}">
+
+                              <a href="<c:url value='userlogin'/>">
+                                  login
+                              </a>
+                        </c:if>
+                        <c:if test="${loggedInFlag == true}">
+                            <a href="calendar">
+                                Calendar
+                            </a>&nbsp;<a href="customerLogOut">
+                                logout
+                            </a>
+                            &nbsp;welcome back,&nbsp;${client.firstName}&nbsp;${client.lastName}
+                        </c:if><input type="hidden" name="userID" value="${client.id}">
+                        | <a href="deleteCookies">Delete cookies</a>&nbsp;| <a href="progressBar">progress bar</a>
+                    </div>
+
+                    <%-- checkout widget --%>
+                    <div class="headerWidget">
+
+                        <%-- tests for the following:
+                             * if cart exists and is not empty
+                             * if the servlet path does not contain '/checkout'
+                             * if the requested view is not checkout
+                             * if the servlet path does not contain '/cart'
+                             * if the requested view is not cart
+
+                            <c:if test="${!empty sessionScope.cart}">
+                                CART EXISTS AND IS NOT NULL
+                            </c:if>
+                                <BR>
+                            <c:if test="${sessionScope.cart.numberOfItems != 0}">
+                                NUMBER OF ITEMS IN CART IS NOT 0
+                            </c:if>
+                                <BR>
+                            <c:if test="${fn:contains(pageContext.request.servletPath,'/checkout')}">
+                                SERVLET PATH CONTAINS '/checkout'
+                            </c:if>
+                                <BR>
+                            <c:if test="${requestScope['javax.servlet.forward.servlet_path'] ne '/checkout'}">
+                                REQUEST IS NOT CHECKOUT
+                            </c:if> --%>
+
+                        <c:if test="${!empty cart && cart.numberOfItems != 0 &&
+
+                                      !fn:contains(pageContext.request.servletPath,'/checkout') &&
+                                      requestScope['javax.servlet.forward.servlet_path'] ne '/checkout' &&
+
+                                      !fn:contains(pageContext.request.servletPath,'/cart') &&
+                                      requestScope['javax.servlet.forward.servlet_path'] ne '/cart'}">
+
+                              <a href="checkout" class="bubble">
+                                  proceed to checkout &#x279f;
+                              </a>
+                        </c:if>
+                    </div>
+
+                    <%-- shopping cart widget --%>
+                    <div class="headerWidget" id="viewCart">
+
+                        <img src="img/cart.gif" alt="shopping cart icon" id="cart">
+
+                        <%-- If 'numberOfItems' property doesn't exist, or if number of items
+                             in cart is 0, output '0', otherwise output 'numberOfItems' --%>
+                        <span class="horizontalMargin">
+                            <c:choose>
+                                <c:when test="${cart.numberOfItems == null}">
+                                    0
+                                </c:when>
+                                <c:otherwise>
+                                    ${cart.numberOfItems}
+                                </c:otherwise>
+                            </c:choose>
+
+                            <%-- Handle singular/plural forms of 'item' --%>
+                            <c:choose>
+                                <c:when test="${cart.numberOfItems == 1}">
+                                    item
+                                </c:when>
+                                <c:otherwise>
+                                    items
+                                </c:otherwise>
+                            </c:choose>
+                        </span>
+
+                        <c:if test="${!empty cart && cart.numberOfItems != 0 &&
+
+                                      !fn:contains(pageContext.request.servletPath,'/cart') &&
+                                      requestScope['javax.servlet.forward.servlet_path'] ne '/cart'}">
+
+                              <a href="viewCart" class="bubble">
+                                  view cart
+                              </a>
+                        </c:if>
+                    </div>
+                </div>
+
+                <a href="index.jsp">
+                    <img src="/AppointmentStore/img/clock.png" id="logo" alt="On-Time Logo">
+                </a>
+
+                <img src="/AppointmentStore/img/salonsyslogo.png" id="logoText" alt="on-time system">
+            </div>

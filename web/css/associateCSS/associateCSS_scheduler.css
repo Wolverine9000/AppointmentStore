@@ -1,0 +1,247 @@
+/* 
+    Document   : associateCSS_scheduler
+    Created on : May 17, 2013, 10:03:23 AM
+    Author     : williamdobbs
+    Description:
+        Purpose of the stylesheet follows.
+*/
+div#schedulertabs {border: none; }
+/*confirmation submit dialog popup window*/
+div#confirmSchedule.ui-dialog-content.ui-widget-content { padding: .5em }
+
+#section1 .ui-widget-header { 
+    background: none;
+    border-bottom: 1px solid #cccccc;
+    border-top:  none;
+    border-left: none;
+    border-right: none;
+    border-radius: 0px;
+}
+input label {
+    text-align: center;
+}
+button.submit { margin-top: 10px; }
+
+fieldset {margin-bottom: 30px;}
+
+/*fieldset#weeklyFieldset, #globalFieldset { width: 700px;}*/
+
+#globalMain th:nth-child(2) { text-align: left }
+#globalMain tbody td:nth-child(2) { 
+    text-align: left; 
+    border-bottom-right-radius: 4px; 
+    border-top-right-radius: 4px;
+}
+.timetitle {padding-left: 17px;}
+
+thead, tfoot, th, tfoot td {
+    background-color: #fff;
+    color: #000;
+    border: none;
+    font-weight: normal;
+}
+.table1, .weekly, .global { 
+    border-top: 1px solid #ccc; 
+    border-bottom: 1px solid #ccc;
+}
+/* Main Schedule styles*/
+#table1Fieldset {
+    text-align: left;
+    border: none;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+}
+table#shadowBox.table1 { width: 100%}
+.table1 {
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+input.tableInputMain {
+    padding: 0 5px 0 1px;
+}
+.table1 th:first-child { border-top-left-radius: 4px }
+.table1 th:last-child { border-top-right-radius: 4px }
+.table1 tfoot td { border-bottom-left-radius: 4px }
+.table1 tfoot td { border-bottom-right-radius: 4px }
+
+.table1 tbody tr:first-child {background-color: #EEEEEE}
+
+.table1 th {
+    padding: 4px 0;
+    text-align: center;
+    font-size: small;
+}
+
+.table1 th:first-child, td:first-child {
+    vertical-align: middle;
+    text-align: left;
+    font-style: inherit;
+}
+.table1 td {
+    padding: .2em .4em;
+    text-align: center;
+    border-right: solid 1px #cccccc;
+    font-size: small;
+}
+.table1 td:first-child {
+    width: 132px;
+    text-align: center;
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+}
+.table1 td:nth-child(2) {
+    text-align: right;
+    border-right: none;
+    /*    padding: 0px 1px 0px 1px;
+        width: 38px;*/
+}
+
+.table1 td:last-child {
+    border-right: none;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.table1 tbody tr:nth-child(even) {
+    background-color: white;
+}
+.table1 tfoot { height: 30px; border-top: 1px solid #ccc; }
+
+.table1 tfoot td { 
+    text-align: center
+}
+.table1 tfoot #toN, #fromN #frequencyN {
+    margin: 8px 0px;
+}
+
+/* weekly quickSchedule styles*/
+#weeklyFieldset {
+    text-align: left;
+    border: none;
+    vertical-align: middle;
+}
+.weekly {
+    width: 100%;
+    margin-bottom: 10px;
+    /*    white-space: nowrap;*/
+    border-radius: 4px;
+}
+
+.weekly th:first-child { border-top-left-radius: 4px }
+.weekly th:last-child { border-top-right-radius: 4px }
+.weekly td:first-child { border-bottom-left-radius: 4px;  border-top-left-radius: 4px; }
+.weekly td:last-child { border-bottom-right-radius: 4px; border-top-right-radius: 4px;}
+
+table#shadowBox.weekly { border-bottom: none; }
+
+.weekly th {
+    text-align: left;
+    font-size: small;
+}
+.quickSchedule { margin-right: 5px }
+
+.weekly td {
+    text-align: left;
+    font-size: small;
+}
+.weekly td:first-child {
+    border-right: 1px solid #ccc;
+    width: 110px; text-align: center;
+}
+.weekly tr { height: 30px; background-color: #EEEEEE;}
+.weekly th:first-child, td:first-child {
+    text-align: left;
+}
+
+/* global  styles*/
+#globalFieldset {
+    text-align: left;
+    vertical-align: middle; 
+    border: none;
+}
+.global {
+    width: 100%;
+    border-radius: 4px;
+    white-space: nowrap;
+    border-radius: 4px;
+}
+.global thead .tableInput {
+    margin-right: 6px;
+    margin-top: 4px;
+}
+.global th:first-child { border-top-left-radius: 4px }
+.global th:last-child { border-top-right-radius: 4px }
+
+.global tbody tr:first-child {background-color: #EEEEEE;}
+
+.timetitle {
+    font-weight: lighter;
+    padding-top: 5px;
+}
+
+.global th {
+    padding: .2em .7em;
+    height: 20px;
+    text-align: center;
+    font-size: small;
+}
+.global td {
+    padding: .4em;
+    text-align: center;
+    font-size: small;
+}
+.global td:first-child {
+    border-right: solid 1px #cccccc;
+    width: 100px;
+    text-align: center;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+.global th:first-child, td:first-child {
+    text-align: left;
+    font-style: inherit;
+}
+.global tfoot { 
+    padding: .2em .4em;
+}
+
+/*clear schedule styles*/
+#schedulerBox {
+    float: left;
+    text-align: left;
+    width: 380px;
+}
+div#clear-box {
+    padding-top:  15px;
+    border-top: 1px solid #cccccc;
+}
+
+.schedulerDate { float: right;
+}
+.schedulerInput { margin: 8px 3px}
+
+/*confirm request styles*/
+.schedulerInfoTable { width: 100%; }
+
+.schedulerInfoTable tbody tr:nth-child(odd) {
+    background-color: #EEE;
+}
+
+.schedulerInfoTable td {padding: 2px 5px}
+
+.eventHeader { 
+    color: #555555;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.schedulerInfoTable td:first-child { 
+    text-align: right;
+    border-right: solid 1px #000;
+}
+
+.schedulerInfoTable td:nth-child(2) { text-align: left; }
+
+#days .ui-checkbox input { width: 100%; }
+#days .ui-checkbox label { width: 100%; }

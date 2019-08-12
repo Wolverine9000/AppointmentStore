@@ -1,0 +1,69 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jul 25, 2015, 5:56:56 PM
+    Author     : williamdobbs
+*/
+.qs-h4-1 {
+    width: 100%;
+    text-align: center;
+    margin: 10px 0 0 0;
+    color: #800000; 
+}
+
+legend { color: #555555; font-weight: bold; text-align: center;  }
+
+#profile-fieldset-1 legend { padding-top: 8px; }
+
+table#profile-table { width: 100%; border-top: 1px solid #ccc; }
+
+table#profile-table tbody tr:nth-child(even) {
+    background-color: #EEEEEE;
+}
+table#profile-table td:first-child {
+    padding-right: 3px;
+    text-align: right;
+    border-right: solid 1px #ccc;
+}
+table#profile-table td:nth-child(2) {
+    text-align: left;
+    padding-left: 5px;
+}
+fieldset#profile-fieldset-1 {margin-bottom: 10px;}
+
+/*account photo styles*/
+div#photo {
+    margin: 0 16%;
+}
+
+div#photo img { 
+    border-radius: 5px;
+    height: 70px;
+    width: 70px;
+}
+#photo-fieldset legend { text-align: left; margin-left: 2em; }
+
+#photo-fieldset input { margin: 0 9%; }
+
+/*account info styles*/
+fieldset#account-fieldset { width: 100%; }
+
+#account-table { width: 100%; border-top: 1px solid #ccc;  }
+
+table#account-table tbody tr:nth-child(even) {
+    background-color: #EEEEEE;
+}
+#account-table td:first-child {
+    padding-right: 3px;
+    text-align: right;
+    border-right: solid 1px #ccc;
+}
+#account-table td:nth-child(2) {
+    text-align: left;
+    padding-left: 5px;
+}
+
+/*associate security styles*/

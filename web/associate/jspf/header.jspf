@@ -1,0 +1,77 @@
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+    <head>
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <!-- ============= re-direct to mobile web-site================== -->
+        <script type="text/javascript" src="../js/detectmobilebrowser.js"></script>
+        <!-- ======================= Themes  ======================== -->
+        <!-- ---------------------------------- Microsoft CDN Themes --------------------------------- -->
+        <!--        <link rel="Stylesheet" href="//ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/themes/smoothness/jquery-ui.css" />-->
+        <!-- ---------------------------------- Local Themes  --------------------------------- -->
+        <!--        <link type="text/css" href="../css/themes/redmond/jquery-ui.css" rel="Stylesheet" />-->
+        <!--        <link type="text/css" href="../css/themes/smoothness/jquery-ui.min.css" rel="Stylesheet" />-->
+        <!-- -------------------------------- Google and JQuery CDN Themes ---------------------- -->
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css" />
+        <!--        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.4/themes/smoothness/jquery-ui.css" /> -->
+        <!-- ===================== FullCalendar v2 css ===========================-->
+        <!--        <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css" />
+                <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.print.css" />-->
+        <link href='../js/fullcalendar3/fullcalendar.min.css' rel='stylesheet' />
+        <link href='../js/fullcalendar3/fullcalendar.print.css' rel='stylesheet' media='print' />
+        <!-- ======================= JQuery CDN ======================== -->
+        <!--        <script src="//code.jquery.com/jquery-1.12.1.js"></script>
+                <script src="/code.jquery.com/ui/1.11.1/jquery-ui.js""></script>-->
+        <!-- ========================= Google CDNs ======================== -->
+        <!--        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>-->
+        <!--        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+                <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>-->
+        <!-- ========================= Microsoft CDNs ======================== -->
+        <!-- <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.4.min.js"></script>
+        <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.4.min.map"></script>
+        <script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.11.4/jquery-ui.min.js"></script>-->
+
+        <!-- ========================= JQuery Local Files ======================== -->
+        <!--        <script src="../js/jquery-1.10.2.js"></script> -->
+        <!-- ==== jquery-2.1.4.js does not support Internet Explorer 6, 7, or 8 === -->
+        <script src="../js/jquery-2.1.4.min.js"></script>
+        <script src="../js/jquery-ui-1.11.4.min.js" type="text/javascript"></script>
+        <!-- ========================= Local Style Sheets  ========================= --->
+        <link rel="stylesheet" type="text/css" href="../css/associate.css">
+        <!-- ========================= Custom javascript Files ========================= --->
+        <script src="../js/jquery.validate.min.js" type="text/javascript"></script>
+        <!--        <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script> -->
+        <script src="../js/associate.js" type="text/javascript"></script>
+        <!--        <script src="../js/associate_min.js" type="text/javascript"></script>-->
+        <script src="../js/date.js" type="text/javascript"></script>
+        <script src="../js/spin.min.js" type="text/javascript"></script>
+        <!-- ========================= Moment ========================= --->
+        <script src="../js/moment.min.js"></script>
+        <!-- ======================= Full Calendar v2 js ========================= -->     
+        <script src="../js/fullcalendar3/fullcalendar.min.js"></script>
+        <!--        <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>-->
+
+        <title>OnTime Appointment System : Associate Console</title>
+    </head>
+    <body>
+
+    <header>
+        <img id="header-logo" src="../img/headerLogo.png" alt="header-logo">
+        <hgroup>
+            <div id="header-div">
+                <a href="<c:url value='/index.jsp'/>">
+                    <img id="header-clock" src="../img/clock_large.png" alt="OnTime">
+                </a>
+                <h1>OnTime Appointment System</h1>
+                <h2>Your Professional Appointment Solution</h2>
+            </div>
+        </hgroup>
+    </header>
+
+    <input type="hidden" name="defaultCalView" id="defaultCalView" value="${associateRecord.defaultCalendarView}">

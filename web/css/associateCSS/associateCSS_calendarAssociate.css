@@ -1,0 +1,230 @@
+/* 
+    Document   : associateCSS_services
+    Created on : May 17, 2013, 10:03:52 AM
+    Author     : williamdobbs
+    Description:
+        Purpose of the stylesheet follows.
+*/
+#calendar .fc-content{ font-size: 110%; }
+
+figcaption {
+    margin-bottom: 5px;
+    font-size: 100%;
+    color: #c00;
+}
+
+legend {text-align: center}
+
+label, input { display:block; text-align: left; }
+
+input.text { width: 95%; padding: .2em; }
+
+.ui-dialog .ui-state-error { padding: .3em; }
+
+legend.validateTips {
+    border: 1px solid transparent;
+    margin: 8px auto;
+    padding-top: 4px;
+}
+div.validateTips.error.smallText.normalText { 
+    margin: 5px;
+    text-align: center;
+}
+
+.ui-autocomplete-loading {
+    background: white url('../ui-anim_basic_16x16.gif') right center no-repeat;
+}
+.ui-autocomplete {text-align: left}
+
+.eventHeader { text-align: center; margin-bottom: 5px }
+
+/*new event styles*/
+#newEventField { margin-top: 0px }
+
+#newEventTable { margin: auto }
+
+#newEventTable tr:first-child { background: inherit; }
+
+/*#newEventTable td { padding: .2em .3em;}*/
+
+#newEventTable td { 
+    padding-right: 0;
+}
+
+#newEventTable td:nth-child(2) { padding-right: 2em }
+
+#newEventTable thead {
+    border: none;
+}
+#newEventTable th {
+    font-weight: lighter;
+    padding: 4px 3px;
+}
+#newEventTable input {
+    padding-left: 2px;
+    text-align: left;
+}
+
+/*Cancel Appointment*/
+#delete span {
+    float:left;
+    margin: 2px 6px 0px 0;
+}
+#deleteHeader { 
+    text-align: center;
+    margin-bottom: 5px;
+    color: #c00;
+}
+table.deleteTable { width: 100%}
+
+.deleteTable td {
+    word-wrap: break-word;
+    max-width: 200px;
+}
+.deleteTable { margin: 5px auto }
+
+.deleteTable tr:first-child { background: inherit }
+
+.deleteTable thead {
+    border: none;
+}
+.deleteTable th {
+    font-weight: lighter;
+    padding: 4px 3px;
+}
+.deleteTable input {
+    padding-left: 2px;
+    text-align: left;
+}
+.deleteTable td:first-child {
+    padding-right: 3px;
+}
+
+/*notify table styles*/
+table.notifyTable { width: 100%}
+
+.notifyTable td:nth-child(2) { padding-left: 0}
+
+#notifyCancelTabel td:first-child,  label:first-child {
+    text-align: right;
+}
+#notifyCancelTabel  td:nth-child(2) {
+    text-align: left;
+    padding-left: 0px;
+}
+#endTime, #startTime, #customerId  {
+    background: none transparent;
+    border: none;
+    color: #000;
+}
+
+/* error table/message styles*/
+#errorMsg span{
+    float: left;
+    margin: 2px 7px 0px 5px
+}
+#errorMsg legend { text-align: left; margin-left: 10px }
+
+#errorMsg tbody tr:nth-child(even) {
+    background-color: #EBF5FF;
+}
+
+/*past date message styles*/
+#pastDateMsg span { float: left; margin: 2px 7px 5px 5px }
+
+#pastTable td { padding: 2px 3px }
+
+#pastTable th { font-weight: lighter }
+
+#pastTable tbody tr:nth-child(odd) {
+    background-color: #EEEEEE;
+}
+#pastTable tfoot {
+    border: none;
+}
+#pastTable td:first-child {
+    text-align: right;
+    border-right: solid 1px #4297d7;
+}
+#pastTable td:nth-child(2) {
+    text-align: left;
+}
+
+/*start and end times styles*/
+#startend {  width: auto; margin-bottom: 5px; }
+
+.times  {
+    white-space: nowrap;
+    margin: auto;
+}
+.times input {
+    padding-left: 4px;
+    text-align: left;
+    width: 80px;
+}
+.times input.text { padding: 0 }
+
+.times thead { border: none; }
+
+.times th {
+    font-weight: lighter;
+    padding: 2px 0;
+}
+.times th:first-child { text-align: right; }
+
+.times thead tr { background-color: transparent;}
+
+.times th:nth-child(2) { text-align: left; }
+
+#startTime, #endTime { font-weight: bold }
+
+input#startTime { padding-right: 20px; }
+
+/*associate calendar top of  calendar page*/
+#gototable {
+    color: black;
+    z-index: 25; position:relative;
+}
+#gototable input {
+    border: 1px solid #CCCCCC;
+}
+#gototable td { padding: 0px 2px; }
+
+#gototable label { color: black }
+
+.ui-datepicker thead {
+    background-color: white;
+    /*    color: #002E8A;*/
+    border: none;
+}
+
+#gotodiv { float: left }
+
+#showdiv {
+    float: left;
+    margin-left: 20px;
+}
+
+#showCal, #clientCal { border: 1px solid #CCCCCC; }
+
+#msgBar { margin-bottom: 2em; }
+
+#loading {
+    float: right;
+    margin-right: 1em;
+}
+auto complete alternating color
+ul#ui-id-3 li:nth-child(odd) {
+    background-color: #EBF5FF;
+    padding: .5em 0;
+    white-space: nowrap;
+}
+ul#ui-id-3 {border-radius: 5px;}
+
+ul#ui-id-3 li#ui-id-21.ui-menu-item { white-space: nowrap;}
+
+.last-visits-table td:first-child { padding: .1em }
+
+#newEventField .ui-state-focus { outline: none;}
+
+.ui-accordion .ui-accordion-content { padding: 0; }

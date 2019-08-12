@@ -1,0 +1,151 @@
+/* 
+    Document   : associateCSS_services
+    Created on : May 17, 2013, 10:03:52 AM
+    Author     : williamdobbs
+    Description:
+        Purpose of the stylesheet follows.
+*/
+table * { color: #555; }
+
+input {width:  100%;}
+
+.validateTips { margin: 0; padding: 0; border: 0; }
+
+#section1 .ui-widget-content {
+    border: none;
+}
+.space { padding-bottom: 10px; }
+
+#section1 .ui-widget-header {
+    background: none;
+    border-bottom: 1px solid #cccccc;
+    border-top:  none;
+    border-left: none;
+    border-right: none;
+    border-radius: 0px;
+}
+
+tfoot td {
+    font-weight: normal;
+    text-align: left;
+    color: #F7941D;
+}
+#personal-div { float: left; width: 50%;}
+
+div#personal-btn.edit {
+    height: 33px;
+    width: 54px;
+    cursor: pointer;
+}
+div#personal-btn.save {
+    height: 33px;
+    width: 54px;
+    cursor: pointer;
+    margin-bottom: 0px;
+}
+
+table#personal-table { width: 100%; }
+
+#personal-table input { padding: 1px 2px 1px 5px; width: 95%; }
+
+#personal-table td { padding: .09em .5em; }
+
+#table-personal { width: 100%;} 
+
+input#email, input#id { border: none; color: #A3A3A3; }
+
+fieldset#profile-fieldset-1 { float: left; height: 330px; width: 100%;}
+
+#photo-fieldset { height: 330px; width: 100%; }
+
+#photo-div { float: right; width: 49%;}
+
+input#sms-ad-alerts.sms-ad-alerts, input#email-ad-alerts.email-ad-alerts { width: auto; }
+
+fieldset#alert-prefs-fieldset { float: left; }
+
+table.alert-prefs-table td {  padding: .2em 4px; }
+
+div#photo { margin-top:  10px; }
+
+div#personal-btn.upload { height: 31px; width: 54px; cursor: pointer; }
+
+#photo-fieldset legend, legend#calendar-legend {border-bottom: 1px solid #ccc; width: 100%; margin-bottom: 10px;}
+
+fieldset#alert-prefs-fieldset { margin-top: 30px; width: 100%; margin-bottom: 10px;}
+
+fieldset#alert-prefs-fieldset  legend {border-bottom: 1px solid #ccc; width: 100%; margin-bottom: 10px;}
+
+#photo-fieldset input { border:  none; }
+
+.width-450-pixels { width: 450px; }
+
+.widthAcct-first-td td:first-child { width: 190px; }
+
+p.error.smallText { margin-top: 5px; }
+
+input#associate-password, input#password-1, input#password-2 {
+    padding: 1px 2px 1px 5px;
+}
+.disabled-input {
+    border: 1px solid #CCCCCC;
+    background-color: #F5F5F5;
+    color: #F5F5F5;
+}
+.enable-input {
+}
+/*Password Tab Styles*/
+#password-div, #security-questions-div { 
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+    color: #555555;
+}
+table.password-table { width: 98%; }
+
+.password-table td:first-child { 
+    padding-right: 0px; 
+    text-align: right; 
+    width: 75px; }
+
+table.password-table td:nth-child(2) { 
+    padding-right: 0;
+    padding-left: 3px;
+}
+
+fieldset#password-feildset ul {padding: 0 0 0 1.25em;}
+
+fieldset#password-feildset li { margin: 0; padding: 0; }
+
+fieldset#password-feildset { float: left;}
+fieldset#security-questions-feildset { float: right; }
+fieldset#password-feildset { width: 45%; }
+#security-questions-feildset { width: 54%; margin-bottom: 10px; }
+/*Security Tab Styles*/
+table.security-questions-table { width: 100%;}
+table.security-questions-table td:first-child { text-align: right; padding-right: 3px; width: 100px; }
+table.security-questions-table td:nth-child(2) { padding-left: 0; }
+.security-questions-table input { padding: .09em .5em; }
+
+#security-questions-div div#personal-btn {  margin-left: 40px; }
+
+select#securityQuestion-1, select#securityQuestion-2, select#securityQuestion-3 { 
+    font-size: 18pt; width: 100%}
+
+input#securityAnswer-1, input#securityAnswer-2, input#securityAnswer-3 { width: 93% }
+
+legend#default-times.border-bottom { width: 100%; }
+
+table#default-times-table { margin-bottom: 15px;}
+
+/*Calendar Tab Styles*/
+fieldset#default-times-fieldset, fieldset#calendar-prefs-fieldset { width: 49%; }
+table#calendar-view-table { margin-left: 55px; }
+
+table#calendar-view-table td:first-child { padding-right: 0px }
+
+fieldset#calendar-prefs-fieldset { margin-bottom: 30px; }
+
+/*account info styles*/
+fieldset#account-fieldset { margin-bottom: 30px; width: 49%; }
+
+#account-table { width: 100%; }

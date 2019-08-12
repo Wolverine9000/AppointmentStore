@@ -1,0 +1,72 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Oct 19, 2015, 10:31:06 AM
+    Author     : whdobbs
+*/
+.successBkgColor { background-color: #b3ffb3 !important; }
+
+#section1 .ui-widget-header {
+    background: none;
+    border-bottom: 1px solid #cccccc    ;
+    border-top:  none;
+    border-left: none;
+    border-right: none;
+    border-radius: 0px;
+}
+/*thead { border-top: 1px solid #ccc; }*/
+
+div#services-tabs { border: none; } 
+
+div#services {padding: 1em 0; }
+
+table#services-list-table, #service-info-table { font-size: 100%; width: 100%; }
+
+#services-list-table tbody tr:hover { background-color: #FFEBCC; }
+
+#services-list-table tbody tr td { 
+    cursor:pointer;
+}
+#services-list-table tbody tr:nth-child(odd) {
+    background-color: #EEEEEE;
+}
+#services-list-table tbody td:first-child {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+#services-list-table tbody td:last-child {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+#services-list-table tbody tr:hover { background-color: #FFEBCC;  }
+
+#services-list-table tbody td:nth-child(5), td:nth-child(6), th:nth-child(5), th:nth-child(6) {
+    text-align: right;
+}
+#services-list-table tbody td:last-child, th:last-child { 
+    text-align: center; 
+}
+
+#services-list-table tbody td:first-child {
+width: 40px;
+text-align: center;
+}
+#services-list-table th:first-child { text-align: center; }
+
+#editServiceTable input {
+padding: 1px 2px 1px 5px;
+width: 95%;
+}
+
+#services-list-table th:hover { cursor: pointer; color: #F7941D}
+
+#editServiceTable input#price { width: 100px; }
+
+div.ui-dialog { padding: 0; }
+
+legend { padding: 0 5px; }
+
+input#service-id { border: none; }

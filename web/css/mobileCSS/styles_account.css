@@ -1,0 +1,57 @@
+#home {
+  background: url(../images/photobackground.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  filter:alpha(opacity=50);
+}
+
+#home article {
+  background: rgba(0,0,0,.7);
+  width: 50%;
+  margin: 0 auto;
+  margin-top: 220px;
+  border-radius: 20px;
+  color: white;
+  font-weight: lighter;
+  text-shadow: none;
+}
+
+#home article h1, #home article p {
+  margin: 0;
+  padding:5px;
+}
+
+#home article h1 {
+  padding-bottom: 10px;
+  color: #29A198;
+}
+
+img.fullscreen {
+  display: block;
+  margin: 0 auto;
+  max-height: 100%;
+  max-width: 100%;
+}
+
+.ui-grid-d {
+  max-width: 650px;
+}
+
+.ui-grid-d img {
+  width: 100%;
+  display: inline;
+  float: left;
+  border-radius: 10%;
+}
+
+.ui-grid-d div {
+  padding: 1%;
+}
+
+.artistinfo p img {
+  border-radius: 10%;
+  float: left;
+  margin-right: 3%;
+}

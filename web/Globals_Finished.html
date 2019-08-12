@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Using AJAX Global Events</title>
+        <style>
+            #content {
+                padding: 5pt;
+                border: 2px dashed lightgray;
+            }
+        </style>
+        <!--    <script type="text/javascript" src="../jquery-1.9.1.js"></script>-->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script type="text/javascript">
+            $("document").ready(function() {
+                $(document).ajaxStart(function() {
+                    console.log("AJAX starting");
+                });
+
+                $(document).ajaxStop(function() {
+                    console.log("AJAX request ended");
+                });
+
+                $(document).ajaxSend(function() {
+                    console.log("About to request data...");
+                });
+
+                $(document).ajaxComplete(function() {
+                    console.log("Everything's finished!");
+                });
+
+                $(document).ajaxError(function(evt, jqXHR, settings, err) {
+                    console.log("Hmmm. Seems like there was a problem: " + err);
+                });
+
+                $(document).ajaxSuccess(function() {
+                    console.log("Looks like everything worked!");
+                });
+
+                getData();
+            });
+
+            function getData() {
+                $.get("testdata.txt", successFn);
+            }
+
+            function successFn(result) {
+                console.log("Setting result");
+                $("#content").append(result);
+            }
+            function errorFn(xhr, status, strErr) {
+                alert(strErr);
+            }
+        </script>
+    </head>
+    <body>
+        <h1>Using AJAX Global Events</h1>
+        <p id="content"></p>
+    </body>
+</html>

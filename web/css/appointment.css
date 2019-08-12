@@ -1,0 +1,695 @@
+/* So the HTML5 structural tags work in older browsers */
+article, aside, figure, footer, header, nav, section {
+    display: block;
+}
+/* html tags */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    width: 1150px;
+    text-align: center;
+    margin: 20px auto 20px 30px;
+    color: #444;
+}
+
+hr {
+    border: 0;
+    background-color: #333;
+    height: 1px;
+}
+
+table {
+    margin: 0 20px;
+    border-spacing: 0;
+    text-align: center;
+    border: solid 1px #f5eabe;
+}
+
+a {
+    color: inherit;
+    text-decoration: underline;
+}
+
+a:hover { text-decoration: none }
+
+.underline { text-decoration: underline}
+
+a:visited { color: inherit }
+
+img { border: none }
+
+#imgsmall {
+    height: 30px;
+}
+
+.loginInput { 
+    width: 20em;
+    margin-left: 0em;
+    margin-bottom: .5em;
+}
+
+input, select { margin: 5px }
+
+input:focus {
+    border: 2px solid navy; }
+
+input:required, input[required]
+
+input:invalid {
+    border: 3px solid red;
+}
+input:valid {
+    border: 1px solid black;
+}
+input:invalid {
+    box-shadow: none;
+}
+
+li { margin: 10px 0 }
+
+label { 
+    line-height: 30px;
+    float: left;
+    width: 8em;
+    font-weight: normal;
+    text-align: right;
+}
+
+label.error {
+    display: block;
+    width: auto;
+    margin: 0 0 0.5em auto;
+    font-size: smaller;
+    line-height: 20px;
+    font-style: italic;
+}
+
+/* general styles */
+#main { background: #f7f7e9}
+
+#singleColumn {
+    margin: 20px 50px;
+    text-align: left;
+    clear: right
+}
+
+.lightBlue { background-color: #edf8f7 }
+
+.white { background-color: #fff }
+
+.bubble {
+    font-weight: bold;
+    background-color: #f5eabe;
+    padding: 5px;
+    color: inherit;
+    display: inline;
+    border-radius: 4px;
+}
+
+.hMargin { margin: 0 30px }
+
+.smallText { font-size: small }
+
+#smallText { font-size: small}
+
+.reallySmallText { font-size: xx-small }
+
+.header {
+    background-color: #c3e3e0;
+    height: 30px;
+}
+
+.error {
+    color: #c00;
+    font-style: italic;
+}
+
+.good {
+    color: #339900;
+    font-style: italic;
+}
+
+.tableHeading {
+    font-weight: bold;
+    background-color: #edf8f7;
+}
+
+#button, #reset {
+    width: 7em;
+    padding: .2em;
+    margin-top: .2px;
+    background-color: #c3e3e0;
+    /*    box-shadow: 2px 2px 0 navy; */
+    border-radius: 4px;
+    box-shadow: 2px 2px 3px 2px rgba(0, 0, 0, 0.5);
+}
+
+#button { margin-left: 9.5em; }
+
+.selectedButton {
+    background-color: #cc9f10;
+    width: 110px;
+    border-radius: 4px;
+    color: #f5eabe;
+}
+
+.alignLeft { text-align: left }
+
+.alignRight { text-align: right}
+
+.selectedRow {
+    background-color: #c3e3e0;
+    cursor: pointer;
+}
+
+.noDecoration { text-decoration: none }
+
+.rigidWidth { width:200px }
+
+.embedded {
+    margin: 0;
+    border: none;
+}
+
+/* progress bar styles */
+/*.ui-progressbar {
+    position: relative;
+}
+.progress-label {
+    position: absolute;
+    left: 50%;
+    top: 4px;
+    font-weight: bold;
+    text-shadow: 1px 1px 0 #fff;
+}*/
+
+/* styles for elements contained in the header, i.e.,
+   shopping cart widget, language toggle, and logo */
+#header {
+    width: 1000px;
+    height: 250px;
+    background: url(../img/stalk.png) no-repeat 28px 28px;
+}
+
+#logo {
+    float: left;
+    margin-left: 30px;
+    margin-top: -20px;
+}
+
+#logoText {
+    float: left;
+    margin: 20px 0 0 70px;
+    /* font styles apply to text within img alt attribute */
+    font-family: 'American Typewriter', Courier, monospace;
+    font-size: 50px;
+    color: #333;
+}
+
+#widgetBar {
+    height: 50px;
+    width: 950px;
+    float: right;
+}
+
+#cart {
+    position: absolute;
+    margin: 5px 0 0 2px;
+}
+
+.horizontalMargin {
+    margin-left: 28px;
+    margin-right: 5px
+}
+
+#viewCart {
+    text-align: left;
+    width: 210px;
+}
+
+.headerWidget {
+    width: 194px;
+    margin: 20px 0;
+    font-size: 14px;
+    float: right;
+    line-height: 25px;
+}
+
+/* footer styles */
+#footer {
+    height: 60px;
+    width: 350px;
+    clear: left;
+}
+
+#footerText { margin-top: 5px }
+
+#footerDivider {
+    margin: 0 25px;
+    width: 300px;
+}
+
+/* register page styles */
+#registerText { margin-top: 5px }
+
+.registerFont {
+    font-size: 16px;
+}
+
+#registerTable {
+    width: 400px;
+    padding: 10px;
+    margin: 0 auto;
+    background-color: #f5eabe;
+    float: left;
+    border-radius: 4px;
+}
+
+.registerInputField { width: 190px;
+}
+
+#registerTable td {
+    vertical-align: top;
+    text-align: right;
+    margin: 5px;
+}
+
+#clientLoginTable table {
+    width:370px;
+    margin: 0 auto;
+    border: solid 1px #f5eabe;
+    background-color: #f5eabe;
+    border-radius: 4px;
+    box-shadow: 2px 2px 4px 2px rgba(0, 0,0, 0.5);
+    border-collapse: collapse;
+}
+#clientLoginTable legend {
+    text-align: left
+}
+#clientLoginTable figcaption {
+    margin: 0;
+    padding: .3em;
+    font-weight: bold;
+    text-align: left;
+    /* font-size: 120%;
+    padding-bottom: .25em; 
+    border: none*/
+}
+#clientLoginTable td {
+    padding: .2em .1em;
+    text-align: right;
+}
+#clientLoginTable td:nth-child(2) {
+    padding: .2em 2em .2em .2em
+}
+
+/* index page styles */
+#indexLeftColumn {
+    text-align: left;
+    height: 400px;
+    width: 350px;
+    float: left;
+}
+
+#indexRightColumn {
+    text-align: left;
+    height: 400px;
+    width: 800px;
+    float: left;
+}
+
+#welcomeText {
+    margin: 30px 5px 0 30px;
+    line-height: 1.4em;
+}
+
+.categoryBox {
+    height: 176px;
+    width: 212px;
+    margin: 21px 14px 6px;
+    float: inherit;
+}
+
+/* Safari - disables underline for category boxes on index page */
+.categoryBox a { text-decoration: none }
+
+.categoryLabel {
+    position: absolute;
+    background-color: #fff;
+    opacity: 0.7;
+    height: 40px;
+    width: 210px;
+    margin: 2px;
+}
+
+.categoryLabelText {
+    position: absolute;
+    line-height: 150%;
+    font-size: x-large;
+    margin: 3px 10px;
+}
+
+.categoryImage {
+    padding: 1px;
+    border:solid 1px #555;
+}
+
+
+/* category page styles */
+#categoryLeftColumn {
+    width: 185px;
+    float: left;
+    margin-top: 25px;
+    padding-left: 15px;
+}
+
+#categoryRightColumn {
+    margin-top: 10px;
+    width: 680px;
+    float: left;
+}
+
+.categoryButton {
+    margin: 15px 22px;
+    padding: 13px;
+    display: block;
+    background-color: #d3ede8;
+    border-radius: 4px;
+}
+
+#selectedCategory {
+    background-color: #b2d2d2;
+    margin-left: 10px;
+    width: 139px;
+}
+
+#categoryTitle {
+    margin-top: -40px;
+    right: 485px;
+    font-size: x-large;
+    position: absolute;
+    background-color: #f5eabe;
+    padding: 7px;
+    border-radius: 4px;
+}
+
+.categoryText {
+    line-height: 25px;
+    font-size: x-large;
+}
+
+#productTable {
+    width: 720px;
+
+    /* styles to collaborate with rounded categoryLabel */
+    position: relative;
+    z-index: 1;
+}
+
+#productTable tr { height: 90px }
+
+#productTable td { width: 145px }
+
+/* cart page styles */
+#actionBar {
+    margin: 30px;
+    width: 750px;
+    text-align: center;
+}
+
+#subtotal { margin: 40px 0 20px 430px }
+
+#cartTable { width: 800px }
+
+#cartTable td {
+    width: 145px;
+    height: 90px;
+}
+
+/* checkout page styles */
+#checkoutTable {
+    width: 510px;
+    padding: 10px;
+    background-color: #f5eabe;
+    float: left;
+    border-radius: 4px;
+    box-shadow: 2px 2px 4px 2px rgba(0, 0,0, 0.5);
+}
+
+#checkoutTable td {
+    vertical-align: top;
+    text-align: right;
+    margin: 5px;
+}
+
+#checkoutTable tr {
+    float: left
+}
+
+.inputField {  width: 190px }
+
+.stateInputField {width: 40px}
+
+#infoBox { padding: 10px 25px 0 460px }
+
+.priceBox {
+    padding: 10px;
+    border: 1px solid #c3e3e0;
+    background-color: #c3e3e0;
+    border-radius: 4px;
+}
+.priceBox td {
+    text-align: center;
+    margin: 5px;
+}
+
+.priceBox td:last-child {
+    text-align: right;
+    padding: 2px;
+}
+.priceBox th:first-child, td:first-child {
+    text-align: center;
+    padding: 2px;
+}
+.priceBox tr td:nth-child(2) {
+    text-align: center;
+    padding: 10px;
+}
+.checkoutPriceColumn {
+    width: 100px;
+    font-weight: bold;
+}
+/* check box test*/
+.testBox figure, figcaption {
+    margin: 0;
+    padding: 0; 
+}
+.testBox figure {
+    border: 1px solid black;
+    width: 450px;
+    padding: 5px; 
+    margin: 2px
+}
+.testBox figcaption {
+    display: block;
+    font-weight: bold;
+    text-align: left;
+    font-size: 120%;
+    padding-bottom: .25em; 
+}
+.testBox table {
+    padding: 5px;
+    border: 1px solid #c3e3e0;
+    background-color: #c3e3e0;
+    border-radius: 4px;
+    /*    padding: 10px;
+        border-collapse: collapse;
+        border: 1px solid black;
+    margin:10px auto; */
+}
+.testBox thead, tfoot {
+    font-weight: bold;
+    /*    padding: 5px;
+        border: 1px solid black;*/
+    text-align: center
+}
+.testBox tfoot td {padding: 10px 2px 5px 2px}
+
+.testBox tfoot td:nth-child(3){
+    font-weight: normal;
+    text-align: right
+}
+.testBox td:last-child {text-align: right}
+
+.testBox tr td:nth-child(2) {
+    text-align: center;
+    padding: 5px;
+}
+/*end check out box test*/
+
+.total { border-top: 1px solid #444 }
+
+.indent { margin-left: 6em }
+
+/* confirmation page styles */
+#confirmationText {
+    margin: 0 20px 20px;
+    padding: 10px;
+    background-color: #f5eabe;
+    float: left;
+    border-radius: 4px;
+}
+
+.summaryColumn {
+    margin-top: 15px;
+    width: 50%;
+    float: left;
+}
+
+.summaryTableBox {
+    background-color: #edf8f7;
+    font-size: small;
+    font-family: "Courier New", courier, monospace;
+    float: left;
+    width: 320px;
+    padding: 0px;
+    margin-left: 30px;
+    margin-top: 15px
+}
+
+.summaryTableBox td {
+    padding: 5px
+}
+
+.summaryTableBox td:nth-child(2) {
+    text-align: left;}
+
+.summaryTableBox thead {
+    background-color: #c3e3e0;
+    height: 20px;
+    text-align: left;
+    font-family: arial;
+    font-size: medium
+}
+
+.summaryTableBox thead th {
+    padding: 6px 6px;
+    padding-left: 10px;
+}
+
+.summaryTableBox td:first-child {
+    text-align: right;
+}
+
+.summaryTableBox tr:nth-child(5) td {
+    border-top: 1px solid black;
+    padding: 5px;
+}
+
+.detailsTable { text-align: left }
+
+.detailsTable th { padding: 5px 10px }
+
+.detailsTable td {
+    padding: 5px 10px 5px 5px;
+    font-size: small;
+    font-family: "Courier New", courier, monospace;
+}
+.detailsTable td:first-child {
+    text-align: right
+}
+
+#orderSummaryTable { width: 100% }
+
+#deliveryAddressTable {
+    width: 70%;
+    margin-left: 15%;
+}
+
+#deliveryAddressTable td {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.quantityColumn {
+    text-align: center;
+    width: 62px;
+}
+
+.confirmationPriceColumn {
+    width: 90px;
+    font-weight: normal;
+}
+
+#deliverySurchargeCellLeft {
+    text-align: right;
+    padding: 0;
+}
+
+#deliverySurchargeCellRight { padding: 0 20px }
+
+#totalCellLeft {
+    text-align: right;
+    padding: 0;
+}
+
+#totalCellRight { padding: 0 20px }
+
+#dateProcessedRow { padding: 2px 0 10px 20px }
+
+/* admin styles */
+#adminLogo {
+    float:left;
+    margin-left: 30px;
+    margin-top: -20px;
+}
+
+#loginBox {
+    width: 400px;
+    margin: 0 auto;
+    border: solid 1px #f5eabe;
+    background-color: #f5eabe;
+    border-radius: 4px;
+}
+
+#adminLoginBox {
+    width: 380px;
+    margin: 0 auto;
+    border: solid 1px #f5eabe;
+    background-color: #f5eabe;
+    border-radius: 4px;
+    box-shadow: 2px 2px 4px 2px rgba(0, 0,0, 0.5);
+}
+
+#adminMenu {
+    float: left;
+    width: 180px;
+    margin: 25px 5px 0 30px;
+    border: solid 1px #f5eabe;
+    background-color: #f5eabe;
+    border-radius: 4px;
+}
+
+#adminMenu p { margin-left: 15px }
+
+#adminTable {
+    width: 650px;
+    float: left;
+    background-color: #edf8f7;
+}
+
+.bookAppointmentBox {
+    position: relative;
+    background-color: #edf8f7;
+    height: 250px;
+    width: 500px;
+    margin-left: 400px
+}
+
+.popupBox {
+    position: absolute;
+    left: 140px;
+}
+
+
+
+

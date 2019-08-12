@@ -1,0 +1,74 @@
+/* 
+    Document   : associateCSS_update
+    Created on : May 17, 2013, 10:04:36 AM
+    Author     : williamdobbs
+    Description:
+        Purpose of the stylesheet follows.
+*/
+br {
+    clear: both;
+}
+fieldset {
+    background-color: #f5eabe;
+    border-radius: 4px;
+    box-shadow: 2px 2px 4px 2px rgba(0, 0,0, 0.5);
+    border: none
+}
+legend {
+    font-weight: bold;
+    text-align: left;
+}
+label {
+    float: left;
+    width: 10em;
+    text-align: right;
+}
+input, select {
+    width: 180px;
+    margin-left: 0px;
+    margin-right: 5px;
+    margin-bottom: 0.5em;
+}
+.tableInput, select { margin: 5px 5px 5px 0px}
+
+.submitLegend {font-size: small}
+
+#sectionA {
+    float: left;
+    height: auto;
+    width: 29em;
+    padding-bottom: 8px;
+    margin: 5px;
+    background-color: #f7f7e9;
+}
+.updateHeader {
+    height: 30px;
+}
+#updateTable {
+    width: 380px;
+    padding: 10px;
+    background-color: #f5eabe;
+    float: left;
+    border-radius: 4px;
+    /*    width: 380px;
+        padding: .3px;
+            background-color: #f5eabe;
+        float: left;
+        border-radius: 4px;
+        white-space: nowrap;*/
+}
+#updateTable td {
+    vertical-align: top;
+    text-align: right;
+    margin: 5px;
+    /*    text-align: right;
+        width: 20px;
+        padding-left: 5px*/
+}
+#updateTable {
+    float: left
+}
+.updateHeader {
+    height: 30px;
+}
+.inputField {margin-bottom: 20px}

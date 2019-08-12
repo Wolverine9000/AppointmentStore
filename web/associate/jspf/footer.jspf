@@ -1,0 +1,14 @@
+
+<footer>
+    <nav>
+        <ul>
+            <li><a href="<c:url value='/index.jsp'/>">Home</a></li>
+            <li><a href="#">Support</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Contact Us</a></li>
+        </ul>
+    </nav>
+    <p>&copy;&nbsp;${currentYear}&nbsp;&#8226;&nbsp;On-Time Appointment System&nbsp;&#8226;&nbsp;WHD Technologies LLC, Helena, AL 35080</p>
+</footer>
+</body>
+</html>

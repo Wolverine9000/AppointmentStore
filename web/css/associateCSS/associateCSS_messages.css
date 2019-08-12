@@ -1,0 +1,160 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Aug 8, 2015, 3:57:58 PM
+    Author     : williamdobbs
+*/
+table * { color: #555; }
+
+/*.ui-widget { font-size: inherit;}*/
+.button-size-1 {
+    margin-top: 10px;
+    height: 33px;
+    width: 56px;
+}
+.warning {
+    border: 1px solid #ffb366;
+    background-color: #fff2e6;
+    color: #ff9933;
+}
+.warning-style { color: #ff9933; }
+
+#section1 .ui-widget-header {
+    background: none;
+    border-bottom: 1px solid #cccccc;
+    border-top:  none;
+    border-left: none;
+    border-right: none;
+    border-radius: 0px;
+}
+
+legend {
+    border-bottom: 1px solid #ccc; 
+width: 100%;
+}
+
+div#message-tabs { border: none; } 
+
+div#senttext, #scheduled {padding: 1em 0; }
+
+#message-tabs .message-list-table, .scheduled-list-table { font-size: 87.5%; width: 100%; }
+
+#message-tabs .message-list-table tbody td, .scheduled-list-table tbody td { padding: .4em .5em; }
+
+#message-tabs .message-list-table td:nth-child(3), .scheduled-list-table td:nth-child(3) { min-width: 75px; }
+
+#message-tabs .message-list-table th:hover, .scheduled-list-table th:hover { cursor: pointer; color: #F7941D}
+
+.message-list-table, .scheduled-list-table tbody tr {cursor: pointer;}
+
+#message-tabs .message-list-table td:nth-child(2), .scheduled-list-table td:nth-child(2) { 
+/*    white-space: nowrap;*/
+   padding-right: 0;
+   color: #0066FF;
+    max-width: 100px;
+}
+/*auto complete pin-wheel animation*/
+.ui-autocomplete-loading {
+    background: white url('../ui-anim_basic_16x16.gif') right center no-repeat;
+}
+.ui-autocomplete {text-align: left}
+
+#message-tabs .message-list-table td:nth-child(4), .scheduled-list-table td:nth-child(4) {
+    white-space: nowrap;
+}
+
+#message-tabs .message-list-table td:nth-child(4), th:nth-child(4) { text-align: center; }
+
+#message-tabs .message-list-table tbody tr:nth-child(odd), .scheduled-list-table tbody tr:nth-child(odd) { 
+    background-color: #EEEEEE;
+}
+
+#message-tabs .message-list-table tbody tr:hover, .scheduled-list-table tbody tr:hover { background-color: #FFEBCC !important; }
+
+.messgage-info-table, .scheduled-info-table { width: 100%; }
+/*
+div#personal-btn.edit {
+    height: 33px;
+    width: 54px;
+    cursor: pointer;
+}
+div#personal-btn.save {
+    height: 33px;
+    width: 54px;
+    cursor: pointer;
+    margin-bottom: 0px;
+}
+div#personal-btn.upload { height: 31px; width: 54px; cursor: pointer; }
+*/
+div#new-client-request {
+    padding: 20px 0;
+}
+fieldset#new-client-request-fieldset-1 {
+    width: 40%;
+     float: left;
+}
+#new-client-request-fieldset-1 .validateTips { 
+border: 1px solid transparent;
+margin: 1px auto;
+padding-top: 0;
+}
+#new-client-request-fieldset-1 input {
+    padding-left: 2px;
+    width: 145px;
+}
+
+#recent-requests {
+    float: right;
+    width: 59%;
+}
+
+#new-client-request-fieldset-1 legend { padding-bottom: 0px; }
+
+table#table-mobile-requests-1, table#table-mobile-requests-2 { float: left;  width: 50%; margin-bottom: 10px; }
+
+
+table#table-mobile-requests-2 td:nth-child(1){ padding-left: 8px;  padding-right: 2px;  }
+table#table-mobile-requests-2 td:nth-child(2){ padding-left: 6px; }
+
+#table-recent-requests, #table-mobile-requests {
+    width: 100%;
+}
+#recent-requests #table-recent-requests {
+    margin-top: 3px;
+}
+#recent-requests #table-recent-requests td:first-child { width: 130px; }
+#recent-requests #table-recent-requests th:nth-child(2) { text-align: center;  padding-left: 0; padding-right: 0px}
+#recent-requests #table-recent-requests td:nth-child(2) { text-align: center;  padding-left: 0; padding-right: 0px}
+#recent-requests #table-recent-requests th:nth-child(2) { text-align: center;  }
+
+#table-mobile-requests th {
+    padding-left: 4em;
+}
+
+#fieldset-send-invite #table-send-invite td:nth-child(2){ text-align: center;  }
+
+/*results display and buttons*/
+#postResults {
+    display: block;
+    float: left;
+}
+
+.invite.button-size-1 {
+    float: left;
+    clear: both;
+}
+.next-page-size {
+    height: 25px;
+    width: 25px;
+    color: transparent;
+    border: none;
+    cursor: pointer;
+    float: right;
+    margin-right: 5px;
+}
+.margin-right {
+    margin-right: 20px;
+}

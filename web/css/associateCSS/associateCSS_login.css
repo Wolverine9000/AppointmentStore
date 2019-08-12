@@ -1,0 +1,87 @@
+/* 
+    Document   : associateCSS_login
+    Created on : May 17, 2013, 10:02:44 AM
+    Author     : williamdobbs
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+aside {
+    width: 40%;
+    float: left;
+    margin-top: 20px;
+}
+td, th, label, input { color: #555555;}
+
+table { float: right; }
+
+aside h1 { text-align: center; }
+
+div#aside-div {
+    width:  100%;
+    text-align: center;
+    float: right;
+}
+section {
+    float: right;
+    width: 59%;
+}
+th, td {
+    padding: 5px 0px 0px 0px;
+    text-align: left;
+}
+fieldset {
+    width: 100%;
+    padding: .1em 0;
+    border: 0px;
+    margin: 0px;
+}
+login-legend {
+    font-weight: bold;
+    font-size: 100%;
+}
+div#aside-div thead tr:nth-child(1), td:nth-child(2) { font-size: 24px; }
+
+#submit-fieldset td:nth-child(2) { 
+    float: right;
+    padding: 5px 50%; 
+}
+
+label {
+    float: left;
+    vertical-align: middle;
+    margin: 5px 0px;
+    padding-right: 0px;
+    width: 100%;
+    text-align: right;
+    font-size: 130%;
+}
+input, select {
+    font-size: 14px;
+    vertical-align: middle;
+    width: 230px;
+    height: 20px;
+    padding: 0px 4px;
+    margin-left: 7px;
+}
+
+
+
+/* the styles for the slide show */
+#photoShow {
+    position:relative;
+    float: right;
+    height:190px;
+    width:240px;
+    margin: auto;
+}
+#photoShow div {
+    position:absolute;
+    z-index: 0;
+}
+#photoShow div.previous {
+    z-index: 1;
+}
+#photoShow div.current {
+    z-index: 2;
+}
