@@ -71,7 +71,8 @@ public class AssociateDB
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            LogFile.databaseError("AssociateDB selectAssociateAvailability error ", e.getMessage(), e.toString());
+//            e.printStackTrace();
             return null;
         }
         finally
@@ -125,7 +126,7 @@ public class AssociateDB
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            LogFile.databaseError("AssociateDB selectAssociateAvailability 3-arguments error ", e.getMessage(), e.toString());
             return null;
         }
         finally
@@ -169,7 +170,7 @@ public class AssociateDB
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            LogFile.databaseError("AssociateDB selectAvailableTimes 4-arguments error ", e.getMessage(), e.toString());
             return null;
         }
         finally
@@ -212,7 +213,7 @@ public class AssociateDB
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            LogFile.databaseError("AssociateDB selectAvailableTimes 2-arguments error ", e.getMessage(), e.toString());
             return null;
         }
         finally
@@ -253,7 +254,7 @@ public class AssociateDB
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            LogFile.databaseError("AssociateDB selectAvailableTimes 1-arguments error ", e.getMessage(), e.toString());
             return null;
         }
         finally
@@ -309,7 +310,7 @@ public class AssociateDB
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            LogFile.databaseError("AssociateDB selectAssociateAvailableTimes error ", e.getMessage(), e.toString());
             return null;
         }
         finally
@@ -353,7 +354,7 @@ public class AssociateDB
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            LogFile.databaseError("AssociateDB selectAssociatesAvailable error ", e.getMessage(), e.toString());
             return null;
         }
         finally
@@ -391,7 +392,7 @@ public class AssociateDB
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            LogFile.databaseError("AssociateDB isAssociateAvailability error ", e.getMessage(), e.toString());
             return false;
         }
         finally
@@ -1427,7 +1428,7 @@ public class AssociateDB
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            LogFile.databaseError("AssociateDB selectAssociateInfo error ", e.getMessage(), e.toString());
             return null;
         }
         finally
