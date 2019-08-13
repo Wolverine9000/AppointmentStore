@@ -41,7 +41,7 @@ $(document).ready(function () {
             heightStyle: "content"
         });
     });
-
+    
     var v = memberLevels();
     $("#memberLevels").append(v);
     listClients("ci", "../FullCalendar", false, "clientInfo", 'firstName');
