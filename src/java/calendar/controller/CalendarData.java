@@ -246,9 +246,8 @@ public class CalendarData
         {
             c = CustomerDB.selectClientsAll();
         }
-        for (Iterator<CalendarCustomer> it = c.iterator(); it.hasNext();)
+        for (CalendarCustomer cc : c)
         {
-            CalendarCustomer cc = it.next();
             FullCalendar2 fc = new FullCalendar2();
             fc.setFirstName(cc.getFirstName());
             fc.setLastName(cc.getLastName());
