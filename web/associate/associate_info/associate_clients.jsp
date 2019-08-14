@@ -71,7 +71,7 @@
                 <tr><th></th><th title="sort by ID number">ID</th><th title="sort by First Name">First</th><th title="sort by Last Name">Last</th>
                     <th title="sort by Email Address">Email</th><th title="sort by Mobile Number">Mobile</th><th title="sort by Member Level">Level</th>
                     <th title="select all checkboxes" id="select-header">Select</th></tr>
-            </thead>    
+            </thead>
             <tbody>
             </tbody>
         </table>
@@ -82,7 +82,7 @@
             </table>
             <div id="accordion">
                 <h3>Notification Preferences</h3>
-                <div class="alert-prefs">
+                 <div class="alert-prefs">
                     <table class="alert-prefs-table">
                         <tbody>
                             <tr>
@@ -99,7 +99,7 @@
                             </tr>
                         </tbody>
                     </table>
-                </div>
+                 </div>
                 <h3>Past 5 Appointments</h3>
                 <div class="visits">
                     <table class="last-visits-table">
@@ -276,6 +276,20 @@
                 <textarea name="message-to-send" id="message-to-send" maxlength="145" placeholder="10 to 145 characters"
                           title="clients will recieve your message via text and email only if those options are enabled within their account"></textarea>
             </div>
+            <div id="accordion-send">
+    <div>
+        <h3><a href="#">First</a></h3>
+        <div>Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.</div>
+    </div>
+    <div>
+        <h3><a href="#">Second</a></h3>
+        <div>Phasellus mattis tincidunt nibh.</div>
+    </div>
+    <div>
+        <h3><a href="#">Third</a></h3>
+        <div>Nam dui erat, auctor a, dignissim quis.</div>
+    </div>
+</div>
         </fieldset>
         <fieldset id="clients-del-fieldset">
             <span></span>

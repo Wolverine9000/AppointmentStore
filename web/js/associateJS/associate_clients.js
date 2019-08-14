@@ -14,6 +14,9 @@ var minutes = [];
 var hours = [];
 
 $(document).ready(function () {
+    $(function() {
+            $("#accordion > div").accordion({ header: "h3", collapsible: true });
+        }); 
     // populate minutes option select
 //    for (var i = 00; i < 60; i++)
 //    {
