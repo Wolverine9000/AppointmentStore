@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-/* global nameRegEx, emailRegEx, associateClass */
+/* global nameRegEx, emailRegEx, associateClass, serviceList, convert */
 
 var clientSet = [];
 var isAllSelected = false;
@@ -15,7 +15,7 @@ var hours = [];
 
 $(document).ready(function () {
     $(function() {
-            $("#accordion > div").accordion({ header: "h3", collapsible: true });
+            $("#accordion-send > div").accordion({ header: "h3", collapsible: true });
         }); 
     // populate minutes option select
 //    for (var i = 00; i < 60; i++)
@@ -244,7 +244,7 @@ $(document).on("change", "#c-options", function () {
             $("#send-message-field").dialog("option", "height", 'auto');
             $("#send-message-field").dialog("option", "width", 'auto');
             $("#send-message-field").dialog("option", "maxWidth", 670);
-            $("#send-message-field").dialog("option", "maxHeight", 370);
+            $("#send-message-field").dialog("option", "maxHeight", 770);
             $("#send-message-field #messageHeader").html(sendMsgText);
             $("#send-message-field").show();
         }

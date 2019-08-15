@@ -26,6 +26,10 @@ public class MailUtil
     private static final String REGISTRATIONURL = "http://174.80.101.20/AppointmentStore/registrationConfirm";
     private static final String WILLIAMDOBBS = "support@ontimeappointmentsystem.com";
     private static final String WHDTECHNOLOGIESEMAIL = "donotreply@whdtechnologies.com";
+    
+    private static void getEmailPwd() {
+
+    }
 
     public static void sendMail(String to, String from, String subject, String body, String bcc, boolean bodyIsHTML)
     {

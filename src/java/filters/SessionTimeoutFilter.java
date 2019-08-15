@@ -38,7 +38,7 @@ public class SessionTimeoutFilter implements Filter
                 }
             catch (ServletException | IOException ex)
                 {
-                ex.printStackTrace();
+                 LogFile.generalLog("SessionTimeoutFilter doFilter exception " + ex.toString() + " ",ex.getMessage());
                 }
             return;
             }

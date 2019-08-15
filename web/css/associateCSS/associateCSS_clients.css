@@ -231,3 +231,8 @@ span.ui-icon.ui-icon-alert {
     margin-left: 2%;
     margin-right: 2em;
 }
+
+fieldset#send-message-field#accordion-send textarea {
+    height: auto;
+    padding-left: 5px;
+}
