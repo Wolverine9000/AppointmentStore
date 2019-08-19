@@ -55,7 +55,7 @@ public class CheckAssociateServlet extends HttpServlet
         // validate user data
         boolean validationErrorFlag = Validator.validateLogin(emailAddress, password, request);
 
-        // if validation error found, return user to checkout
+        // if validation error found, return user to login
         if (validationErrorFlag == true)
         {
             request.setAttribute("validationErrorFlag", validationErrorFlag);

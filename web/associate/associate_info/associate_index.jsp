@@ -27,7 +27,9 @@
                 <h3><a href="<c:url value='#'/>">Messages</a></h3>
 
                 <h3><a href="<c:url value='#'/>"><strong>Account</strong></a></h3>
-
+      
+               <h3><a href="<c:url value='associate_admin'/>">Admin</a></h3>
+            
                 <h3><a href="<c:url value='logoutAssociate'/>">Logout</a></h3>
             </div>
         </aside>

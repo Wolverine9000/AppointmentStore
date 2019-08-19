@@ -37,6 +37,8 @@
             <h3><a href="<c:url value='associate_services'/>">Services</a></h3>
 
             <h3><a href="<c:url value='#'/>">Account</a></h3>
+            
+            <h3><a href="<c:url value='associate_admin'/>">Admin</a></h3>
 
             <h3><a href="<c:url value='logoutAssociate'/>">Logout</a></h3>
         </div>

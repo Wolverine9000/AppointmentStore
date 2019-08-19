@@ -443,6 +443,10 @@
         <servlet-name>MessagesServlet</servlet-name>
         <servlet-class>json.MessagesServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Associate Admin</servlet-name>
+        <jsp-file>/associate/associate_info/associate_admin.jsp</jsp-file>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ViewCategoryServlet</servlet-name>
         <url-pattern>/viewCategory</url-pattern>
@@ -840,6 +844,10 @@
     <servlet-mapping>
         <servlet-name>MessagesServlet</servlet-name>
         <url-pattern>/Messages</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Associate Admin</servlet-name>
+        <url-pattern>/associate/associate_admin</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
