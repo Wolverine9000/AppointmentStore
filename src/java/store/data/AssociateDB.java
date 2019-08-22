@@ -1208,7 +1208,7 @@ public class AssociateDB
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            LogFile.databaseError("AssociateDB selectAllAssociates error ", e.getMessage(), e.toString());
             return null;
         }
         finally
@@ -1269,7 +1269,7 @@ public class AssociateDB
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            LogFile.databaseError("AssociateDB selectAssociatesAll error ", e.getMessage(), e.toString());
             return null;
         }
         finally
@@ -1312,7 +1312,7 @@ public class AssociateDB
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            LogFile.databaseError("AssociateDB selectAssociate error " + email + " ", e.getMessage(), e.toString());
             return null;
         }
         finally
@@ -1343,10 +1343,10 @@ public class AssociateDB
             if (rs.next())
             {
                 String salt = rs.getString("salt");
-                String hasAndSalt1 = rs.getString("passwordHashAndSalted");
+                String hashAndSalt1 = rs.getString("passwordHashAndSalted");
                 String hashAndSalt2 = PasswordUtil.hashPassword(password + salt);
 
-                if (hasAndSalt1 == null ? hashAndSalt2 == null : hasAndSalt1.equals(hashAndSalt2))
+                if (hashAndSalt1 == null ? hashAndSalt2 == null : hashAndSalt1.equals(hashAndSalt2))
                 {
                     Associate2 a = new Associate2();
                     a.setId(rs.getInt("id"));
@@ -1369,7 +1369,7 @@ public class AssociateDB
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            LogFile.databaseError("AssociateDB selectAssociateHash error " + email + " ", e.getMessage(), e.toString());
             return null;
         }
         finally

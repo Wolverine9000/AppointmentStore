@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import messages.LogFile;
 
 /**
  *
@@ -35,7 +36,7 @@ public class AdminUserDB
             }
         catch (SQLException e)
             {
-            e.printStackTrace();
+            LogFile.databaseError("AdminUserDB checkAdminCredenitals error " + username + " ", e.getMessage(), e.toString());
             return false;
             }
         finally
