@@ -39,7 +39,7 @@
     </aside>
         <section id="section1">
             <div id="identifier"><h1>Admin</h1></div>
-            <form id="associateLogin"action="<c:url value='checkAssociate'/>" method=post>
+            <form id="admin-password"action="<c:url value='checkAssociate'/>" method=post>
             <fieldset>
                     <table>
                         <thead>
@@ -84,13 +84,14 @@
                             <tr>
                                 <td></td>
                                 <td> <select id="">
-                                        <option value="sup-admin">Super Admin</option>
-                                        <option value="nor-admin">Normal Admin</option>
-                                        <option value="sys-email">System Email</option>
+                                        <option value="super-admin">Super Admin</option>
+                                        <option value="normal-admin">Normal Admin</option>
+                                        <option value="system-email">System Email</option>
                                         <option value="manager">Manager</option>
                                         <option value="programmer">Programmer</option>
                                         <option value="service">Service</option>
-                                    </select></td>
+                                    </select>
+                                </td>
                                 <td></td>
                             </tr>
                             <tr>
@@ -100,6 +101,8 @@
 
                         </tbody>
                     </table>
+                            <div id="postResults" class="smallText "></div>
+                            <div id="personal-btn"></div>
                 </fieldset>
             </form>
         </section>

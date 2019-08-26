@@ -41,19 +41,19 @@ public class AdminServlet extends HttpServlet
         String key1 = request.getParameter("key1");
         String key2 = request.getParameter("key2");
         String key3 = request.getParameter("key3");
-        String jsonAppointment = null;
+        String jsonData = null;
         // retrieve messages
         msgs = CalendarData.messages(key1, key2, key3, userId);
         
          Gson gson = new Gson();
          
-         jsonAppointment = gson.toJson(msgs);
+         jsonData = gson.toJson(msgs);
          
         response.setContentType("application/json");
         response.setHeader("Cache-Control", "no-cache");
         try
         {
-            response.getWriter().write(jsonAppointment);            
+            response.getWriter().write(jsonData);            
         }
         catch (IOException e)
         {

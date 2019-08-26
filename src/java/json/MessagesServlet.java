@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import static javax.servlet.http.HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
-import javax.servlet.http.HttpSession;
 import messages.LogFile;
 import store.business.Associate2;
 import store.business.SMSAppointmentMessage;
@@ -39,9 +38,7 @@ public class MessagesServlet extends HttpServlet
     public void doGet(HttpServletRequest request,
             HttpServletResponse response)
             throws ServletException, IOException
-    {
-        HttpSession session = request.getSession();
-        
+    {        
         Associate2 associate = null;
         ArrayList<SMSAppointmentMessage> msgs = null;
         
@@ -50,19 +47,19 @@ public class MessagesServlet extends HttpServlet
         String key1 = request.getParameter("key1");
         String key2 = request.getParameter("key2");
         String key3 = request.getParameter("key3");
-        String jsonAppointment = null;
+        String jsonMessage = null;
         // retrieve messages
         msgs = CalendarData.messages(key1, key2, key3, userId);
         
          Gson gson = new Gson();
          
-         jsonAppointment = gson.toJson(msgs);
+         jsonMessage = gson.toJson(msgs);
          
          response.setContentType("application/json");
         response.setHeader("Cache-Control", "no-cache");
         try
         {
-            response.getWriter().write(jsonAppointment);            
+            response.getWriter().write(jsonMessage);            
         }
         catch (IOException e)
         {
