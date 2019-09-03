@@ -49,7 +49,7 @@
         </div>
         <form id="admin-password">
             <fieldset id="admin-fieldset-1">
-                <legend>Admin</legend>
+                <legend></legend>
                 <div class="validateTips error smallText normalText"></div>
                 <div id="admin"></div>
                 <div id="postResults" class="smallText "></div>
