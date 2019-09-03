@@ -448,7 +448,7 @@
         <jsp-file>/associate/associate_info/associate_admin.jsp</jsp-file>
     </servlet>
     <servlet>
-        <servlet-name>AdminServlet</servlet-name>
+        <servlet-name>Administration Console</servlet-name>
         <servlet-class>json.AdminServlet</servlet-class>
     </servlet>
     <servlet-mapping>
@@ -854,8 +854,8 @@
         <url-pattern>/associate/associate_admin</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AdminServlet</servlet-name>
-        <url-pattern>/admin</url-pattern>
+        <servlet-name>Administration Console</servlet-name>
+        <url-pattern>/adminCon</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
