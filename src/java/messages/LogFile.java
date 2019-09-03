@@ -70,6 +70,7 @@ public class LogFile
         }
         catch (IOException ioe)
         {
+            Logger.getLogger(LogFile.class.getName()).log(Level.SEVERE, null, ioe);
             return false;
         }
         return true;
@@ -98,7 +99,7 @@ public class LogFile
         }
         catch (IOException ioe)
         {
-            ioe.printStackTrace();
+            Logger.getLogger(LogFile.class.getName()).log(Level.SEVERE, null, ioe);
             return false;
         }
         return true;
@@ -154,7 +155,7 @@ public class LogFile
         }
         catch (IOException ioe)
         {
-            ioe.printStackTrace();
+            generalLog("LogFile associateLog" + ioe.toString(), currentDate);
             return false;
         }
         return true;
@@ -184,7 +185,7 @@ public class LogFile
         }
         catch (IOException ioe)
         {
-            ioe.printStackTrace();
+            Logger.getLogger(LogFile.class.getName()).log(Level.SEVERE, null, ioe);
         }
     }
 
@@ -215,7 +216,8 @@ public class LogFile
         }
         catch (IOException ioe)
         {
-            ioe.printStackTrace();
+            Logger.getLogger(LogFile.class.getName()).log(Level.SEVERE, null, ioe);
+           generalLog("LogFile associateLog" + ioe.toString(), currentDate);
         }
     }
 
@@ -243,7 +245,8 @@ public class LogFile
         }
         catch (IOException ioe)
         {
-            ioe.printStackTrace();
+            Logger.getLogger(LogFile.class.getName()).log(Level.SEVERE, null, ioe);
+            generalLog("LogFile associateLog" + ioe.toString(), currentDate);
         }
     }
 //private static void notifyAdminitrator(String str)
