@@ -200,7 +200,6 @@ fieldset#send-message-field.ui-dialog-content.ui-widget-content { padding: 0 5px
 #msgName { margin-bottom: 2px;}
 
 #send-message-field textArea {
-    
     border: 1px solid #CCCCCC;
     border-radius: 5px;
 }

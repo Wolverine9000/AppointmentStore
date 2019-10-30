@@ -277,19 +277,10 @@
                 <div id="msgName">Message&#58;</div>
                 <textarea name="message-to-send" id="message-to-send" maxlength="145" placeholder="10 to 145 characters"
                           title="clients will recieve your message via text and email only if those options are enabled within their account"></textarea>
-            </div>
-            <div id="accordion-send">
                 <div>
-                    <h3><a href="#">First</a></h3>
-                    <textarea>Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.</textarea>
-                </div>
-                <div>
-                     <h3><a href="#">Second</a></h3>
-                <div>Phasellus mattis tincidunt nibh.</div>
-                </div>
-                <div>
-                <h3><a href="#">Third</a></h3>
-                <div>Nam dui erat, auctor a, dignissim quis.</div>
+                    SMS&#58;
+                    <label for="send-sms" title="send sms message" class="send-now-label"></label>
+                    <input type="checkbox" name="send-sms" id="send-sms">
                 </div>
             </div>
         </fieldset>
