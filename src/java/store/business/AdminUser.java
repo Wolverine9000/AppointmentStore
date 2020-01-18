@@ -13,6 +13,8 @@ public class AdminUser
     private String userName;
     private String password;
     private String roleName;
+    private String sysEmailAddress;
+    private String sysEmailPassword;
 
 
     public AdminUser()
@@ -51,4 +53,24 @@ public class AdminUser
       {
         return roleName;
       }
+
+    public String getSysEmailAddress()
+    {
+        return sysEmailAddress;
+    }
+
+    public void setSysEmailAddress(String sysEmailAddress)
+    {
+        this.sysEmailAddress = sysEmailAddress;
+    }
+
+    public String getSysEmailPassword()
+    {
+        return sysEmailPassword;
+    }
+
+    public void setSysEmailPassword(String sysEmailPassword)
+    {
+        this.sysEmailPassword = sysEmailPassword;
+    }
 }

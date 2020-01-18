@@ -26,7 +26,7 @@ public class MailUtil
     private static final String REGISTRATIONURL = "http://174.80.101.20/AppointmentStore/registrationConfirm";
     private static final String WILLIAMDOBBS = "support@ontimeappointmentsystem.com";
     private static final String WHDTECHNOLOGIESEMAIL = "donotreply@whdtechnologies.com";
-    
+    // TODO
     private static void getEmailPwd() {
 
     }
@@ -91,12 +91,12 @@ public class MailUtil
             message.setRecipients(RecipientType.BCC, addressArray);
             // 4 - send the message
             Transport transport = session.getTransport();
-            transport.connect("whdobbs", "wzpyidenzuyzdgzs");
+            transport.connect("whdobbs", "zpyidenzuyzdgzs");
             transport.sendMessage(message, message.getAllRecipients());
         }
         catch (MessagingException ex)
         {
-            LogFile.emailLog("confirmationEmail ", to, ex.getMessage());
+            LogFile.emailLog("MailUtil sendMail ", to, ex.getMessage());
         }
         catch (IOException ex)
         {
