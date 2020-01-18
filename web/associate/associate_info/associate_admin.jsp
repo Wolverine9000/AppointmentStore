@@ -87,9 +87,9 @@
                     <tr>
                         <td></td>
                         <td> <select id="admin-type">
-                                <option value="super-admin">Super Admin</option>
+                                <option value="super-admin">System Email</option>
                                 <option value="normal-admin">Normal Admin</option>
-                                <option value="system-email">System Email</option>
+                                <option value="system-email">Super Admin</option>
                                 <option value="manager">Manager</option>
                                 <option value="programmer">Programmer</option>
                                 <option value="service">Service</option>
