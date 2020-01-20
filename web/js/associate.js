@@ -1,4 +1,4 @@
-/* 
+/*
  Author     : williamdobbs
  */
 // global variables
@@ -18,8 +18,10 @@ var dateFmts = ["MM-DD-YYYY", "YYYY-MM-DD", "MM/DD/YYYY", "YYYY/MM/DD"],
         + "<li>" + "Include at least one uppercase letter." + "</li>"
         + "<li>" + "Include at least one numeric digit." + "</li>",
         pwdMatchError = "<font color='#c00'>" + "Passwords " + "</font>" + "must match. Please re-enter your password.",
+        pwdNullError = "<font color='#c00'>" + "Password fields " + "</font>" + "cannot be empty. Please re-enter your password.",
         currencyErrorMsg = "<font color='#c00'>" + "Price " + "</font>" + "must be one these formats:&nbsp;19, 19.00, 19.03",
         tips = "",
+        emailEntryError = "A valid Email Address is required <br> eg. jdoe&#64;doe.com",
         emailRegEx = /^[\w.%+\-]+@[\w.\-]+\.[A-Za-z]{2,6}$/i,
         nameRegEx = /^[a-z]([0-9a-z _])+$/i,
         zipCodeRegEx = /^\d{5}(-\d{4})?$/,
@@ -27,9 +29,9 @@ var dateFmts = ["MM-DD-YYYY", "YYYY-MM-DD", "MM/DD/YYYY", "YYYY/MM/DD"],
         // /\D*([2-9]\d{2})(\D*)([2-9]\d{2})(\D*)(\d{4})\D*/,
         // //^\d{10}?|(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}/,
         currencyRegEx = /^(\d*\.\d{2}|\d+)$/,
-        /* Password Must include at least one symbol, 
-         * at least one uppercase letter, 
-         * Between 8 and 15 characters long, 
+        /* Password Must include at least one symbol,
+         * at least one uppercase letter,
+         * Between 8 and 15 characters long,
          * May contain any character except space,
          Must include at least one lowercase letter, Must include at least one numeric digit */
         passwordRegEx = /^(?=.*\d)(?=.*[~!@#$%^&*()_\-+=|\\{}[\]:;<>?/])(?=.*[A-Z])(?=.*[a-z])\S{8,15}$/;
@@ -84,8 +86,7 @@ function spinner(element, top, timeout) {
 //    }, timeout);
 } // end spinner function
 
-var doAjaxMsgRequest = function (key, url, async, title, altKey, response)
-{
+var doAjaxMsgRequest = function (key, url, async, title, altKey, response) {
 
     $.ajax({
         url: url,
@@ -109,15 +110,13 @@ var doAjaxMsgRequest = function (key, url, async, title, altKey, response)
         success: function (data) {
             response(data);
         },
-        complete: function (xhr, status)
-        {
+        complete: function (xhr, status) {
             $("#loading").dialog("close"); // close loading element
         }
     });
 
 };
-var doAjaxMsgRequest2 = function (key1, key2, key3, userId, url, async,  response)
-{
+var doAjaxMsgRequest2 = function (key1, key2, key3, userId, url, async, response) {
 
     $.ajax({
         url: url,
@@ -131,7 +130,7 @@ var doAjaxMsgRequest2 = function (key1, key2, key3, userId, url, async,  respons
         type: 'GET',
         dataType: "json",
         async: async,
-        data: {key1: key1,  key2: key2,  key3: key3, userId:userId, url: url},
+        data: {key1: key1, key2: key2, key3: key3, userId: userId, url: url},
         error: function (xhr, status, error) {
             $("#loading h4").html("ERROR!");
             $("#loading").dialog("close"); // close loading element
@@ -141,15 +140,13 @@ var doAjaxMsgRequest2 = function (key1, key2, key3, userId, url, async,  respons
         success: function (data) {
             response(data);
         },
-        complete: function (xhr, status)
-        {
+        complete: function (xhr, status) {
             $("#loading").dialog("close"); // close loading element
         }
     });
 
 };
-function doAjaxRequest(key, url, async, title, response)
-{
+function doAjaxRequest(key, url, async, title, response) {
     $.ajax({
         url: url,
         beforeSend: function () {
@@ -174,15 +171,13 @@ function doAjaxRequest(key, url, async, title, response)
             //$("#loading h4").html("Done!");
             //$("#loading").dialog("close"); // close loading element
         },
-        complete: function (xhr, status)
-        {
+        complete: function (xhr, status) {
             $("#loading").dialog("close"); // close loading element
         }
     });
 } // end doAjaxRequest function
 
-function doAjaxRequestNoElements(key, url, async, title, response)
-{
+function doAjaxRequestNoElements(key, url, async, title, response) {
     $.ajax({
         url: url,
         type: 'GET',
@@ -197,8 +192,7 @@ function doAjaxRequestNoElements(key, url, async, title, response)
         }
     });
 }
-function doAjaxEventsRequest(key, url, userID, numOfEvts, async, title, response)
-{
+function doAjaxEventsRequest(key, url, userID, numOfEvts, async, title, response) {
     $.ajax({
         url: url,
         beforeSend: function () {
@@ -228,8 +222,7 @@ function doAjaxEventsRequest(key, url, userID, numOfEvts, async, title, response
     });
 } // end doAjaxEventsRequest function
 
-function doAjaxPost(data, url, id, async)
-{
+function doAjaxPost(data, url, id, async) {
     var ajaxPostSuccess;
     var associatePwd = $("#security #password-div #postResults");
     var associateInfoElm = $("#profile #profile-fieldset-1 #postResults");
@@ -257,7 +250,8 @@ function doAjaxPost(data, url, id, async)
             $("#loading h4").html("ERROR!");
             $("#loading").dialog("close"); // close loading element
 
-            switch (id) {
+            switch (id)
+            {
                 case "updateAssoPwd":
                     associatePwd.removeClass("good").addClass("error");
                     associatePwd.html("An error occurred updating your Password.");
@@ -309,7 +303,8 @@ function doAjaxPost(data, url, id, async)
             {
                 $("#postDataError").html("Error Adding Client: " + xhr.status + " - " + error);
             }
-            else {
+            else
+            {
                 $("#postDataError").html("Error Posting Data: " + xhr.status + " - " + error);
             }
             ajaxPostSuccess = false;
@@ -319,7 +314,8 @@ function doAjaxPost(data, url, id, async)
             $('#loading').data('spinner').stop(); // Stop the spinner
             $("#loading h4").html("Done!");
             $("#loading").dialog("close"); // close loading element
-            switch (id) {
+            switch (id)
+            {
                 case "updateAssoPwd":
                     associatePwd.removeClass("error").addClass("good");
                     associatePwd.html("Your Password was successfully updated.");
@@ -392,7 +388,8 @@ var options = {
             {
                 options[i] = "<option selected=" + o.memberLevels[i].memberLevel + ">" + o.memberLevels[i].memberLevel + "</option>";
             }
-            else {
+            else
+            {
                 options[i] = "<option>" + o.memberLevels[i].memberLevel + "</option>";
             }
         }
@@ -404,7 +401,8 @@ var options = {
         {
             selState = o.state;
         }
-        else {
+        else
+        {
             selState = o.client.state;
         }
         var s = [];
@@ -415,7 +413,8 @@ var options = {
             {
                 s[state] = "<option value='" + s[state] + "' selected>" + s[state] + "</option>";
             }
-            else {
+            else
+            {
                 s[state] = "<option value='" + s[state] + "'>" + s[state] + "</option>";
             }
         }
@@ -432,7 +431,8 @@ var options = {
                 options[y] = "<option selected=" + o.client.memberLevel + ">" + o.client.memberLevel + "</option>";
                 bkgColor = o.memberLevels[y].memberColor;
             }
-            else {
+            else
+            {
                 options[y] = "<option value='" + bkgColors[y].memberLevel + "'>" + bkgColors[y].memberLevel + "</option>";
             }
         }
@@ -442,8 +442,7 @@ var options = {
 }; // end options fucntion objects
 
 var serviceList = {
-    getServiceList: function ()
-    {
+    getServiceList: function () {
         var s = [];
         doAjaxRequest("svc", "../FullCalendar", false, "services", function (servicesArr) {
             $.each(servicesArr, function (svc_index, service) {
@@ -452,8 +451,7 @@ var serviceList = {
         });
         return s;
     },
-    getServiceCategories: function ()
-    {
+    getServiceCategories: function () {
         var c = [];
         doAjaxRequest("cat", "../FullCalendar", false, "category", function (categoriesArr) {
             $.each(categoriesArr, function (cat_index, category) {
@@ -462,8 +460,7 @@ var serviceList = {
         });
         return c;
     },
-    getServiceStatusList: function ()
-    {
+    getServiceStatusList: function () {
         var c = [];
         doAjaxRequestNoElements("svcStatus", "../FullCalendar", false, "serviceStatusList", function (statusArr) {
             $.each(statusArr, function (status_index, statusObj) {
@@ -472,16 +469,14 @@ var serviceList = {
         });
         return c;
     },
-    getCalendarEvents: function (userID, numOfEvts)
-    {
+    getCalendarEvents: function (userID, numOfEvts) {
         var evts = [];
         doAjaxEventsRequest("calEvts", "../FullCalendar", userID, numOfEvts, false, "client", function (calEventsArr) {
             evts = calEventsArr;
         });
         return evts;
     },
-    getFutureEvents: function (id, futureEvts)
-    {
+    getFutureEvents: function (id, futureEvts) {
         var evts = [];
         doAjaxEventsRequest("futureCalEvts", "../FullCalendar", id, futureEvts, false, "client", function (calEventsArr) {
             evts = calEventsArr;
@@ -493,8 +488,7 @@ var serviceList = {
 // message retrieval functions
 var messagesList = {
     // get current associate messages
-    getMessagesList: function (associateInfo, async)
-    {
+    getMessagesList: function (associateInfo, async) {
         var m = [];
         // retrieve sms message objects
         doAjaxRequest("retrieveMessages", "../FullCalendar", async, associateInfo.id, function (messagesArr) {
@@ -505,8 +499,7 @@ var messagesList = {
         });
         return m;
     },
-    getNextMsgs: function (key1, key2, key3, associateInfo, url, async)
-    {
+    getNextMsgs: function (key1, key2, key3, associateInfo, url, async) {
         var m = [];
         // retrieve sms message objects
         doAjaxMsgRequest2(key1, key2, key3, associateInfo.id, url, async, function (messagesArr) {
@@ -517,8 +510,7 @@ var messagesList = {
         });
         return m;
     },
-    getInviteRequests: function (associateInfo, dayNum)
-    {
+    getInviteRequests: function (associateInfo, dayNum) {
         var m = [];
         var messageObj;
         doAjaxMsgRequest("retrieveMsgInvites", "../FullCalendar", false, associateInfo.id, dayNum, function (messagesArr) {
@@ -529,8 +521,7 @@ var messagesList = {
         });
         return m;
     },
-    selectMsgInviteRequest: function (associateInfo, smsObj)
-    {
+    selectMsgInviteRequest: function (associateInfo, smsObj) {
         var messageObj;
         doAjaxMsgRequest("selectMsgInviteRequest", "../FullCalendar", false, associateInfo.id, smsObj, function (msg) {
             messageObj = new SMSMessage(msg);
@@ -539,8 +530,7 @@ var messagesList = {
     }
 }; // end message retrieval functions
 
-function isClientOfAssociate(obj)
-{
+function isClientOfAssociate(obj) {
     var m = [];
     var messageObj;
     var jsonObj = convert.stringify(obj);
@@ -609,7 +599,8 @@ var services = {
                         }
                     }
                 }
-                else {
+                else
+                {
                     if (serviceCategories[c].category_id === serviceListing[s].category_id)
                     {
                         optionGrp[c] += "<option value='" + JSON.stringify(serviceListing[s]) + "'>" + serviceListing[s].description
@@ -622,8 +613,7 @@ var services = {
         }
         return optionGrp;
     },
-    getServiceName: function (o)
-    {
+    getServiceName: function (o) {
         var svcList = serviceList.getServiceList();
         var y = "not yet selected";
         if (o instanceof Object)
@@ -635,7 +625,8 @@ var services = {
                     y = svcList[i].description;
                 }
         }
-        else if (typeof o === "number") {
+        else if (typeof o === "number")
+        {
             for (var i = 0; i < svcList.length; i++)
                 if (o === svcList[i].serviceId)
                 {
@@ -691,20 +682,21 @@ var associateClass = {
                     assocList[i] = "<option value='" + JSON.stringify(a[i]) + "' selected>" + a[i].firstName + " " + a[i].lastName
                             + "</option>";
                 }
-                else {
+                else
+                {
                     assocList[i] = "<option value='" + JSON.stringify(a[i]) + "'>" + a[i].firstName + " " + a[i].lastName
                             + "</option>";
                 }
             }
-            else {
+            else
+            {
                 assocList[i] = "<option value='" + JSON.stringify(a[i]) + "'>" + a[i].firstName + " " + a[i].lastName
                         + "</option>";
             }
         }
         return assocList;
     },
-    delClientList: function (array)
-    {
+    delClientList: function (array) {
         var table = "<thead><tr><th>first</th><th>last</th><th>email</th></tr></thead>";
         table = table + "</tbody>";
         for (var i in array)
@@ -762,7 +754,8 @@ var associateClass = {
             {
                 viewOptions += "<option value='" + i + "' selected >" + viewsArray[i] + "</option> ";
             }
-            else {
+            else
+            {
                 viewOptions += "<option value='" + i + "'>" + viewsArray[i] + "</option>";
             }
         }
@@ -794,7 +787,8 @@ var associateClass = {
             {
                 timesOptions += "<option value='" + timesArray[i] + "' selected >" + timesArray[i] + "</option>";
             }
-            else {
+            else
+            {
                 timesOptions += "<option value='" + timesArray[i] + "'>" + timesArray[i] + "</option>";
             }
         }
@@ -840,30 +834,37 @@ var associateClass = {
         asssoInputTable += "</tbody>" + "</table>";
         return asssoInputTable;
     },
-    alertPrefs: function (o, e)
-    {
-        if (o.emailAdAlerts === true) {
+    alertPrefs: function (o, e) {
+        if (o.emailAdAlerts === true)
+        {
             $(e + " #email-ad-alerts").prop('checked', true);
         }
-        else {
+        else
+        {
             $(e + " #email-ad-alerts").prop('checked', false);
         }
-        if (o.smsAdAlerts === true) {
+        if (o.smsAdAlerts === true)
+        {
             $(e + " #sms-ad-alerts").prop('checked', true);
         }
-        else {
+        else
+        {
             $(e + " #sms-ad-alerts").prop('checked', false);
         }
-        if (o.emailApptAlerts === true) {
+        if (o.emailApptAlerts === true)
+        {
             $(e + " #email-appt-alerts").prop('checked', true);
         }
-        else {
+        else
+        {
             $(e + " #email-appt-alerts").prop('checked', false);
         }
-        if (o.smsApptAlerts === true) {
+        if (o.smsApptAlerts === true)
+        {
             $(e + " #sms-appt-alerts").prop('checked', true);
         }
-        else {
+        else
+        {
             $(e + " #sms-appt-alerts").prop('checked', false);
         }
     },
@@ -947,8 +948,7 @@ var EventObj = function (event) {
 }; // end EventObj function
 
 // remove client name from title
-EventObj.prototype.title = function ()
-{
+EventObj.prototype.title = function () {
     if (typeof this.title !== "undefined")
     {
         var i = this.title.indexOf(":", 0);
@@ -959,8 +959,7 @@ EventObj.prototype.title = function ()
     }
     return this.title;
 };
-EventObj.prototype.notes = function ()
-{
+EventObj.prototype.notes = function () {
     return this.notes.replace(/\'/g, "\"");
 };
 
@@ -1076,8 +1075,7 @@ Message.prototype.name = function () {
     return this.clientId + " " + this.status;
 };
 
-var stripQuotes = function (msg)
-{
+var stripQuotes = function (msg) {
     if (msg === undefined)
     {
         msg = "no message to display";
@@ -1245,10 +1243,11 @@ $(document).ready(function () {
     });
     $("#submitRequest").submit("click", function (event) {
         var response = confirm("Submit your request?");
-        if (!response) {
+        if (!response)
+        {
             $("#updateSrvMessage").html("Associate Services Update Request Cancelled.");
             fadeInMessage("#updateSrvMessage");
-            // prevent the submission of the form if any entries are invalid 
+            // prevent the submission of the form if any entries are invalid
             event.preventDefault();
         }
     }); // end submit
@@ -1262,8 +1261,7 @@ function fadeInMessage(element) {
 
 
 var convert = {
-    stringifyEvtObj: function (event)
-    {
+    stringifyEvtObj: function (event) {
         if (event instanceof EventObj)
         {
             var eventNew = [];
@@ -1278,8 +1276,7 @@ var convert = {
             return event;
         }
     },
-    stringifyObj: function (o)
-    {
+    stringifyObj: function (o) {
         if (o instanceof Object)
         {
             if (o instanceof Array)
@@ -1288,7 +1285,8 @@ var convert = {
                 a = a.replace(/\"/g, '\''); // replace double quotes with single quote
                 return a;
             }
-            else {
+            else
+            {
                 var eventNew = [];
                 //var eventObj = new EventObj(o);
                 eventNew.push(o);
@@ -1299,8 +1297,7 @@ var convert = {
         }
         return o;
     },
-    stringify: function (e)
-    {
+    stringify: function (e) {
         if (e instanceof Object)
         {
             var s = JSON.stringify(e);
@@ -1313,8 +1310,7 @@ var convert = {
         var o = $.parseJSON(c);
         return o;
     },
-    capitalize: function (text)
-    {
+    capitalize: function (text) {
         return text.toUpperCase();
     }
 }; // end convert class functions
@@ -1481,13 +1477,15 @@ var jsTime = {
     formatTime: function (d) {
         var f;
         var momentObj;
-        if (d === null) {
+        if (d === null)
+        {
             momentObj = moment();
             momentObj.hours(0);
             momentObj.minutes(0);
             momentObj.seconds(0);
         }
-        else {
+        else
+        {
             momentObj = moment(d);
         }
         f = momentObj.format("h:mm a");
@@ -1525,25 +1523,28 @@ var validateForm = {
             tips.removeClass("ui-state-highlight", 1500);
         }, 500);
     },
-    checkRegexp: function (o, regexp, n, tips)
-    {
-        if (!(regexp.test(o.val()))) {
+    checkRegexp: function (o, regexp, n, tips) {
+        if (!(regexp.test(o.val())))
+        {
             o.addClass("ui-state-error");
             validateForm.updateTips(n, tips);
             return false;
         }
-        else {
+        else
+        {
             return true;
         }
     },
     checkLength: function (o, n, min, max, tips) {
-        if (o.val().length > max || o.val().length < min) {
+        if (o.val().length > max || o.val().length < min)
+        {
             o.addClass("ui-state-error");
             validateForm.updateTips("Length of " + "<font color='#c00'>" + n + "</font>"
                     + " must be between " + min + " and " + max + " characters.", tips);
             return false;
         }
-        else {
+        else
+        {
             return true;
         }
     },
@@ -1563,7 +1564,8 @@ var validateForm = {
                         + " is assigned to " + "<b>" + clients[i].client.firstName + " " + clients[i].client.lastName + "</b>");
                 return false;
             }
-            else {
+            else
+            {
                 return true;
             }
         }
@@ -1575,7 +1577,20 @@ var validateForm = {
             b.addClass("ui-state-error");
             return false;
         }
-        else if (a.val() === b.val()) {
+        else if (a.val() === b.val())
+        {
+            return true;
+        }
+    },
+    notNull: function (a, msg, tips) {
+        if (a.val() === "")
+        {
+            validateForm.updateTips(msg, tips);
+            a.addClass("ui-state-error");
+            return false;
+        }
+        else
+        {
             return true;
         }
     },
@@ -1584,14 +1599,14 @@ var validateForm = {
         {
             return true;
         }
-        else {
+        else
+        {
             return false;
         }
     }
 }; // end validateForm functions
 // post Full Calendar events to server
-function postToServer(event)
-{
+function postToServer(event) {
     var eventNew = [];
     var eventObj = new EventObj(event);
     eventNew.push(eventObj);
@@ -1694,8 +1709,7 @@ function confirmMessage(element1, element2, message1, message2, message3) {
 } // end confirmMessage function
 
 // element to display spinner
-function openLoading()
-{
+function openLoading() {
     $("#loading").dialog({
         autoOpen: false,
         width: 'auto',
@@ -1744,7 +1758,8 @@ var timeConverter = {
             {
                 opts[i] = "<option value='" + i + "' selected>" + i + "</option>";
             }
-            else {
+            else
+            {
                 opts[i] = "<option value='" + i + "'>" + i + "</option>";
             }
         }
@@ -1761,7 +1776,8 @@ var timeConverter = {
             {
                 opts[i] = "<option value='" + i + "' selected>" + i + "</option>";
             }
-            else {
+            else
+            {
                 opts[i] = "<option value='" + i + "'>" + i + "</option>";
             }
         }
@@ -1770,8 +1786,7 @@ var timeConverter = {
 };
 
 
-var stripName = function (t)
-{
+var stripName = function (t) {
     if (typeof t !== "undefined")
     {
         var i = t.indexOf(":", 0);
@@ -1847,7 +1862,8 @@ var eventsRendering = {
             {
                 return e[0] = "<td style='text-align:center'>" + "no past appointments on record" + "</td>";
             }
-            else {
+            else
+            {
                 var tableHeader = "<tr>" + "<th>" + "date" + "</th>" + "<th>" + "time" + "</th>" + "<th>" + "associate" + "</th>" + "<th>" + "service" + "</th>" + "</tr>";
                 e.unshift(tableHeader);
             }
@@ -1864,7 +1880,8 @@ var eventsRendering = {
             {
                 return e[0] = "<td style='text-align:center'>" + "no future appointments scheduled" + "</td>";
             }
-            else {
+            else
+            {
                 var tableHeader = "<tr>" + "<th>" + "date" + "</th>" + "<th>" + "time" + "</th>" + "<th>" + "associate" + "</th>"
                         + "<th>" + "service" + "</th>" + "<th>" + "status" + "</th>" + "</tr>";
                 e.unshift(tableHeader);

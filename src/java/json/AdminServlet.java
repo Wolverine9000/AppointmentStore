@@ -35,6 +35,7 @@ public class AdminServlet extends HttpServlet
         String key1 = request.getParameter("key1");
         String key2 = request.getParameter("key2");
         String key3 = request.getParameter("key3");
+        String key4 = request.getParameter("key4");
         
         Associate2 associate;
         associate = (Associate2) session.getAttribute("associateRecord");
@@ -48,7 +49,7 @@ public class AdminServlet extends HttpServlet
             {
                if ("system-email".equals(key3))
                {
-                evtPostError = AdminData.processAdmin(key1, key2, key3, userId, request);
+                evtPostError = AdminData.processAdmin(key1, key2, key3, key4, userId, request);
                }
             }
         

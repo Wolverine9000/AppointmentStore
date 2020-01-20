@@ -1,4 +1,4 @@
-<%-- 
+<%--
     Document   : associate_admin
     Created on : Aug 17, 2019, 6:10:13 PM
     Author     : whdobbs
@@ -69,27 +69,32 @@
                 <tbody>
                     <tr>
                         <td><label for="emailAddress">Email Address:</label></td>
-                        <td><input type="email" name="emailAddress" id="admin-emailAddress" autofocus required
+                        <td><input type="email" name="emailAddress" id="admin-emailAddress" maxlength="45" autofocus required
                                    placeholder="email address"></td>
                     </tr>
                     <tr>
+                        <td><label for="admin-username">Username</label></td>
+                        <td><input type="text" name="userName" id="admin-username" maxlength="45" required
+                                   placeholder="username"></td>
+                    </tr>
+                    <tr>
                         <td><label for="password-admin-1">Enter Password:</label></td>
-                        <td><input type="password" name="password-admin-1" id="password-admin-1" required
+                        <td><input type="password" name="password-admin-1" id="password-admin-1" maxlength="45" required
                                    placeholder="password">
                         </td>
                     </tr>
                     <tr>
                         <td><label for="password-admin-2">Re-Enter Password:</label></td>
-                        <td><input type="password" name="password-admin-2" id="password-admin-2" required
+                        <td><input type="password" name="password-admin-2" id="password-admin-2" maxlength="45" required
                                    placeholder="password">
                         </td>
                     </tr>
                     <tr>
                         <td></td>
                         <td> <select id="admin-type">
-                                <option value="super-admin">System Email</option>
+                                <option value="system-email">System Email</option>
                                 <option value="normal-admin">Normal Admin</option>
-                                <option value="system-email">Super Admin</option>
+                                <option value="super-admin">Super Admin</option>
                                 <option value="manager">Manager</option>
                                 <option value="programmer">Programmer</option>
                                 <option value="service">Service</option>

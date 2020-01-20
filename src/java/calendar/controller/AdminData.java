@@ -7,7 +7,6 @@ package calendar.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import store.data.AdminUserDB;
-import store.util.PasswordUtil;
 
 /**
  *
@@ -15,15 +14,13 @@ import store.util.PasswordUtil;
  */
 public class AdminData
 {
-    public static boolean processAdmin(String eamilAddress, String password, String adminType, String userId, HttpServletRequest request)
+    public static boolean processAdmin(String eamilAddress, String password, String adminType, String username, String userId, HttpServletRequest request)
     {
     boolean errorFlag;
+    
     int id = Integer.parseInt(userId);
     
-    String hashedPassword = PasswordUtil.hashPassword(password);
-    String salt = PasswordUtil.getSalt();
-    
-    errorFlag = AdminUserDB.updateEmailCredentials(eamilAddress, hashedPassword, salt, id);
+    errorFlag = AdminUserDB.updateEmailCredentials(eamilAddress, password, username, id);
         
         return errorFlag;
     }

@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import messages.LogFile;
+import store.business.AdminUser;
 
 /**
  *
@@ -54,8 +55,8 @@ public class AdminUserDB
         Connection connection = pool.getConnection();
         PreparedStatement ps = null;
 
-        String query = "INSERT INTO sys_email "
-                + "(sys_email_addr, sys_email_password, sys_email_salt) "
+        String query = "INSERT INTO system_users "
+                + "(system_user_email_address, system_user_email_password, system_user_email_passwordl_salt) "
                 + "VALUES (?, ?, ?)";
 
         try
@@ -65,7 +66,7 @@ public class AdminUserDB
             ps.setString(1, emailAddress);
             ps.setString(2, password);
             ps.setString(3, salt);
-            
+
             ps.executeUpdate();
 
             return false;
@@ -82,36 +83,77 @@ public class AdminUserDB
         }
 
     }
-    public static boolean updateEmailCredentials(String emailAddress, String password, String salt, int userId)
+
+    public static boolean updateEmailCredentials(String emailAddress, String password, String username, int userId)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         PreparedStatement ps = null;
-        
-         String query = "UPDATE sys_email SET "
-                + "sys_email_addr = ?, "
-                + "sys_email_password = ?, "
-                + "sys_email_salt = ? "
-                + "WHERE sys_email_userid = ?";
-         
-           try
+
+        String query = "UPDATE system_users SET "
+                + "system_user_email_address = ?, "
+                + "system_user_email_password = ?, "
+                + "system_username = ? "
+                + "WHERE system_userid = ?";
+
+        try
         {
             ps = connection.prepareStatement(query);
             ps.setString(1, emailAddress);
             ps.setString(2, password);
-            ps.setString(3, salt);
+            ps.setString(3, username);
             ps.setInt(4, userId);
-            
+
             ps.executeUpdate();
-            return false; 
-    }
-           catch (SQLException e)
+            return false;
+        }
+        catch (SQLException e)
         {
             LogFile.databaseError("AdminUserDB updateEmailCredentials", e.getMessage(), e.toString());
             return true;
         }
         finally
         {
+            DBUtil.closePreparedStatement(ps);
+            pool.freeConnection(connection);
+        }
+    }
+
+    public static AdminUser selectSysAdmin(int sysId)
+    {
+        ConnectionPool pool = ConnectionPool.getInstance();
+        Connection connection = pool.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        String query = "SELECT * FROM system_users "
+                + "WHERE system_userid = ?";
+
+        try
+        {
+            ps = connection.prepareStatement(query);
+            ps.setInt(1, sysId);
+            rs = ps.executeQuery();
+            if (rs.next());
+            {
+                AdminUser a = new AdminUser();
+                a.setSysId(sysId);
+                a.setSysEmailAddress(rs.getString("system_user_email_address"));
+                a.setUserName(rs.getString("system_username"));
+                a.setPassword(rs.getString("system_user_email_password"));
+
+                return a;
+            }
+        }
+
+        catch (SQLException e)
+        {
+            LogFile.databaseError("AdminUserDB selectSysAdmin", e.getMessage(), e.toString());
+            return null;
+        }
+        finally
+        {
+            DBUtil.closeResultSet(rs);
             DBUtil.closePreparedStatement(ps);
             pool.freeConnection(connection);
         }

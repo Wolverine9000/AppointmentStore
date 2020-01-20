@@ -15,6 +15,7 @@ public class AdminUser
     private String roleName;
     private String sysEmailAddress;
     private String sysEmailPassword;
+    private int sysId;
 
 
     public AdminUser()
@@ -73,4 +74,15 @@ public class AdminUser
     {
         this.sysEmailPassword = sysEmailPassword;
     }
+
+    public int getSysId()
+    {
+        return sysId;
+    }
+
+    public void setSysId(int sysId)
+    {
+        this.sysId = sysId;
+    }
+    
 }

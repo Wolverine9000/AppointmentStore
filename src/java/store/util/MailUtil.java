@@ -15,9 +15,11 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import messages.LogFile;
+import store.business.AdminUser;
 import store.business.Associate2;
 import store.business.FullCalendar2;
 import store.business.Services;
+import store.data.AdminUserDB;
 
 public class MailUtil
 {
@@ -26,13 +28,12 @@ public class MailUtil
     private static final String REGISTRATIONURL = "http://174.80.101.20/AppointmentStore/registrationConfirm";
     private static final String WILLIAMDOBBS = "support@ontimeappointmentsystem.com";
     private static final String WHDTECHNOLOGIESEMAIL = "donotreply@whdtechnologies.com";
-    // TODO
-    private static void getEmailPwd() {
-
-    }
 
     public static void sendMail(String to, String from, String subject, String body, String bcc, boolean bodyIsHTML)
     {
+        AdminUser sa = AdminUserDB.selectSysAdmin(2);
+        String emailUsername = sa.getUserName();
+        String emailPassword = sa.getPassword();
         try
         {
             // 1 - get a mail session
@@ -42,11 +43,11 @@ public class MailUtil
             props.put("mail.smtps.port", 465);
             props.put("mail.smtps.auth", "true");
             props.put("mail.smtps.quitwait", "false");
-            
+
             Session session = Session.getDefaultInstance(props);
             session.setDebug(true);
 
-            // 2 - create a message  
+            // 2 - create a message
             MimeMessage message;
             message = new MimeMessage(session);
 //            SMTPMessage message = new SMTPMessage(session);
@@ -91,7 +92,7 @@ public class MailUtil
             message.setRecipients(RecipientType.BCC, addressArray);
             // 4 - send the message
             Transport transport = session.getTransport();
-            transport.connect("whdobbs", "zpyidenzuyzdgzs");
+            transport.connect(emailUsername, emailPassword);
             transport.sendMessage(message, message.getAllRecipients());
         }
         catch (MessagingException ex)
