@@ -3,7 +3,7 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 */
-/* 
+/*
     Created on : Oct 19, 2015, 10:31:06 AM
     Author     : whdobbs
 */
@@ -19,15 +19,19 @@ and open the template in the editor.
 }
 /*thead { border-top: 1px solid #ccc; }*/
 
-div#services-tabs { border: none; } 
+div#services-tabs { border: none; }
 
 div#services {padding: 1em 0; }
 
-table#services-list-table, #service-info-table { font-size: 100%; width: 100%; }
+table#services-list-table, #service-info-table {
+    font-size: 100%;
+    width: 100%;
+    color: #555555;
+}
 
 #services-list-table tbody tr:hover { background-color: #FFEBCC; }
 
-#services-list-table tbody tr td { 
+#services-list-table tbody tr td {
     cursor:pointer;
 }
 #services-list-table tbody tr:nth-child(odd) {
@@ -46,19 +50,19 @@ table#services-list-table, #service-info-table { font-size: 100%; width: 100%; }
 #services-list-table tbody td:nth-child(5), td:nth-child(6), th:nth-child(5), th:nth-child(6) {
     text-align: right;
 }
-#services-list-table tbody td:last-child, th:last-child { 
-    text-align: center; 
+#services-list-table tbody td:last-child, th:last-child {
+    text-align: center;
 }
 
 #services-list-table tbody td:first-child {
-width: 40px;
-text-align: center;
+    width: 40px;
+    text-align: center;
 }
 #services-list-table th:first-child { text-align: center; }
 
 #editServiceTable input {
-padding: 1px 2px 1px 5px;
-width: 95%;
+    padding: 1px 2px 1px 5px;
+    width: 95%;
 }
 
 #services-list-table th:hover { cursor: pointer; color: #F7941D}

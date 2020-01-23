@@ -242,7 +242,8 @@ public class CalendarData
         if ("getList".equals(key))
         {
             c = CustomerDB.selectClientsAll(title);
-        } else
+        }
+        else
         {
             c = CustomerDB.selectClientsAll();
         }
@@ -262,7 +263,7 @@ public class CalendarData
         }
         return fullCalendar2;
     }
-    
+
 // Get sms messages
 //    public static ArrayList<SMSAppointmentMessage> messages(String key, String idnumber)
 //    {
@@ -272,20 +273,19 @@ public class CalendarData
 //
 //        return messages;
 //    }
-    
     // Get sms   messages
-     public static ArrayList<SMSAppointmentMessage> messages(String key1, String key2, String key3, String userId)
+    public static ArrayList<SMSAppointmentMessage> messages(String key1, String key2, String key3, String userId)
     {
         ArrayList<SMSAppointmentMessage> messages;
         int id = Integer.parseInt(userId);
         int start = Integer.parseInt(key1);
         int limit = Integer.parseInt(key2);
-    
+
         messages = MessagesDB.sentMessages2(id, start, limit);
 
         return messages;
     }
-    
+
 // Get sms invite messages
     public static ArrayList<SMSMemberInviteMessage> inviteMessages(String key, String idnumber, String altKey)
     {
@@ -296,7 +296,7 @@ public class CalendarData
 
         return messages;
     }
-    
+
 // Get sms selected invite messages
     public static SMSMemberInviteMessage selectInviteMessage(String id, String json)
     {
@@ -334,7 +334,8 @@ public class CalendarData
             {
                 m.setClient(c);
                 m.setIsClientOfAssociate(true);
-            } else
+            }
+            else
             {
                 Client nc = new Client();
                 nc.setMobilePhone(n);
@@ -425,7 +426,8 @@ public class CalendarData
                 int questionId = Integer.parseInt(objectInArray.getString("q"));
                 String answer = objectInArray.getString("a");
                 SecurityDB.insertChallengeQandA(questionId, userId, email, answer);
-            } catch (SQLException ex)
+            }
+            catch (SQLException ex)
             {
                 Logger.getLogger(CalendarData.class.getName()).log(Level.SEVERE, null, ex);
                 LogFile.databaseError("CalendarData SecurityDB updateSecrityQuestions error ", ex.getMessage(), ex.toString());
@@ -463,7 +465,7 @@ public class CalendarData
             // get sql start date and end date
             java.sql.Date sqlStartDate = new java.sql.Date(startDate.getTime());
             java.sql.Date sqlEndDate = new java.sql.Date(endDate.getTime());
-            // get Calendar object instances 
+            // get Calendar object instances
             Calendar calStart = Calendar.getInstance();
             Calendar calEnd = Calendar.getInstance();
             // set Calendar objects from Date objects
@@ -504,7 +506,8 @@ public class CalendarData
                     if (fc.getAllDay())
                     { // if event is an all day calendar event, check to see if it already exists in the database
                         eventExists = CalendarDB.eventExists(fc.getEventId());
-                    } else
+                    }
+                    else
                     { // check to see if timed calendar event exists
                         eventExists = CalendarDB.eventExists(fc.getStartSql(), fc.getEventId());
                     }
@@ -527,7 +530,8 @@ public class CalendarData
                                 CalendarDB.updateStatus(cancelEvt, svcStatusId);
                             });
                         }
-                    } else if (!eventExists) // if event does NOT exist
+                    }
+                    else if (!eventExists) // if event does NOT exist
                     {
                         if (fc.getNewClient() == true)
                         {
@@ -542,7 +546,8 @@ public class CalendarData
                             {
                                 fc.setCustomerId(clientId);
                                 fc.getClient().setId(clientId);
-                            } else
+                            }
+                            else
                             {
                                 errorFlag = true;
                             }
@@ -613,7 +618,8 @@ public class CalendarData
                                         {
                                             errorFlag = true;
                                         }
-                                    } catch (Exception ex)
+                                    }
+                                    catch (Exception ex)
                                     {
                                         LogFile.smsError("CalendarData postCalendarData Client SMS", ex.toString(), m);
                                         errorFlag = true;
@@ -652,7 +658,8 @@ public class CalendarData
                                     m.setPhoneArray(mobilePhAssocArr);
                                     m.setSubject(m.getAssociateSender().getFirstName());
                                     smsSent = SendingSMSMessagesJSON.sendSMSMessage(m);
-                                } catch (Exception ex)
+                                }
+                                catch (Exception ex)
                                 {
                                     LogFile.smsError("CalendarData postCalendarData Associate SMS", ex.toString(), m);
                                     errorFlag = true;
@@ -662,7 +669,8 @@ public class CalendarData
                                     errorFlag = true;
                                 }
                             }
-                        } else
+                        }
+                        else
                         {
                             dataInsert = false;
                             errorFlag = true;
@@ -829,19 +837,23 @@ public class CalendarData
                     {
                         errorFlag = true;
                     }
-                } catch (Exception ex)
+                }
+                catch (Exception ex)
                 {
                     LogFile.smsError("CalendarData postClientData quick sms", ex.toString(), m);
                     errorFlag = true;
                 }
             }
-        } else if (title.equals("deactivateClients"))
+        }
+        else if (title.equals("deactivateClients"))
         {
             CustomerDB.updateActiveStatus(fcArray);
-        } else if (title.equals("invite"))
+        }
+        else if (title.equals("invite"))
         {
 
-        } else
+        }
+        else
         {
             for (FullCalendar2 fc : fcArray)
             {
@@ -875,7 +887,8 @@ public class CalendarData
                         if (clientId > 0)
                         {
                             fc.setCustomerId(clientId);
-                        } else
+                        }
+                        else
                         {
                             errorFlag = true;
                         }
@@ -914,14 +927,16 @@ public class CalendarData
             if (smsSent == false)
             {
                 errorFlag = true;
-            } else if (smsSent == true)
+            }
+            else if (smsSent == true)
             {
                 m.getConvertedPhoneNumersString().forEach((String mobilePh) ->
                 {
                     MessagesDB.insertInvitationRequests(mobilePh, m.getAssociateSender().getId(), m.getSqlTimestamp(), m.getTimeToSendInteger());
                 });
             }
-        } catch (Exception ex)
+        }
+        catch (Exception ex)
         {
             Logger.getLogger(CalendarData.class.getName()).log(Level.SEVERE, null, ex);
             LogFile.smsError("CalendarData smsInviteRequest", ex.toString(), m);

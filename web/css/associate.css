@@ -1,4 +1,4 @@
-/* 
+/*
     Document   : associate
     Created on : Aug 16, 2012, 1:22:58 PM
     Author     : williamdobbs
@@ -18,15 +18,15 @@ article, aside, figure, footer, header, nav, section {
 }
 table {border-collapse: collapse;}
 
-fieldset { 
+fieldset {
     width: auto;
     border: none;
     margin-top: 10px
 }
 html {
-    background-color: white;    
+    background-color: white;
 }
-.floatLeft { float: left; } 
+.floatLeft { float: left; }
 .floatRight { float: right; }
 
 .border-bottom { border-bottom: 1px solid #cccccc; }
@@ -57,7 +57,7 @@ html {
 
 .table-header-font {
     font-size: 10pt;
-font-weight: normal;
+    font-weight: normal;
 }
 
 legend { color: #555555; font-weight: bold; }
@@ -80,7 +80,7 @@ div#main-section {
     width: 100%;
     margin: 0 auto;
 }
-#messages { 
+#messages {
     text-align: center;
     display: inline;
 }
@@ -135,7 +135,7 @@ header #header-logo {
 
 /* the styles for the navigation bar */
 nav {
-    clear: both; 
+    clear: both;
     text-align: center;
     background-color: white;
     /*    width: 100%;*/
@@ -152,7 +152,7 @@ nav a {
     text-decoration: none;
     color: #000000;
     font-weight: normal;
-    border-right: 2px solid #fffded; 
+    border-right: 2px solid #fffded;
     cursor: pointer
 }
 nav a.current { color: #99CCFF; }
@@ -170,8 +170,8 @@ nav a:focus, nav a:hover {
 /* the styles for the section */
 section {
     float: right;
- width: 89%;
-margin-right: .5%;
+    width: 89%;
+    margin-right: .5%;
 }
 section h1 {
     color: #555555;
@@ -198,7 +198,7 @@ section li {
     padding-bottom: .35em;
 }
 article {
-    border-top: 2px solid #002E8A;	
+    border-top: 2px solid #002E8A;
     border-bottom: 2px solid #002E8A;
 }
 article h1 {
@@ -210,14 +210,14 @@ article img {
     border: 1px solid black;
 }
 aside {
-     width: 10.5%;
-     float: left;
+    width: 10.5%;
+    float: left;
     margin-top: 20px;
 }
 div#aside-div {
-text-align: center;
-width: 100%;
-float: right;
+    text-align: center;
+    width: 100%;
+    float: right;
 }
 aside h1 {
     color: #001A4C;
@@ -282,7 +282,7 @@ tfoot th, tfoot td {
 }
 .border-bottom-table {border-bottom: 1px solid #CCCCCC}
 
-p { 
+p {
     margin-left: 15px; text-align: left
 }
 /*button styles*/
@@ -366,19 +366,19 @@ p {
 .next-page:hover {
     background: url(../img/nav/next-page-over.png) no-repeat;
 }
- .prev-page {
+.prev-page {
     background: url(../img/nav/prev-page-up.png) no-repeat;
 }
- .prev-page:hover {
+.prev-page:hover {
     background: url(../img/nav/prev-page-over.png) no-repeat;
 }
- .first-page {
+.first-page {
     background: url(../img/nav/first-page-up.png) no-repeat;
 }
- .first-page:hover {
+.first-page:hover {
     background: url(../img/nav/first-page-over.png) no-repeat;
 }
- .last-page {
+.last-page {
     background: url(../img/nav/last-page.png) no-repeat;
 }
 .button-size-1 {
@@ -393,7 +393,7 @@ p {
 
 img { border: none }
 
-input { 
+input {
     border-radius: 4px;
 }
 input:invalid {
@@ -478,7 +478,7 @@ li { margin: 10px 0 }
     width: 67px;
 }
 
-#associateFirstName { 
+#associateFirstName {
     margin: 3px 0px 20px 6px;
     text-align: center;
 }
@@ -494,6 +494,7 @@ table.eventInfoTable { width: 100%; border-bottom: 1px solid #ccc; }
 .calEvent.ui-dialog-content.ui-widget-content {
     padding-left: 2px;
     padding-right: 2px;
+    color: #555555;
 }
 
 .eventInfoTable img {
@@ -566,13 +567,13 @@ ul#ui-id-3 {border-radius: 5px;}
 ul#ui-id-3 li#ui-id-21.ui-menu-item { white-space: nowrap;}
 
 /*accordion styles*/
-div#ui-id-3.last-5-visits.ui-accordion-content, div#ui-id-6.visits.ui-accordion-content, div#ui-id-8.visits.ui-accordion-content 
+div#ui-id-3.last-5-visits.ui-accordion-content, div#ui-id-6.visits.ui-accordion-content, div#ui-id-8.visits.ui-accordion-content
 {padding: 2px 0px}
 
 div#accordion-4, #accordion {
     outline: none;
 }
-h3#ui-id-3.ui-accordion-header.ui-state-default, h3#ui-id-5.ui-accordion-header.ui-state-default, h3#ui-id-7.ui-accordion-header.ui-state-default, 
+h3#ui-id-3.ui-accordion-header.ui-state-default, h3#ui-id-5.ui-accordion-header.ui-state-default, h3#ui-id-7.ui-accordion-header.ui-state-default,
 h3#ui-id-11.ui-accordion-header.ui-state-default, h3#ui-id-9.ui-accordion-header.ui-state-default
 { outline: none; }
 

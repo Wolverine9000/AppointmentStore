@@ -1,4 +1,4 @@
-/* 
+/*
     Document   : associateCSS_services
     Created on : May 17, 2013, 10:03:52 AM
     Author     : williamdobbs
@@ -38,18 +38,18 @@ ul#ui-id-2 li#ui-id-21.ui-menu-item { white-space: nowrap;}
 .editUserTable img {
     border-radius: 5px;
     height: 40px;
-    width:  40px; 
+    width:  40px;
 }
 
 /*#client-list-table { width: 1200px; }*/
 table#client-list-table { width: 100%; }
 
-#client-list-table td:last-child, th:last-child { 
-    text-align: center; 
+#client-list-table td:last-child, th:last-child {
+    text-align: center;
     padding-left: 0;
     padding-right: 0;
 }
-#client-list-table td:first-child {  width: 50px; padding-right: 0; margin-right: 0; } 
+#client-list-table td:first-child {  width: 50px; padding-right: 0; margin-right: 0; }
 
 #client-list-table th, thead, tfoot {
     border-top: 1px solid #ccc;
@@ -64,11 +64,11 @@ table#client-list-table { width: 100%; }
 
 #client-list-table th:first-child { border-top-left-radius: 5px }
 #client-list-table th:last-child { border-top-right-radius: 5px }
-#client-list-table td:first-child { 
+#client-list-table td:first-child {
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
 }
-#client-list-table td:last-child { 
+#client-list-table td:last-child {
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
 }
@@ -99,10 +99,10 @@ table#client-list-table { width: 100%; }
 
 div#msgBar { margin-bottom: 15px; }
 
-#client-list-table tbody tr:hover { 
+#client-list-table tbody tr:hover {
     background-color: #FFEBCC;
 }
-#client-list-table tbody tr td:nth-child(-n+6) { 
+#client-list-table tbody tr td:nth-child(-n+6) {
     cursor:pointer;
 }
 
@@ -206,6 +206,8 @@ fieldset#send-message-field.ui-dialog-content.ui-widget-content { padding: 0 5px
 
 #send-message-field input#subject {width: 100%; margin-bottom: 10px; }
 
+#send-message-field input#subject,  #send-message-field textArea { color: #555555; }
+
 div#add-client {float: left; margin-top: -1.12em;}
 
 fieldset#select-client-options { margin-top: 0;}
@@ -217,7 +219,7 @@ table#delete-client-list tbody tr:nth-child(odd) {
     background-color: #EEE;
 }
 
-fieldset#clients-del-fieldset legend { 
+fieldset#clients-del-fieldset legend {
     text-align: center;
     width: 100%;
     padding-left: .3em;
@@ -225,7 +227,7 @@ fieldset#clients-del-fieldset legend {
 }
 
 span.ui-icon.ui-icon-alert {
-    float: left; 
+    float: left;
     margin-top: -2.2em;
     margin-left: 2%;
     margin-right: 2em;

@@ -15,7 +15,7 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import messages.LogFile;
-import store.business.AdminUser;
+import store.business.SystemAdmin;
 import store.business.Associate2;
 import store.business.FullCalendar2;
 import store.business.Services;
@@ -31,7 +31,7 @@ public class MailUtil
 
     public static void sendMail(String to, String from, String subject, String body, String bcc, boolean bodyIsHTML)
     {
-        AdminUser sa = AdminUserDB.selectSysAdmin(2);
+        SystemAdmin sa = AdminUserDB.selectSysAdmin(2);
         String emailUsername = sa.getUserName();
         String emailPassword = sa.getPassword();
         try
@@ -97,7 +97,7 @@ public class MailUtil
         }
         catch (MessagingException ex)
         {
-            LogFile.emailLog("MailUtil sendMail ", to, ex.getMessage());
+            LogFile.emailLog("MailUtil sendMail ", to, ex.getMessage() + " " + ex.toString());
         }
         catch (IOException ex)
         {

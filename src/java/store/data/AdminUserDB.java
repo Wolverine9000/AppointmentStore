@@ -9,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import messages.LogFile;
-import store.business.AdminUser;
+import store.business.SystemAdmin;
 
 /**
  *
@@ -119,7 +119,7 @@ public class AdminUserDB
         }
     }
 
-    public static AdminUser selectSysAdmin(int sysId)
+    public static SystemAdmin selectSysAdmin(int sysId)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
@@ -136,12 +136,15 @@ public class AdminUserDB
             rs = ps.executeQuery();
             if (rs.next());
             {
-                AdminUser a = new AdminUser();
+                SystemAdmin a = new SystemAdmin();
                 a.setSysId(sysId);
                 a.setSysEmailAddress(rs.getString("system_user_email_address"));
                 a.setUserName(rs.getString("system_username"));
                 a.setPassword(rs.getString("system_user_email_password"));
-
+                a.setSmsPassword(rs.getString("system_sms_password"));
+                a.setSmsURL(rs.getString("system_sms_url"));
+                a.setSmsUsername(rs.getString("system_sms_username"));
+                
                 return a;
             }
         }

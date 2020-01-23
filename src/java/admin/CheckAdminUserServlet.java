@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import store.business.AdminUser;
+import store.business.SystemAdmin;
 import store.data.AdminUserDB;
 
 /**
@@ -33,7 +33,7 @@ public class CheckAdminUserServlet extends HttpServlet
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        AdminUser adminuser = new AdminUser();
+        SystemAdmin adminuser = new SystemAdmin();
         adminuser.setUserName(username);
         adminuser.setPassword(password);        
 
