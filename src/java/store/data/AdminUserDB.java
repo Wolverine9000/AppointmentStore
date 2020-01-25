@@ -144,7 +144,7 @@ public class AdminUserDB
                 a.setSmsPassword(rs.getString("system_sms_password"));
                 a.setSmsURL(rs.getString("system_sms_url"));
                 a.setSmsUsername(rs.getString("system_sms_username"));
-                
+
                 return a;
             }
         }
@@ -152,6 +152,80 @@ public class AdminUserDB
         catch (SQLException e)
         {
             LogFile.databaseError("AdminUserDB selectSysAdmin", e.getMessage(), e.toString());
+            return null;
+        }
+        finally
+        {
+            DBUtil.closeResultSet(rs);
+            DBUtil.closePreparedStatement(ps);
+            pool.freeConnection(connection);
+        }
+    }
+
+    public static String selectEmailSystemPassword(int sysId)
+    {
+        ConnectionPool pool = ConnectionPool.getInstance();
+        Connection connection = pool.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        String query = "SELECT system_user_email_password FROM appointment.system_users "
+                + "WHERE system_userid = ?";
+
+        try
+        {
+            ps = connection.prepareStatement(query);
+            ps.setInt(1, sysId);
+            rs = ps.executeQuery();
+
+            if (rs.next());
+            {
+                String e = rs.getString("system_user_email_password");
+
+                return e;
+            }
+        }
+
+        catch (SQLException e)
+        {
+            LogFile.databaseError("AdminUserDB selectSystemPassword", e.getMessage(), e.toString());
+            return null;
+        }
+        finally
+        {
+            DBUtil.closeResultSet(rs);
+            DBUtil.closePreparedStatement(ps);
+            pool.freeConnection(connection);
+        }
+    }
+
+    public static String selectEmailSystemUsername(int sysId)
+    {
+        ConnectionPool pool = ConnectionPool.getInstance();
+        Connection connection = pool.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        String query = "SELECT system_username FROM appointment.system_users "
+                + "WHERE system_userid = ?";
+
+        try
+        {
+            ps = connection.prepareStatement(query);
+            ps.setInt(1, sysId);
+            rs = ps.executeQuery();
+
+            if (rs.next());
+            {
+                String e = rs.getString("system_username");
+
+                return e;
+            }
+        }
+
+        catch (SQLException e)
+        {
+            LogFile.databaseError("AdminUserDB selectEmailSystemUsername", e.getMessage(), e.toString());
             return null;
         }
         finally
