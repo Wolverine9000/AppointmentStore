@@ -7,7 +7,7 @@ import store.util.PhoneUtil;
  *
  * @author williamdobbs
  */
-public abstract class User extends Message2
+public abstract class User
 {
 
     private int id;
