@@ -545,10 +545,10 @@ public class CalendarDB
             ps = connection.prepareStatement(query);
             ps.setInt(1, clientId);
             rs = ps.executeQuery();
-            ArrayList<CalendarCustomer> calendarCustomer = new ArrayList<>();
+            ArrayList<FullCalendar2> fc = new ArrayList<>();
             while (rs.next())
             {
-                CalendarCustomer cc = new CalendarCustomer();
+                FullCalendar2 cc = new FullCalendar2();
                 cc.setStartTimeHour(rs.getInt("start_time_hour"));
                 cc.setStartTimeMin(rs.getInt("start_time_min"));
                 cc.setEndTimeHour(rs.getInt("end_time_hour"));
@@ -566,7 +566,7 @@ public class CalendarDB
                 cc.setServiceId(rs.getInt("service_id"));
                 cc.setFirstName(rs.getString("customer_firstName"));
                 cc.setLastName(rs.getString("customer_lastName"));
-                cc.setEmailAddress(rs.getString("customer_emailAddress"));
+                cc.setCl(rs.getString("customer_emailAddress"));
                 cc.setAllDay(rs.getBoolean("allDayEvent"));
                 cc.setEventId(rs.getInt("event_id"));
                 cc.setAssociateId(rs.getInt("associate_id"));
@@ -579,9 +579,9 @@ public class CalendarDB
                 cc.setEndSql(rs.getTimestamp("end_timestamp"));
                 cc.setServiceStatus(serviceStatus(rs.getInt("service_status")));
                 cc.setAssociate2(AssociateDB.selectAssociateInfo(rs.getInt("associate_id")));
-                cc.setClient(CustomerDB.selectClient(rs.getInt("customer_id")));
+                cc.setUser(CustomerDB.selectClient(rs.getInt("customer_id")));
 
-                calendarCustomer.add(cc);
+                fc.add(cc);
             }
             return calendarCustomer;
         }
