@@ -344,9 +344,9 @@ public class CalendarDB
         try
         {
             ps = connection.prepareStatement(query);
-            ps.setString(1, fc.getFirstName());
-            ps.setString(2, fc.getLastName());
-            ps.setString(3, fc.getEmailAddress());
+            ps.setString(1, fc.getClient().getFirstName());
+            ps.setString(2, fc.getClient().getLastName());
+            ps.setString(3, fc.getClient().getEmail());
             ps.setString(4, fc.getTitle());
             ps.setString(5, fc.getBackgroundColor());
             ps.setString(6, fc.getTextColor());

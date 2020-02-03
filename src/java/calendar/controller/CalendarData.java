@@ -197,9 +197,9 @@ public class CalendarData
     public static ArrayList<FullCalendar2> clientData()
     {
         ArrayList<FullCalendar2> fullCalendar2 = new ArrayList<>();
-        ArrayList<CalendarCustomer> c;
+        ArrayList<FullCalendar2> c;
         c = CalendarDB.selectCalendarAll();
-        c.stream().map((CalendarCustomer cc) ->
+        c.stream().map((FullCalendar2 cc) ->
         {
             FullCalendar2 fc = new FullCalendar2();
             fc.setTitle(cc.addName());
