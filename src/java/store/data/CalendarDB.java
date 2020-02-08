@@ -382,7 +382,7 @@ public class CalendarDB
     }
 
     //This method returns null if a calendar isn't found.
-    public static ArrayList<CalendarCustomer> selectCalendarAll()
+    public static ArrayList<FullCalendar2> selectCalendarAll()
     {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
@@ -399,10 +399,12 @@ public class CalendarDB
         {
             ps = connection.prepareStatement(query);
             rs = ps.executeQuery();
-            ArrayList<CalendarCustomer> calendarCustomer = new ArrayList<>();
+            ArrayList<FullCalendar2> calendarCustomer = new ArrayList<>();
             while (rs.next())
             {
-                CalendarCustomer cc = new CalendarCustomer();
+                FullCalendar2 cc = new FullCalendar2();
+                cc.setClient(CustomerDB.selectClient(rs.getInt("customer_id")));
+                cc.setAssociate2(AssociateDB.selectAssociateInfo(rs.getInt("associate_id")));
                 cc.setStartTimeHour(rs.getInt("start_time_hour"));
                 cc.setStartTimeMin(rs.getInt("start_time_min"));
                 cc.setEndTimeHour(rs.getInt("end_time_hour"));
@@ -418,12 +420,12 @@ public class CalendarDB
                 cc.setAssociateTime(rs.getTime("calendar_time"));
                 cc.setDate(rs.getDate("calendar_date"));
                 cc.setServiceId(rs.getInt("service_id"));
-                cc.setFirstName(rs.getString("customer_firstName"));
-                cc.setLastName(rs.getString("customer_lastName"));
-                cc.setEmailAddress(rs.getString("customer_emailAddress"));
+                cc.getClient().setFirstName(rs.getString("customer_firstName"));
+                cc.getClient().setLastName(rs.getString("customer_lastName"));
+                cc.getClient().setEmail(rs.getString("customer_emailAddress"));
                 cc.setAllDay(rs.getBoolean("allDayEvent"));
                 cc.setEventId(rs.getInt("event_id"));
-                cc.setAssociateId(rs.getInt("associate_id"));
+                cc.getAssociate2().setId(rs.getInt("associate_id"));
                 cc.setBackgroundColor(rs.getString("backgroundColor"));
                 cc.setTextColor(rs.getString("textColor"));
                 cc.setDurationEditable(rs.getBoolean("durationEditable"));
@@ -431,9 +433,7 @@ public class CalendarDB
                 cc.setColor(rs.getString("color"));
                 cc.setStartSql(rs.getTimestamp("start_timestamp"));
                 cc.setEndSql(rs.getTimestamp("end_timestamp"));
-                cc.setServiceStatus(serviceStatus(rs.getInt("service_status")));
-                cc.setAssociate2(AssociateDB.selectAssociateInfo(rs.getInt("associate_id")));
-                cc.setClient(CustomerDB.selectClient(rs.getInt("customer_id")));
+//                cc.setServiceStatus(serviceStatus(rs.getInt("service_status")));
 
                 calendarCustomer.add(cc);
             }
@@ -453,7 +453,7 @@ public class CalendarDB
     }
 
     //This method returns null if a calendar isn't found.
-    public static ArrayList<CalendarCustomer> selectCalendar(int associateId)
+    public static ArrayList<FullCalendar2> selectCalendar(int associateId)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
@@ -472,10 +472,10 @@ public class CalendarDB
             ps = connection.prepareStatement(query);
             ps.setInt(1, associateId);
             rs = ps.executeQuery();
-            ArrayList<CalendarCustomer> calendarCustomer = new ArrayList<>();
+            ArrayList<FullCalendar2> calendarCustomer = new ArrayList<>();
             while (rs.next())
             {
-                CalendarCustomer cc = new CalendarCustomer();
+                FullCalendar2 cc = new FullCalendar2();
                 cc.setStartTimeHour(rs.getInt("start_time_hour"));
                 cc.setStartTimeMin(rs.getInt("start_time_min"));
                 cc.setEndTimeHour(rs.getInt("end_time_hour"));
@@ -491,12 +491,12 @@ public class CalendarDB
                 cc.setAssociateTime(rs.getTime("calendar_time"));
                 cc.setDate(rs.getDate("calendar_date"));
                 cc.setServiceId(rs.getInt("service_id"));
-                cc.setFirstName(rs.getString("customer_firstName"));
-                cc.setLastName(rs.getString("customer_lastName"));
-                cc.setEmailAddress(rs.getString("customer_emailAddress"));
+                cc.getClient().setFirstName(rs.getString("customer_firstName"));
+                cc.getClient().setLastName(rs.getString("customer_lastName"));
+                cc.getClient().setEmail(rs.getString("customer_emailAddress"));
                 cc.setAllDay(rs.getBoolean("allDayEvent"));
                 cc.setEventId(rs.getInt("event_id"));
-                cc.setAssociateId(rs.getInt("associate_id"));
+                cc.getAssociate2().setId(rs.getInt("associate_id"));
                 cc.setBackgroundColor(rs.getString("backgroundColor"));
                 cc.setTextColor(rs.getString("textColor"));
                 cc.setDurationEditable(rs.getBoolean("durationEditable"));
@@ -526,7 +526,7 @@ public class CalendarDB
     }
 
     //This method returns null if a calendar isn't found.
-    public static ArrayList<CalendarCustomer> selectClientCalendar(int clientId)
+    public static ArrayList<FullCalendar2> selectClientCalendar(int clientId)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
@@ -549,6 +549,7 @@ public class CalendarDB
             while (rs.next())
             {
                 FullCalendar2 cc = new FullCalendar2();
+
                 cc.setStartTimeHour(rs.getInt("start_time_hour"));
                 cc.setStartTimeMin(rs.getInt("start_time_min"));
                 cc.setEndTimeHour(rs.getInt("end_time_hour"));
@@ -564,12 +565,12 @@ public class CalendarDB
                 cc.setAssociateTime(rs.getTime("calendar_time"));
                 cc.setDate(rs.getDate("calendar_date"));
                 cc.setServiceId(rs.getInt("service_id"));
-                cc.setFirstName(rs.getString("customer_firstName"));
-                cc.setLastName(rs.getString("customer_lastName"));
-                cc.setCl(rs.getString("customer_emailAddress"));
+                cc.getClient().setFirstName(rs.getString("customer_firstName"));
+                cc.getClient().setLastName(rs.getString("customer_lastName"));
+                cc.getClient().setEmail(rs.getString("customer_emailAddress"));
                 cc.setAllDay(rs.getBoolean("allDayEvent"));
                 cc.setEventId(rs.getInt("event_id"));
-                cc.setAssociateId(rs.getInt("associate_id"));
+                cc.getAssociate2().setId(rs.getInt("associate_id"));
                 cc.setBackgroundColor(rs.getString("backgroundColor"));
                 cc.setTextColor(rs.getString("textColor"));
                 cc.setDurationEditable(rs.getBoolean("durationEditable"));
@@ -577,13 +578,13 @@ public class CalendarDB
                 cc.setColor(rs.getString("color"));
                 cc.setStartSql(rs.getTimestamp("start_timestamp"));
                 cc.setEndSql(rs.getTimestamp("end_timestamp"));
-                cc.setServiceStatus(serviceStatus(rs.getInt("service_status")));
+                cc.getServices().setServiceStatus(rs.getInt("service_status"));
                 cc.setAssociate2(AssociateDB.selectAssociateInfo(rs.getInt("associate_id")));
-                cc.setUser(CustomerDB.selectClient(rs.getInt("customer_id")));
+                cc.setClient(CustomerDB.selectClient(rs.getInt("customer_id")));
 
                 fc.add(cc);
             }
-            return calendarCustomer;
+            return fc;
         }
         catch (SQLException | NullPointerException e)
         {

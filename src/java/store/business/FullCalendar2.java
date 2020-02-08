@@ -29,7 +29,7 @@ public class FullCalendar2 implements Serializable
     private int eventId;
     private int serviceTime;
     private String serviceDescription;
-    private ServiceStatus serviceStatus;
+    private Services services;
     private Associate2 associate2;
     private Client client;
     private String start;
@@ -75,7 +75,6 @@ public class FullCalendar2 implements Serializable
         serviceDescription = null;
         serviceTime = 0;
         customerId = 0;
-        serviceStatus = new ServiceStatus();
         associate2 = null;
         client = null;
         start = null;
@@ -114,14 +113,14 @@ public class FullCalendar2 implements Serializable
         this.associate2 = associate2;
     }
 
-    public ServiceStatus getServiceStatus()
+    public Services getServices()
     {
-        return serviceStatus;
+        return services;
     }
 
-    public void setServiceStatus(ServiceStatus serviceStatus)
+    public void setServices(Services services)
     {
-        this.serviceStatus = serviceStatus;
+        this.services = services;
     }
 
     public int getEventId()

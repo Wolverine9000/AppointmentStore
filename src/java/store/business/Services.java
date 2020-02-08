@@ -21,6 +21,10 @@ public class Services extends Product
     private int serviceId;
     private boolean canDoService;
     private HashMap servicesHashMap = new HashMap();
+    private String statusName;
+    private String statusColor;
+    private int statusId;
+    private int serviceStatus;
 
     public Services()
     {
@@ -29,6 +33,7 @@ public class Services extends Product
         graceTime = 0;
         serviceProductId = 0;
         serviceId = 0;
+        serviceStatus = 0;
     }
 
     public HashMap getServicesHashMap()
@@ -86,4 +91,45 @@ public class Services extends Product
     {
         this.canDoService = canDoService;
     }
+
+    public String getStatusName()
+    {
+        return statusName;
+    }
+
+    public void setStatusName(String statusName)
+    {
+        this.statusName = statusName;
+    }
+
+    public String getStatusColor()
+    {
+        return statusColor;
+    }
+
+    public void setStatusColor(String statusColor)
+    {
+        this.statusColor = statusColor;
+    }
+
+    public int getStatusId()
+    {
+        return statusId;
+    }
+
+    public void setStatusId(int statusId)
+    {
+        this.statusId = statusId;
+    }
+
+    public int getServiceStatus()
+    {
+        return serviceStatus;
+    }
+
+    public void setServiceStatus(int serviceStatus)
+    {
+        this.serviceStatus = serviceStatus;
+    }
+
 }

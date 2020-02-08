@@ -20,6 +20,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
@@ -62,35 +63,34 @@ public class CalendarData
         int clientId = Integer.parseInt(id);
 
         ArrayList<FullCalendar2> fullCalendar2 = new ArrayList<>();
-        ArrayList<CalendarCustomer> c;
+        ArrayList<FullCalendar2> c;
         c = CalendarDB.selectClientCalendar(clientId);
-        c.stream().map((cc)
-                ->
+        c.stream().map((FullCalendar2 cc) ->
         {
             Associate2 a;
-            a = selectAssociateInfo(cc.getAssociateId());
+            a = selectAssociateInfo(cc.getId());
             FullCalendar2 fc = new FullCalendar2();
             fc.setTitle(cc.addName());
             fc.setNotes(cc.getNotes());
             fc.setStart(cc.convertStartTimestamp());
             fc.setEnd(cc.convertEndTimestamp());
             fc.setServiceId(cc.getServiceId());
-            fc.setAllDay(cc.getAllDay());
-            fc.setFirstName(cc.getFirstName());
-            fc.setLastName(cc.getLastName());
-            fc.setEmailAddress(cc.getEmailAddress());
+            fc.setAllDay(cc.isAllDay());
+            fc.getAssociate2().setFirstName(a.getFirstName());
+            fc.getAssociate2().setLastName(a.getLastName());
+            fc.getAssociate2().setEmail(a.getEmail());
             fc.setCustomerId(cc.getCustomerId());
             fc.setEventId(cc.getEventId());
-            fc.setAssociateName(a.getFirstName());
-            fc.setAssociateId(cc.getAssociateId());
+            fc.getAssociate2().setFirstName(a.getFirstName());
+            fc.getAssociate2().setId(a.getId());
             fc.setTextColor(cc.getTextColor());
-            fc.setBackgroundColor(cc.getServiceStatus().getStatusColor());
+            fc.setBackgroundColor(cc.getBackgroundColor());
             fc.setAssociate2(cc.getAssociate2());
-            fc.setServiceStatus(cc.getServiceStatus());
+//            fc.getServices().setStatusColor(id);tStatusColor());
             fc.setClient(cc.getClient());
             fc.setServiceTime(cc.getServiceTime());
-            fc.setDurationEditable(cc.getDurationEditable());
-            fc.setEditable(cc.getEditable());
+//            fc.setDurationEditable(cc.getDurationEditable());
+//            fc.setEditable(cc.getEditable());
             fc.setStartSql(cc.getStartSql());
             fc.setEndSql(cc.getEndSql());
             fc.setId(cc.getEventId());
@@ -123,7 +123,7 @@ public class CalendarData
         ArrayList<FullCalendar2> fullCalendar2 = new ArrayList<>();
         ArrayList<CalendarCustomer> c;
         c = CalendarDB.selectCalendar(associateId);
-        c.stream().map((CalendarCustomer cc) ->
+        c.stream().map((Function<CalendarCustomer, R> cc) ->
         {
             Associate2 a;
             a = selectAssociateInfo(cc.getAssociateId());
