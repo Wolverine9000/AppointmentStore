@@ -86,11 +86,13 @@ public class CalendarData
             fc.setTextColor(cc.getTextColor());
             fc.setBackgroundColor(cc.getBackgroundColor());
             fc.setAssociate2(cc.getAssociate2());
-//            fc.getServices().setStatusColor(id);tStatusColor());
+            fc.getServices().setStatusColor(id);
+            tStatusColor()
+            );
             fc.setClient(cc.getClient());
             fc.setServiceTime(cc.getServiceTime());
-//            fc.setDurationEditable(cc.getDurationEditable());
-//            fc.setEditable(cc.getEditable());
+            fc.setDurationEditable(cc.isDurationEditable());
+            fc.setEditable(cc.isEditable());
             fc.setStartSql(cc.getStartSql());
             fc.setEndSql(cc.getEndSql());
             fc.setId(cc.getEventId());
@@ -202,27 +204,28 @@ public class CalendarData
         c.stream().map((FullCalendar2 cc) ->
         {
             FullCalendar2 fc = new FullCalendar2();
+            fc.setClient(cc.getClient());
+            fc.setAssociate2(cc.getAssociate2());
             fc.setTitle(cc.addName());
             fc.setNotes(cc.getNotes());
             fc.setStart(cc.convertStartTimestamp());
             fc.setEnd(cc.convertEndTimestamp());
             fc.setServiceId(cc.getServiceId());
-            fc.setAllDay(cc.getAllDay());
-            fc.setFirstName(cc.getFirstName());
-            fc.setLastName(cc.getLastName());
-            fc.setEmailAddress(cc.getEmailAddress());
-            fc.setCustomerId(cc.getCustomerId());
+            fc.setAllDay(cc.isAllDay());
+//            fc.setFirstName(cc.getClient().getFirstName());
+//            fc.setLastName(cc.getLastName());
+//            fc.setEmailAddress(cc.getEmailAddress());
+            fc.setCustomerId(cc.getClient().getId());
             fc.setEventId(cc.getEventId());
-            fc.setAssociateName(cc.getAssociate2().getFirstName());
-            fc.setAssociateId(cc.getAssociateId());
+//            fc.setAssociateName(cc.getAssociate2().getFirstName());
+//            fc.setAssociateId(cc.getAssociateId());
             fc.setTextColor(cc.getTextColor());
-            fc.setBackgroundColor(cc.getServiceStatus().getStatusColor());
+//            fc.setBackgroundColor(cc.getServiceStatus().getStatusColor());
             fc.setAssociate2(cc.getAssociate2());
-            fc.setServiceStatus(cc.getServiceStatus());
-            fc.setClient(cc.getClient());
+//            fc.setServiceStatus(cc.getServiceStatus());
             fc.setServiceTime(cc.getServiceTime());
-            fc.setDurationEditable(cc.getDurationEditable());
-            fc.setEditable(cc.getEditable());
+            fc.setDurationEditable(cc.isDurationEditable());
+            fc.setEditable(cc.isEditable());
             fc.setStartSql(cc.getStartSql());
             fc.setEndSql(cc.getEndSql());
             fc.setId(cc.getEventId());

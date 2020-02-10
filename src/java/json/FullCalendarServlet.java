@@ -52,7 +52,7 @@ public class FullCalendarServlet extends HttpServlet
         ArrayList<SMSMemberInviteMessage> m2 = null;
         ArrayList<SMSAppointmentMessage> m3 = null;
 
-        // get calendar id number and key id characters 
+        // get calendar id number and key id characters
         String title = request.getParameter("title");
         String key = request.getParameter("key");
         String altKey = request.getParameter("altKey");
@@ -61,7 +61,8 @@ public class FullCalendarServlet extends HttpServlet
         if (title == null)
         {
             // select all calendar appointments
-            fc2 = CalendarData.clientData();
+//            fc2 = CalendarData.clientData();
+            fc2 = CalendarDB.selectCalendarAll();
         }
         if (null != key)
         {

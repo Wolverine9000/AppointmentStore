@@ -65,6 +65,7 @@ public class FullCalendar2 implements Serializable
     private String color;
     private String notes;
     private String mobilePhone;
+    private String associateTime;
 
     private final Map<String, Object> otherProperties = new HashMap<>();
 
@@ -89,7 +90,6 @@ public class FullCalendar2 implements Serializable
         userType = "";
         memberLevels = null;
         message = "no message";
-        // strip client first name from calendar title
 
     }
 
@@ -524,6 +524,16 @@ public class FullCalendar2 implements Serializable
         this.mobilePhone = mobilePhone;
     }
 
+    public String getAssociateTime()
+    {
+        return associateTime;
+    }
+
+    public void setAssociateTime(String associateTime)
+    {
+        this.associateTime = associateTime;
+    }
+
     public String getTimestampFormat()
     {
         DateFormat shortTime = DateFormat.getTimeInstance(DateFormat.SHORT);
@@ -593,6 +603,7 @@ public class FullCalendar2 implements Serializable
         sqlCalendarDate = new java.sql.Date(date.getTime());
     }
 
+    // strip client first name from calendar title
     public String stripName(String t)
     {
         if (t != null)

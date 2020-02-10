@@ -413,28 +413,27 @@ public class CalendarDB
                 cc.setDay(rs.getInt("day"));
                 cc.setDate(rs.getInt("date"));
                 cc.setYear(rs.getInt("year"));
-                cc.setCustomerId(rs.getInt("customer_id"));
+//                cc.setCustomerId(rs.getInt("customer_id"));
                 cc.setServiceDescription(rs.getString("service_description"));
                 cc.setNotes(rs.getString("notes"));
-                cc.setServiceTime(rs.getInt("service_time"));
-                cc.setAssociateTime(rs.getTime("calendar_time"));
-                cc.setDate(rs.getDate("calendar_date"));
-                cc.setServiceId(rs.getInt("service_id"));
-                cc.getClient().setFirstName(rs.getString("customer_firstName"));
-                cc.getClient().setLastName(rs.getString("customer_lastName"));
-                cc.getClient().setEmail(rs.getString("customer_emailAddress"));
-                cc.setAllDay(rs.getBoolean("allDayEvent"));
+//                cc.setServiceTime(rs.getInt("service_time"));
+//                cc.setAssociateTime(rs.getTime("calendar_time"));
+//                cc.setDate(rs.getDate("calendar_date"));
+//                cc.setServiceId(rs.getInt("service_id"));
+//                cc.getClient().setFirstName(rs.getString("customer_firstName"));
+//                cc.getClient().setLastName(rs.getString("customer_lastName"));
+//                cc.getClient().setEmail(rs.getString("customer_emailAddress"));
+//                cc.setAllDay(rs.getBoolean("allDayEvent"));
                 cc.setEventId(rs.getInt("event_id"));
-                cc.getAssociate2().setId(rs.getInt("associate_id"));
-                cc.setBackgroundColor(rs.getString("backgroundColor"));
+//                cc.getAssociate2().setId(rs.getInt("associate_id"));
+//                cc.setBackgroundColor(rs.getString("backgroundColor"));
                 cc.setTextColor(rs.getString("textColor"));
-                cc.setDurationEditable(rs.getBoolean("durationEditable"));
-                cc.setEditable(rs.getBoolean("editable"));
+//                cc.setDurationEditable(rs.getBoolean("durationEditable"));
+//                cc.setEditable(rs.getBoolean("editable"));
                 cc.setColor(rs.getString("color"));
-                cc.setStartSql(rs.getTimestamp("start_timestamp"));
-                cc.setEndSql(rs.getTimestamp("end_timestamp"));
-//                cc.setServiceStatus(serviceStatus(rs.getInt("service_status")));
-
+//                cc.setStartSql(rs.getTimestamp("start_timestamp"));
+//                cc.setEndSql(rs.getTimestamp("end_timestamp"));
+                //                cc.setServicesserviceStatus(rs.getInt("service_status"))
                 calendarCustomer.add(cc);
             }
             return calendarCustomer;
