@@ -51,7 +51,7 @@ public class Associate2 extends User
 
     public Associate2()
     {
-        super(); // call constructor of User superclasss 
+        super(); // call constructor of User superclasss
         associateAvailabilityId = 0;
         associateAvailId = 0;
         associateAvailYear = 0;
@@ -68,11 +68,6 @@ public class Associate2 extends User
         assocAvailEndTimeStamp = null;
         adminUser = false;
         superAdminUser = false;
-    }
-
-    public Associate2(String firstName)
-    {
-
     }
 
     public HashMap<String, Integer> getMemberSettings()

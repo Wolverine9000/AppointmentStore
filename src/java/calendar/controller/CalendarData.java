@@ -123,9 +123,9 @@ public class CalendarData
         int associateId = Integer.parseInt(id);
 
         ArrayList<FullCalendar2> fullCalendar2 = new ArrayList<>();
-        ArrayList<CalendarCustomer> c;
+        ArrayList<FullCalendar2> c;
         c = CalendarDB.selectCalendar(associateId);
-        c.stream().map((Function<CalendarCustomer, R> cc) ->
+        c.stream().map((FullCalendar2 cc) ->
         {
             Associate2 a;
             a = selectAssociateInfo(cc.getAssociateId());
@@ -149,7 +149,7 @@ public class CalendarData
             fc.setServiceStatus(cc.getServiceStatus());
             fc.setClient(cc.getClient());
             fc.setServiceTime(cc.getServiceTime());
-            fc.setDurationEditable(cc.getDurationEditable());
+            fc.setDurationEditable(cc.isDurationEditable());
             fc.setEditable(cc.getEditable());
             fc.setStartSql(cc.getStartSql());
             fc.setEndSql(cc.getEndSql());
@@ -201,40 +201,72 @@ public class CalendarData
         ArrayList<FullCalendar2> fullCalendar2 = new ArrayList<>();
         ArrayList<FullCalendar2> c;
         c = CalendarDB.selectCalendarAll();
-        c.stream().map((FullCalendar2 cc) ->
+
+        c.stream().map(new Function<FullCalendar2, FullCalendar2>()
         {
-            FullCalendar2 fc = new FullCalendar2();
-            fc.setClient(cc.getClient());
-            fc.setAssociate2(cc.getAssociate2());
-            fc.setTitle(cc.addName());
-            fc.setNotes(cc.getNotes());
-            fc.setStart(cc.convertStartTimestamp());
-            fc.setEnd(cc.convertEndTimestamp());
-            fc.setServiceId(cc.getServiceId());
-            fc.setAllDay(cc.isAllDay());
-//            fc.setFirstName(cc.getClient().getFirstName());
-//            fc.setLastName(cc.getLastName());
-//            fc.setEmailAddress(cc.getEmailAddress());
-            fc.setCustomerId(cc.getClient().getId());
-            fc.setEventId(cc.getEventId());
-//            fc.setAssociateName(cc.getAssociate2().getFirstName());
-//            fc.setAssociateId(cc.getAssociateId());
-            fc.setTextColor(cc.getTextColor());
-//            fc.setBackgroundColor(cc.getServiceStatus().getStatusColor());
-            fc.setAssociate2(cc.getAssociate2());
-//            fc.setServiceStatus(cc.getServiceStatus());
-            fc.setServiceTime(cc.getServiceTime());
-            fc.setDurationEditable(cc.isDurationEditable());
-            fc.setEditable(cc.isEditable());
-            fc.setStartSql(cc.getStartSql());
-            fc.setEndSql(cc.getEndSql());
-            fc.setId(cc.getEventId());
-            return fc;
-        }).forEach((fc)
-                ->
+            @Override
+            public FullCalendar2 apply(FullCalendar2 cc)
+            {
+                FullCalendar2 fc;
+                fc = new FullCalendar2();
+                fc.setClient(cc.getClient());
+                fc.setCustomerId(cc.getClient().getId());
+                fc.setAssociate2(cc.getAssociate2());
+                fc.setServices(cc.getServices());
+                fc.setStart(cc.convertStartTimestamp());
+                fc.setEnd(cc.convertEndTimestamp());
+                fc.setTitle(cc.addName());
+                fc.setNotes(cc.getNotes());
+                fc.setDurationEditable(cc.isDurationEditable());
+                fc.setTextColor(cc.getTextColor());
+                fc.setEditable(cc.isEditable());
+                fc.setServiceTime(cc.getServiceTime());
+                fc.setAllDay(cc.isAllDay());
+                fc.setId(cc.getEventId());
+                fc.setEventId(cc.getEventId());
+//                 fc.setAssociateId(cc.getAssociateId());
+
+                return fc;
+            }
+        }).forEachOrdered((fc) ->
         {
             fullCalendar2.add(fc);
         });
+
+//        c.stream().map((FullCalendar2 cc) ->
+//        {
+//            FullCalendar2 fc = new FullCalendar2();
+//            fc.setClient(cc.getClient());
+//            fc.setAssociate2(cc.getAssociate2());
+//            fc.setTitle(cc.addName());
+//            fc.setNotes(cc.getNotes());
+//            fc.setStart(cc.convertStartTimestamp());
+//            fc.setEnd(cc.convertEndTimestamp());
+//            fc.setServiceId(cc.getServiceId());
+//            fc.setAllDay(cc.isAllDay());
+//            fc.setFirstName(cc.getClient().getFirstName());
+//           fc.setLastName(cc.getLastName());
+//            fc.setEmailAddress(cc.getEmailAddress());
+//            fc.setCustomerId(cc.getClient().getId());
+//            fc.setEventId(cc.getEventId());
+//            fc.setAssociateName(cc.getAssociate2().getFirstName());
+//            fc.setAssociateId(cc.getAssociateId());
+//            fc.setTextColor(cc.getTextColor());
+//            fc.setBackgroundColor(cc.getServiceStatus().getStatusColor());
+//            fc.setAssociate2(cc.getAssociate2());
+//            fc.setServiceStatus(cc.getServiceStatus());
+//            fc.setServiceTime(cc.getServiceTime());
+//            fc.setDurationEditable(cc.isDurationEditable());
+//            fc.setEditable(cc.isEditable());
+//            fc.setStartSql(cc.getStartSql());
+//            fc.setEndSql(cc.getEndSql());
+//            fc.setId(cc.getEventId());
+//            return fc;
+//        }).forEach((fc)
+//                ->
+//        {
+//            fullCalendar2.add(fc);
+//        });
         return fullCalendar2;
     }
 
@@ -262,6 +294,7 @@ public class CalendarData
             fc.setAssociate2(cc.getAssociate2());
             fc.setClient(cc.getClient());
             fc.getMemberLevels();
+
             fullCalendar2.add(fc);
         }
         return fullCalendar2;

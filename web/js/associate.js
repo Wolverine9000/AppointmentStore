@@ -944,6 +944,7 @@ var EventObj = function (event) {
     this.cancelEvts = event.cancelEvts;
     this.client = event.client;
     this.associate2 = event.associate2;
+    this.services = event.services;
     this.memberLevels = event.memberLevels;
 }; // end EventObj function
 
@@ -1038,7 +1039,6 @@ var Message = function (obj) {
     this.code = obj.code;
     this.sentById = obj.sentById;
     this.timestamp = obj.timestamp;
-    this.clientId = obj.Id;
 };
 
 var SMSMessage = function (obj) {

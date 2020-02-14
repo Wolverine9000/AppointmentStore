@@ -22,7 +22,7 @@ public class CalendarDB
 {
 
     //This method returns null if a calendar isn't found.
-    public static ArrayList<CalendarCustomer> selectCalendar(int customerId, int month, int year)
+    public static ArrayList<FullCalendar2> selectCalendar(int customerId, int month, int year)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
@@ -43,10 +43,10 @@ public class CalendarDB
             ps.setInt(2, month);
             ps.setInt(3, year);
             rs = ps.executeQuery();
-            ArrayList<CalendarCustomer> calendarCustomer = new ArrayList<>();
+            ArrayList<FullCalendar2> calendarCustomer = new ArrayList<>();
             while (rs.next())
             {
-                CalendarCustomer c = new CalendarCustomer();
+                FullCalendar2 c = new FullCalendar2();
                 c.setStartTimeHour(rs.getInt("start_time_hour"));
                 c.setEndTimeHour(rs.getInt("end_time_hour"));
                 c.setMonth(rs.getInt("month"));
@@ -79,7 +79,7 @@ public class CalendarDB
     }
 
     //This method returns null if a calendar isn't found.
-    public static ArrayList<CalendarCustomer> selectCalendar(int customerId, int month, int year, int day)
+    public static ArrayList<FullCalendar2> selectCalendar(int customerId, int month, int year, int day)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
@@ -101,10 +101,10 @@ public class CalendarDB
             ps.setInt(3, year);
             ps.setInt(4, day);
             rs = ps.executeQuery();
-            ArrayList<CalendarCustomer> calendarCustomer = new ArrayList<>();
+            ArrayList<FullCalendar2> calendarCustomer = new ArrayList<>();
             while (rs.next())
             {
-                CalendarCustomer c = new CalendarCustomer();
+                FullCalendar2 c = new FullCalendar2();
                 c.setStartTimeHour(rs.getInt("start_time_hour"));
                 c.setStartTimeMin(rs.getInt("start_time_min"));
                 c.setEndTimeHour(rs.getInt("end_time_hour"));
@@ -394,6 +394,7 @@ public class CalendarDB
                 + "ON c.service_id = s.service_product_id "
                 + "INNER JOIN customer cust "
                 + "ON cust.id = c.customer_id "
+                + "WHERE c.calendar_date >= DATE_SUB(CURDATE(),INTERVAL 1 YEAR) "
                 + "ORDER BY calendar_time ASC";
         try
         {
@@ -404,7 +405,7 @@ public class CalendarDB
             {
                 FullCalendar2 cc = new FullCalendar2();
                 cc.setClient(CustomerDB.selectClient(rs.getInt("customer_id")));
-                cc.setAssociate2(AssociateDB.selectAssociateInfo(rs.getInt("associate_id")));
+
                 cc.setStartTimeHour(rs.getInt("start_time_hour"));
                 cc.setStartTimeMin(rs.getInt("start_time_min"));
                 cc.setEndTimeHour(rs.getInt("end_time_hour"));
@@ -413,27 +414,30 @@ public class CalendarDB
                 cc.setDay(rs.getInt("day"));
                 cc.setDate(rs.getInt("date"));
                 cc.setYear(rs.getInt("year"));
-//                cc.setCustomerId(rs.getInt("customer_id"));
+                cc.setCustomerId(rs.getInt("customer_id"));
                 cc.setServiceDescription(rs.getString("service_description"));
                 cc.setNotes(rs.getString("notes"));
-//                cc.setServiceTime(rs.getInt("service_time"));
+                cc.setServiceTime(rs.getInt("service_time"));
 //                cc.setAssociateTime(rs.getTime("calendar_time"));
-//                cc.setDate(rs.getDate("calendar_date"));
-//                cc.setServiceId(rs.getInt("service_id"));
+                cc.setDate(rs.getDate("calendar_date"));
+                cc.setServiceId(rs.getInt("service_id"));
 //                cc.getClient().setFirstName(rs.getString("customer_firstName"));
 //                cc.getClient().setLastName(rs.getString("customer_lastName"));
 //                cc.getClient().setEmail(rs.getString("customer_emailAddress"));
-//                cc.setAllDay(rs.getBoolean("allDayEvent"));
+                cc.setAllDay(rs.getBoolean("allDayEvent"));
                 cc.setEventId(rs.getInt("event_id"));
 //                cc.getAssociate2().setId(rs.getInt("associate_id"));
 //                cc.setBackgroundColor(rs.getString("backgroundColor"));
+                cc.setBackgroundColor("green");
                 cc.setTextColor(rs.getString("textColor"));
-//                cc.setDurationEditable(rs.getBoolean("durationEditable"));
-//                cc.setEditable(rs.getBoolean("editable"));
+                cc.setDurationEditable(rs.getBoolean("durationEditable"));
+                cc.setEditable(rs.getBoolean("editable"));
                 cc.setColor(rs.getString("color"));
-//                cc.setStartSql(rs.getTimestamp("start_timestamp"));
-//                cc.setEndSql(rs.getTimestamp("end_timestamp"));
-                //                cc.setServicesserviceStatus(rs.getInt("service_status"))
+                cc.setStartSql(rs.getTimestamp("start_timestamp"));
+                cc.setEndSql(rs.getTimestamp("end_timestamp"));
+                cc.getServices().setServiceStatus(CalendarDB.serviceStatus(rs.getInt("service_status")));
+                cc.setAssociate2(AssociateDB.selectAssociateInfo(rs.getInt("associate_id")));
+
                 calendarCustomer.add(cc);
             }
             return calendarCustomer;
@@ -503,7 +507,7 @@ public class CalendarDB
                 cc.setColor(rs.getString("color"));
                 cc.setStartSql(rs.getTimestamp("start_timestamp"));
                 cc.setEndSql(rs.getTimestamp("end_timestamp"));
-                cc.setServiceStatus(serviceStatus(rs.getInt("service_status")));
+                cc.getServices().getServiceStatus().setStatusId(rs.getInt("service_status"));
                 cc.setAssociate2(AssociateDB.selectAssociateInfo(rs.getInt("associate_id")));
                 cc.setClient(CustomerDB.selectClient(rs.getInt("customer_id")));
 

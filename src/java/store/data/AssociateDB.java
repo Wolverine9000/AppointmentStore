@@ -594,7 +594,7 @@ public class AssociateDB
                     for (int i = 0; i < associateSvcsSize; i++)
                     {
                         serviceNum = associateSvcs.get(i);
-                        if (productNum == serviceNum) // does associate do service  
+                        if (productNum == serviceNum) // does associate do service
                         {
                             s.setCanDoService(true);
                         }
@@ -1387,10 +1387,10 @@ public class AssociateDB
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        String query = "SELECT * FROM associate_info a1 "
-                + "INNER JOIN associate a2 "
+        String query = "SELECT * FROM appointment.associate_info a1 "
+                + "INNER JOIN appointment.associate a2 "
                 + "ON a1.associate_info_id = a2.id "
-                + "INNER JOIN associate_alert_prefs a3 "
+                + "INNER JOIN appointment.associate_alert_prefs a3 "
                 + "ON a1.associate_info_id = a3.assoc_id_alert "
                 + "WHERE a1.associate_info_id = ?";
         try
@@ -1401,7 +1401,7 @@ public class AssociateDB
             if (rs.next())
             {
                 Associate2 a = new Associate2();
-                a.setImgUpl(rs.getBoolean("associate_imgUpload"));
+//                a.setImgUpl(rs.getBoolean("associate_imgUpload"));
                 a.setFirstName(rs.getString("first_name"));
                 a.setLastName(rs.getString("last_name"));
                 a.setEmail(rs.getString("email"));

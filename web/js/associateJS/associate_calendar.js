@@ -1,4 +1,4 @@
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -11,14 +11,14 @@
 //     });
 //
 //     function refresh() {
-//         if(new Date().getTime() - time >= 60000) 
+//         if(new Date().getTime() - time >= 60000)
 //             window.location.reload(true);
-//         else 
+//         else
 //             setTimeout(refresh, 10000);
 //     }
 //
 //     setTimeout(refresh, 10000); // set refresh page
-// 
+//
 $(function () {
     associateInfo = associateClass.getCurrentAssociateInfo(); // get current associate information
     defaultView = associateInfo.defaultCalendarView; // set associate default view
@@ -233,7 +233,7 @@ $(function () {
     });
 }); // end update Calendar function
 
-// this function checks for events with overlapping times and then returns them in an array 
+// this function checks for events with overlapping times and then returns them in an array
 function eventConflictCk(event)
 {
     var conflictEvts = [],
@@ -246,7 +246,7 @@ function eventConflictCk(event)
     var st = stJs.getTime();
     var et = etJs.getTime();
     $.each(clientEvents, function (index, value) {
-        // only process if not allDay event and only events on same day of the event being scheduled, 
+        // only process if not allDay event and only events on same day of the event being scheduled,
         // dropped or resized
         // process if associate id is the same
         vst = jsDate.convToJsDate(value.start);
@@ -292,9 +292,9 @@ function newEvent(start, end, jsEvent, view) {
             minWidth = 250,
             alertIcon = "ui-icon ui-icon-alert";
     now.seconds(0).milliseconds(0);
-    
+
     start.local();  // switch start time from UTC to local time
-    
+
     if (start.diff(end) === -86400000 && start.isBefore(now, 'day'))
     {
         openPastMsg(start, end, jsEvent, view);
@@ -792,9 +792,9 @@ function evtClick(calEvent, jsEvent) {
             calEvent.notes = "none";
         }
         var eventInfo =
-                "<tr>" + "<td title='client first and last name'>" + "client:" + "</td>" + "<td>" + calEvent.firstName + " " + calEvent.lastName + '  <img src="../img/clients/'
+                "<tr>" + "<td title='client first and last name'>" + "client:" + "</td>" + "<td>" + calEvent.client.firstName + " " + calEvent.client.lastName + '  <img src="../img/clients/'
                 + clientImgId + '.png" alt="client img" alt="img">' + "</td>" + "</tr>"
-                + "<tr>" + "<td title='client email address'>" + "email:" + "</td>" + "<td>" + "<a href='mailto:" + calEvent.emailAddress + " '>" + calEvent.emailAddress + "</a>" + "</td>" + "</tr>"
+                + "<tr>" + "<td title='client email address'>" + "email:" + "</td>" + "<td>" + "<a href='mailto:" + calEvent.client.email + " '>" + calEvent.client.email + "</a>" + "</td>" + "</tr>"
                 + "<tr>" + "<td title='mobile phone'>" + "mobile:" + "</td>" + "<td>" + "<a href='tel:" + formatPhone(calEvent.client.mobilePhone) + " '>" + formatPhone(calEvent.client.mobilePhone) + "</a>" + "</td>" + "</tr>"
                 + "<tr>" + "<td title='service to perform'>" + "service:" + "</td>" + "<td>" + stripName(calEvent.title) + "</td>" + "</tr>"
                 + "<tr>" + "<td title='date of service'>" + "date:" + "</td>" + "<td>" + jsDate.formatDate(calEvent.start) + "</td>" + "</tr>"
@@ -806,7 +806,7 @@ function evtClick(calEvent, jsEvent) {
                 + "<tr>" + "<td title='client notes'>" + "notes:" + "</td>" + "<td>" + calEvent.notes + "</td>" + "</tr>"
                 + "<tr>" + "<td title='associate first name'>" + "associate:" + "</td>" + "<td>" + calEvent.associate2.firstName
                 + '  <img src="../img/associates/' + associateImgId + '.png" alt="associate img" alt="img">' + "</td>" + "</tr>"
-                + "<tr>" + "<td>" + "status:" + "</td>" + '<td style="color:' + calEvent.serviceStatus.statusColor + '">' + calEvent.serviceStatus.statusName + "</td>" + "</tr>";
+                + "<tr>" + "<td>" + "status:" + "</td>" + '<td style="color:' + calEvent.services.serviceStatus.statusColor + '">' + calEvent.services.serviceStatus.statusName + "</td>" + "</tr>";
         openEvent(calEvent);
         calEvtElem.dialog("option", "title", "Appointment Info");
         calEvtElem.dialog("open");
@@ -858,7 +858,7 @@ function openEvent(event) {
         });
     }
     else {
-        var currentStatus = event.serviceStatus.statusId;
+        var currentStatus = event.services.serviceStatus.statusId;
         var statusId = $("#updateStatus").val(currentStatus);
         calEvent.dialog({
             autoOpen: false,
@@ -880,7 +880,7 @@ function openEvent(event) {
                 Delete: function () {
                     notifyField.show();
                     var eventInfo =
-                            "<tr>" + "<td title='client first and last name'>" + "client:" + "</td>" + "<td>" + event.firstName + " " + event.lastName + "</td>" + "</tr>"
+                            "<tr>" + "<td title='client first and last name'>" + "client:" + "</td>" + "<td>" + event.client.firstName + " " + event.client.lastName + "</td>" + "</tr>"
                             + "<tr>" + "<td title='service to perform'>" + "service:" + "</td>" + "<td>" + stripName(event.title) + "</td>" + "</tr>"
                             + "<tr>" + "<td title='date of service'>" + "date:" + "</td>" + "<td>" + jsDate.formatDate(event.start) + "</td>" + "</tr>"
                             + "<tr>" + "<td title='service start time'>" + "start:" + "</td>" + "<td>" + jsTime.formatTime(event.start) + "</td>" + "</tr>"

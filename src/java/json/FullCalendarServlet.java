@@ -61,8 +61,8 @@ public class FullCalendarServlet extends HttpServlet
         if (title == null)
         {
             // select all calendar appointments
-//            fc2 = CalendarData.clientData();
-            fc2 = CalendarDB.selectCalendarAll();
+            fc2 = CalendarData.clientData();
+//            fc2 = CalendarDB.selectCalendarAll();
         }
         if (null != key)
         {

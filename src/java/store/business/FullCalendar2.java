@@ -65,8 +65,10 @@ public class FullCalendar2 implements Serializable
     private String color;
     private String notes;
     private String mobilePhone;
-    private String associateTime;
-
+    private Time associateTime;
+    private String associateName;
+    private String associateLastName;
+    private int associateId;
     private final Map<String, Object> otherProperties = new HashMap<>();
 
     public FullCalendar2()
@@ -89,7 +91,10 @@ public class FullCalendar2 implements Serializable
         isAssociate = false;
         userType = "";
         memberLevels = null;
+        notes = "";
+        startSql = null;
         message = "no message";
+        services = new Services();
 
     }
 
@@ -524,12 +529,12 @@ public class FullCalendar2 implements Serializable
         this.mobilePhone = mobilePhone;
     }
 
-    public String getAssociateTime()
+    public Time getAssociateTime()
     {
         return associateTime;
     }
 
-    public void setAssociateTime(String associateTime)
+    public void setAssociateTime(Time associateTime)
     {
         this.associateTime = associateTime;
     }
@@ -623,9 +628,34 @@ public class FullCalendar2 implements Serializable
         return titleFirstNm;
     }
 
-    public void setAssociateTime(Time time)
+    public String getAssociateName()
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return associateName;
+    }
+
+    public void setAssociateName(String associateName)
+    {
+        this.associateName = associateName;
+    }
+
+    public int getAssociateId()
+    {
+        return associateId;
+    }
+
+    public void setAssociateId(int associateId)
+    {
+        this.associateId = associateId;
+    }
+
+    public String getAssociateLastName()
+    {
+        return associateLastName;
+    }
+
+    public void setAssociateLastName(String associateLastName)
+    {
+        this.associateLastName = associateLastName;
     }
 
 }

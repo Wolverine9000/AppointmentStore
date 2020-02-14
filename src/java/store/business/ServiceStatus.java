@@ -18,9 +18,9 @@ public class ServiceStatus
 
     public ServiceStatus()
     {
-        statusName = null;
-        statusColor = null;
-        statusId = 0;
+        statusName = "unknown";
+        statusColor = "purple";
+        statusId = 1;
     }
 
     public String getStatusName()

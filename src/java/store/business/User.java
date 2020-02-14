@@ -25,7 +25,7 @@ public abstract class User
     private String password;
     private String securityAnswer;
     private String securityQuestion;
-    private Boolean imgUpl;
+    private boolean imgUpl;
     private String defaultCalendarView;
     private boolean smsAdAlerts;
     private boolean emailAdAlerts;
@@ -80,17 +80,17 @@ public abstract class User
         this.isAccountActive = isAccountActive;
     }
 
-    public Boolean getImgUpl()
+    public boolean getImgUpl()
     {
         return imgUpl;
     }
 
-    public Boolean isImgUpl()
+    public boolean isImgUpl()
     {
         return imgUpl;
     }
 
-    public void setImgUpl(Boolean imgUpl)
+    public void setImgUpl(boolean imgUpl)
     {
         this.imgUpl = imgUpl;
     }
