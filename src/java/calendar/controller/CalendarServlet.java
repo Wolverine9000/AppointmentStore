@@ -1,6 +1,5 @@
 package calendar.controller;
 
-import store.data.CalendarDB;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -13,8 +12,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import store.business.CalendarCustomer;
 import store.business.Client;
+import store.business.FullCalendar2;
+import store.data.CalendarDB;
 import store.util.CalendarUtil;
 import store.util.DateUtil;
 import validate.Validator;
@@ -27,7 +27,7 @@ public class CalendarServlet extends HttpServlet
 {
 
     private String url;
-    private ArrayList<CalendarCustomer> calendarWeek;
+    private ArrayList<FullCalendar2> calendarWeek;
     private int weekStartDate;
     private int weekEndDate;
     private Date viewWeekStartDate;
@@ -61,8 +61,8 @@ public class CalendarServlet extends HttpServlet
         int day = 0;
         boolean viewWeek = false;
         boolean viewDay = false;
-        ArrayList<CalendarCustomer> calendarMonth = null;
-        ArrayList<CalendarCustomer> calendarDay = null;
+        ArrayList<FullCalendar2> calendarMonth = null;
+        ArrayList<FullCalendar2> calendarDay = null;
         Date selectedDate = null;
 
         HttpSession session = request.getSession();
@@ -70,12 +70,12 @@ public class CalendarServlet extends HttpServlet
         Client client = (Client) session.getAttribute("client");
 
         if (client != null)
-            {
+        {
             String userPath = request.getServletPath();
             int clientId = client.getId();
 
             switch (userPath)
-                {
+            {
                 case "/today":
                     iYear = 0;
                     break;
@@ -85,55 +85,55 @@ public class CalendarServlet extends HttpServlet
                     iYear = (Integer) session.getAttribute("iYear"); // get currently selected year integer
                     cMonth = (String) session.getAttribute("cMonth"); // get currently selected month name string
                     if ("/gotoDate".equals(userPath))
-                        {
+                    {
                         gotoDate = request.getParameter("gotoDate");
                         Date date = null;
                         boolean validateDate = false;
                         validateDate = Validator.isDateValid(gotoDate);
                         if (validateDate == false)
-                            {
+                        {
                             // TODO create code if validateDate equals false respond with message
                             date = DateUtil.getCurrentDate();
                             calendar.setTime(date);
-                            }
+                        }
                         // convert date string into Date object
                         date = DateUtil.convertDateSched(gotoDate);
                         if (date != null)
-                            {
+                        {
                             calendar.setTime(date); // set Calendar object from Date object
                             day = calendar.get(Calendar.DATE); // get the date/day integer from Calendar object
-                            }
-                        else
-                            {
-                            day = 0;
-                            }
                         }
-                    if ("/viewDay".equals(userPath))
+                        else
                         {
+                            day = 0;
+                        }
+                    }
+                    if ("/viewDay".equals(userPath))
+                    {
                         day = CalendarUtil.nullIntconv(request.getParameter("weekStartDay"));
                         calendar = DateUtil.createCalendar(iYear, cMonth, day);
-                        }
+                    }
                     if ("/viewToday".equals(userPath))
-                        {
+                    {
                         Date date = null;
                         date = DateUtil.getCurrentDate();
                         calendar.setTime(date);
-                        }
+                    }
                     iMonth = calendar.get(Calendar.MONTH);
                     iYear = calendar.get(Calendar.YEAR);
                     day = calendar.get(Calendar.DATE);
                     if (day == 0)
-                        {
+                    {
                         selectedDate = DateUtil.getCurrentDate();
                         calendar.setTime(selectedDate);
                         day = calendar.get(Calendar.DAY_OF_MONTH);
                         iMonth = calendar.get(Calendar.MONTH);
                         iYear = calendar.get(Calendar.YEAR);
-                        }
+                    }
                     else
-                        {
+                    {
                         selectedDate = DateUtil.createDate(iYear, iMonth, day);
-                        }
+                    }
                     viewDay = true;
                     break;
                 case "/viewDate":
@@ -181,34 +181,34 @@ public class CalendarServlet extends HttpServlet
                     // create calendar oject and get integers for day, month, year
                     calendar = new GregorianCalendar();
                     if ("/nextWeek".equals(userPath))
-                        {
+                    {
                         viewWeekEndDate = (Date) session.getAttribute("viewWeekEndDate");
                         calendar.setTime(viewWeekEndDate); // set calendar object
                         calendar.add(Calendar.DATE, 1); // add one calendar day
-                        }
+                    }
                     else if ("/prevWeek".equals(userPath))
-                        {
+                    {
                         viewWeekStartDate = (Date) session.getAttribute("viewWeekStartDate");
                         calendar.setTime(viewWeekStartDate); // set calendar object
                         calendar.add(Calendar.DATE, -1); // subtract one calendar day
-                        }
+                    }
                     else if ("/viewWeek".equals(userPath) || "/thisWeek".equals(userPath))
-                        {
+                    {
                         if (day == 0) // if day requested parameter equals zero
-                            {
+                        {
                             selectedDate = DateUtil.getCurrentDate(); // use the current date for Date object
                             calendar.setTime(selectedDate);
-                            }
-                        else
-                            {
-                            calendar = DateUtil.createCalendar(iYear, cMonth, day);
-                            }
                         }
+                        else
+                        {
+                            calendar = DateUtil.createCalendar(iYear, cMonth, day);
+                        }
+                    }
                     // execute while loop until day of week equals 1 (sunday)
                     while (calendar.get(Calendar.DAY_OF_WEEK) > 1)
-                        {
+                    {
                         calendar.add(Calendar.DATE, -1);
-                        }
+                    }
                     weekStartDate = calendar.get(Calendar.DATE); // get the current date should be sun
                     iYear = calendar.get(Calendar.YEAR); // get the year at the start date
                     iMonth = calendar.get(Calendar.MONTH); // get the month
@@ -282,17 +282,17 @@ public class CalendarServlet extends HttpServlet
                     calendar = DateUtil.createCalendar(iYear, cMonth, 1);
                     iMonth = calendar.get(Calendar.MONTH);
                     break;
-                }
+            }
 
             Calendar ca = new GregorianCalendar();
             int iTYear = ca.get(Calendar.YEAR);
             int iTMonth = ca.get(Calendar.MONTH);
 
             if (iYear == 0)
-                {
+            {
                 iYear = iTYear;
                 iMonth = iTMonth;
-                }
+            }
 
             GregorianCalendar cal = new GregorianCalendar(iYear, iMonth, 1);
             int days = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
@@ -300,7 +300,7 @@ public class CalendarServlet extends HttpServlet
             cal = new GregorianCalendar(iYear, iMonth, days);
             int iTotalweeks = cal.get(Calendar.WEEK_OF_MONTH);
             switch (userPath)
-                {
+            {
                 case "/viewDay":
                 case "/prevDay":
                 case "/nextDay":
@@ -310,10 +310,10 @@ public class CalendarServlet extends HttpServlet
                     // get user day calendar data from database
                     calendarDay = CalendarDB.selectCalendar(clientId, iMonth, iYear, day);
                     if (calendarDay == null)
-                        {
+                    {
                         errorMessage = "There was an error retrieving your calendar data";
                         request.setAttribute("errorMessage", errorMessage);
-                        }
+                    }
                     break;
                 case "/viewWeek":
                 case "/nextWeek":
@@ -322,21 +322,21 @@ public class CalendarServlet extends HttpServlet
                     // get user calendar week within start and end selected date ranges
                     calendarWeek = CalendarDB.selectCalendar(clientId, sqlWkStartDate, sqlWkEndDate);
                     if (calendarWeek == null)
-                        {
+                    {
                         errorMessage = "There was an error retrieving your calendar data";
                         request.setAttribute("errorMessage", errorMessage);
-                        }
+                    }
                     break;
                 default:
                     // get user month calendar data from database
                     calendarMonth = CalendarDB.selectCalendar(clientId, iMonth, iYear);
                     if (calendarMonth == null)
-                        {
+                    {
                         errorMessage = "There was an error retrieving your calendar data";
                         request.setAttribute("errorMessage", errorMessage);
-                        }
+                    }
                     break;
-                }
+            }
             // get LONG (i.e. January) Month name using SimpleDateFormat
             cMonth = new SimpleDateFormat("MMMM").format(new Date(iYear, iMonth, days));
 
@@ -367,12 +367,12 @@ public class CalendarServlet extends HttpServlet
             session.setAttribute("viewWeekStartDate", viewWeekStartDate);
             session.setAttribute("viewWeekEndDate", viewWeekEndDate);
 
-            }
+        }
         else
-            {
+        {
             session.invalidate();
             url = "/index.jsp";
-            }
+        }
         RequestDispatcher dispatcher
                 = getServletContext().getRequestDispatcher(url);
         dispatcher.forward(request, response);

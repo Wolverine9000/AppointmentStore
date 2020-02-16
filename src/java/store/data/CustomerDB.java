@@ -15,7 +15,6 @@ import java.util.HashMap;
 import java.util.List;
 import messages.LogFile;
 import store.business.Associate2;
-import store.business.CalendarCustomer;
 import store.business.Client;
 import store.business.FullCalendar2;
 import store.business.MemberExtras;
@@ -125,12 +124,12 @@ public class CustomerDB
         try
         {
             ps = connection.prepareStatement(query);
-            ps.setString(1, fc.getFirstName());
-            ps.setString(2, fc.getLastName());
-            ps.setString(3, fc.getEmailAddress());
-            ps.setString(4, fc.getMobilePhone());
-            ps.setInt(5, fc.getAssociateId());
-            ps.setInt(6, fc.getServiceId());
+            ps.setString(1, fc.getClient().getFirstName());
+            ps.setString(2, fc.getClient().getLastName());
+            ps.setString(3, fc.getClient().getEmail());
+            ps.setString(4, fc.getClient().getMobilePhone());
+            ps.setInt(5, fc.getAssociate2().getId());
+            ps.setInt(6, fc.getServices().getServiceId());
             ps.executeUpdate();
 
             //Get the clientID from the last INSERT statement.
@@ -648,7 +647,7 @@ public class CustomerDB
         try
         {
             ps = connection.prepareStatement(query);
-            ps.setString(1, fc.getEmailAddress());
+            ps.setString(1, fc.getClient().getEmail());
             rs = ps.executeQuery();
             return rs.next();
         }
@@ -677,8 +676,8 @@ public class CustomerDB
         try
         {
             ps = connection.prepareStatement(query);
-            ps.setString(1, fc.getMobilePhone());
-            ps.setString(2, fc.getEmailAddress());
+            ps.setString(1, fc.getClient().getMobilePhone());
+            ps.setString(2, fc.getClient().getEmail());
             ps.setInt(3, fc.getCustomerId());
             rs = ps.executeQuery();
             return rs.next();
@@ -964,9 +963,9 @@ public class CustomerDB
             {
                 FullCalendar2 fc = new FullCalendar2();
                 fc.setCustomerId(rs.getInt("id"));
-                fc.setFirstName(rs.getString("first_name"));
-                fc.setLastName(rs.getString("last_name"));
-                fc.setEmailAddress(rs.getString("email"));
+                fc.getClient().setFirstName(rs.getString("first_name"));
+                fc.getClient().setLastName(rs.getString("last_name"));
+                fc.getClient().setEmail(rs.getString("email"));
                 fc.setAssociateId(rs.getInt("preferred_associateID"));
                 fc.setAssociate2(AssociateDB.selectAssociateInfo(rs.getInt("preferred_associateID")));
                 fc.setClient(CustomerDB.selectClient(rs.getInt("id")));
@@ -1086,7 +1085,7 @@ public class CustomerDB
     }
 
 //This method returns null if a calendar isn't found.
-    public static ArrayList<CalendarCustomer> selectClientsAll()
+    public static ArrayList<FullCalendar2> selectClientsAll()
     {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
@@ -1101,14 +1100,14 @@ public class CustomerDB
         {
             ps = connection.prepareStatement(query);
             rs = ps.executeQuery();
-            ArrayList<CalendarCustomer> calendarCustomer = new ArrayList<>();
+            ArrayList<FullCalendar2> calendarCustomer = new ArrayList<>();
             while (rs.next())
             {
-                CalendarCustomer cc = new CalendarCustomer();
+                FullCalendar2 cc = new FullCalendar2();
                 cc.setCustomerId(rs.getInt("id"));
-                cc.setFirstName(rs.getString("first_name"));
-                cc.setLastName(rs.getString("last_name"));
-                cc.setEmailAddress(rs.getString("email"));
+                cc.getClient().setFirstName(rs.getString("first_name"));
+                cc.getClient().setLastName(rs.getString("last_name"));
+                cc.getClient().setEmail(rs.getString("email"));
                 cc.setAssociateId(rs.getInt("preferred_associateID"));
                 cc.setAssociate2(AssociateDB.selectAssociateInfo(rs.getInt("preferred_associateID")));
                 cc.setClient(CustomerDB.selectClient(rs.getInt("id")));
@@ -1131,7 +1130,7 @@ public class CustomerDB
     }
 
     //This method returns null if a calendar isn't found.
-    public static ArrayList<CalendarCustomer> selectClientsAll(String level)
+    public static ArrayList<FullCalendar2> selectClientsAll(String level)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
@@ -1147,22 +1146,22 @@ public class CustomerDB
             ps = connection.prepareStatement(query);
             ps.setString(1, level);
             rs = ps.executeQuery();
-            ArrayList<CalendarCustomer> calendarCustomer = new ArrayList<>();
+            ArrayList<FullCalendar2> clients = new ArrayList<>();
 
             while (rs.next())
             {
-                CalendarCustomer cc = new CalendarCustomer();
-                cc.setCustomerId(rs.getInt("id"));
-                cc.setFirstName(rs.getString("first_name"));
-                cc.setLastName(rs.getString("last_name"));
-                cc.setEmailAddress(rs.getString("email"));
+                FullCalendar2 cc = new FullCalendar2();
+                cc.getClient().setId(rs.getInt("id"));
+                cc.getClient().setLastName(rs.getString("first_name"));
+                cc.getClient().setLastName(rs.getString("last_name"));
+                cc.getClient().setEmail(rs.getString("email"));
                 cc.setAssociateId(rs.getInt("preferred_associateID"));
                 cc.setAssociate2(AssociateDB.selectAssociateInfo(rs.getInt("preferred_associateID")));
                 cc.setClient(CustomerDB.selectClient(rs.getInt("id")));
 
-                calendarCustomer.add(cc);
+                clients.add(cc);
             }
-            return calendarCustomer;
+            return clients;
         }
         catch (SQLException | NullPointerException e)
         {

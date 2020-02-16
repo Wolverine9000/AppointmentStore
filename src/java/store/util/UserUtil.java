@@ -34,11 +34,11 @@ public class UserUtil
             clientId = (CustomerDB.insertNewClient(fc)); // if client does not exist, create in database
             if (clientId == 0)
             {
-                LogFile.generalLog("UserUtil processUserId", "add client FAILED clientName " + fc.getFirstName() + " " + fc.getLastName());
+                LogFile.generalLog("UserUtil processUserId", "add client FAILED clientName " + fc.getClient().getFirstName() + " " + fc.getClient().getLastName());
             }
             else
             {
-                LogFile.generalLog("UserUtil processUserId", "client ADDED clientName " + fc.getFirstName() + " " + fc.getLastName());
+                LogFile.generalLog("UserUtil processUserId", "client ADDED clientName " + fc.getClient().getFirstName() + " " + fc.getClient().getLastName());
             }
 
         }
@@ -49,13 +49,13 @@ public class UserUtil
             if (updateClient == 0)
             {
                 LogFile.generalLog("UserUtil processUserId", "UPDATE client FAILED clientName "
-                        + fc.getFirstName() + " Client ID = " + fc.getCustomerId());
+                        + fc.getClient().getFirstName() + " Client ID = " + fc.getClient().getId());
 
             }
             else if (updateClient != 0)
             {
                 LogFile.generalLog("UserUtil processUserId", "UPDATE client SUCCESS clientName "
-                        + fc.getFirstName() + " Client ID = " + fc.getCustomerId());
+                        + fc.getClient().getFirstName() + " Client ID = " + fc.getClient().getId());
             }
         }
         return clientId;

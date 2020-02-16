@@ -511,37 +511,37 @@ public class Validator
         boolean emailError;
         boolean mobilephoneError;
 
-        if (fc.getFirstName() == null
-                || fc.getFirstName().equals("")
-                || fc.getFirstName().length() > 45)
+        if (fc.getClient().getFirstName() == null
+                || fc.getClient().getFirstName().equals("")
+                || fc.getClient().getFirstName().length() > 45)
         {
             errorFlag = true;
             firstnameError = true;
             request.setAttribute("firstnameError", firstnameError);
         }
 
-        if (fc.getLastName() == null
-                || fc.getLastName().equals("")
-                || fc.getLastName().length() > 45)
+        if (fc.getClient().getLastName() == null
+                || fc.getClient().getLastName().equals("")
+                || fc.getClient().getLastName().length() > 45)
         {
             errorFlag = true;
             lastnameError = true;
             request.setAttribute("lastnameError", lastnameError);
         }
 
-        if (fc.getEmailAddress() == null
-                || fc.getEmailAddress().equals("")
-                || fc.getEmailAddress().length() > 45
-                || isEmailValid(fc.getEmailAddress()) == false)
+        if (fc.getClient().getEmail() == null
+                || fc.getClient().getEmail().equals("")
+                || fc.getClient().getEmail().length() > 45
+                || isEmailValid(fc.getClient().getEmail()) == false)
         {
             errorFlag = true;
             emailError = true;
             request.setAttribute("emailError", emailError);
         }
 
-        if (!"".equals(fc.getMobilePhone()))
+        if (!"".equals(fc.getClient().getMobilePhone()))
         {
-            if (isPhoneValid(fc.getMobilePhone()) == false)
+            if (isPhoneValid(fc.getClient().getMobilePhone()) == false)
             {
                 errorFlag = true;
                 mobilephoneError = true;

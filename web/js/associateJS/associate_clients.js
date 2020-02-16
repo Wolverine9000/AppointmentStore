@@ -1,4 +1,4 @@
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -14,9 +14,9 @@ var minutes = [];
 var hours = [];
 
 $(document).ready(function () {
-    $(function() {
-            $("#accordion-send > div").accordion({ header: "h3", collapsible: true });
-        }); 
+    $(function () {
+        $("#accordion-send > div").accordion({header: "h3", collapsible: true});
+    });
     // populate minutes option select
 //    for (var i = 00; i < 60; i++)
 //    {
@@ -44,7 +44,7 @@ $(document).ready(function () {
             heightStyle: "content"
         });
     });
-    
+
     var v = memberLevels();
     $("#memberLevels").append(v);
     listClients("ci", "../FullCalendar", false, "clientInfo", 'firstName');
@@ -92,13 +92,13 @@ function  listClients(key, url, async, title) {
     doAjaxRequest(key, url, async, title, function (results) {
         $.each(results, function (index, value) {
             var o = new UserObj(
-                    value.firstName,
-                    value.lastName,
-                    value.emailAddress,
-                    value.customerId,
+                    value.client.firstName,
+                    value.client.lastName,
+                    value.client.email,
+                    value.client.id,
                     value.associate2,
-                    value.associateName,
-                    value.associateId,
+                    value.associate2.firstName,
+                    value.associate2.id,
                     value.memberLevels,
                     value.client);
             clientSet.push(o);
@@ -206,7 +206,8 @@ $(document).on("click", "#select-header", function () {
         });
         isAllSelected = false;
     }
-    else {
+    else
+    {
         $(".c-select").each(function () {
             $(".c-select").prop('checked', true);
         });
@@ -230,7 +231,8 @@ $(document).on("change", "#c-options", function () {
     {
         alert("You must first select one or more clients.");
     }
-    else {
+    else
+    {
         var sendNumber = clientArray.length;
         var clientPlural = sendNumber === 1 ? "Client" : "Clients";
         if (optSel === "send-message")
@@ -314,12 +316,15 @@ var sort = {
         array["sortArrayP"] = "";
         array["sortArrayM"] = "";
         var currentSort = array["sortArrayID"];
-        if (typeof currentSort !== 'boolean') {
+        if (typeof currentSort !== 'boolean')
+        {
             array.sort(function (a, b) {
-                if (a.client.id > b.client.id) {
+                if (a.client.id > b.client.id)
+                {
                     return 1;
                 }
-                if (a.client.id < b.client.id) {
+                if (a.client.id < b.client.id)
+                {
                     return -1;
                 }
                 // a must be equal to b
@@ -341,12 +346,15 @@ var sort = {
         array["sortArrayP"] = "";
         array["sortArrayM"] = "";
         var currentSort = array["sortArrayF"];
-        if (typeof currentSort !== 'boolean') {
+        if (typeof currentSort !== 'boolean')
+        {
             array.sort(function (a, b) {
-                if (a.firstName.toLowerCase() > b.firstName.toLowerCase()) {
+                if (a.firstName.toLowerCase() > b.firstName.toLowerCase())
+                {
                     return 1;
                 }
-                if (a.firstName.toLowerCase() < b.firstName.toLowerCase()) {
+                if (a.firstName.toLowerCase() < b.firstName.toLowerCase())
+                {
                     return -1;
                 }
                 // a must be equal to b
@@ -368,12 +376,15 @@ var sort = {
         array["sortArrayM"] = "";
         array["sortArrayP"] = "";
         var currentSort = array["sortArrayL"];
-        if (typeof currentSort !== 'boolean') {
+        if (typeof currentSort !== 'boolean')
+        {
             array.sort(function (a, b) {
-                if (a.lastName.toLowerCase() > b.lastName.toLowerCase()) {
+                if (a.lastName.toLowerCase() > b.lastName.toLowerCase())
+                {
                     return 1;
                 }
-                if (a.lastName.toLowerCase() < b.lastName.toLowerCase()) {
+                if (a.lastName.toLowerCase() < b.lastName.toLowerCase())
+                {
                     return -1;
                 }
                 // a must be equal to b
@@ -395,12 +406,15 @@ var sort = {
         array["sortArrayM"] = "";
         array["sortArrayP"] = "";
         var currentSort = array["sortArrayE"];
-        if (typeof currentSort !== 'boolean') {
+        if (typeof currentSort !== 'boolean')
+        {
             array.sort(function (a, b) {
-                if (a.client.email.toLowerCase() > b.client.email.toLowerCase()) {
+                if (a.client.email.toLowerCase() > b.client.email.toLowerCase())
+                {
                     return 1;
                 }
-                if (a.client.email.toLowerCase() < b.client.email.toLowerCase()) {
+                if (a.client.email.toLowerCase() < b.client.email.toLowerCase())
+                {
                     return -1;
                 }
                 // a must be equal to b
@@ -422,12 +436,15 @@ var sort = {
         array["sortArrayE"] = "";
         array["sortArrayM"] = "";
         var currentSort = array["sortArrayP"];
-        if (typeof currentSort !== 'boolean') {
+        if (typeof currentSort !== 'boolean')
+        {
             array.sort(function (a, b) {
-                if (a.client.mobilePhone.toLowerCase() > b.client.mobilePhone.toLowerCase()) {
+                if (a.client.mobilePhone.toLowerCase() > b.client.mobilePhone.toLowerCase())
+                {
                     return 1;
                 }
-                if (a.client.mobilePhone.toLowerCase() < b.client.mobilePhone.toLowerCase()) {
+                if (a.client.mobilePhone.toLowerCase() < b.client.mobilePhone.toLowerCase())
+                {
                     return -1;
                 }
                 // a must be equal to b
@@ -449,12 +466,15 @@ var sort = {
         array["sortArrayE"] = "";
         array["sortArrayP"] = "";
         var currentSort = array["sortArrayM"];
-        if (typeof currentSort !== 'boolean') {
+        if (typeof currentSort !== 'boolean')
+        {
             array.sort(function (a, b) {
-                if (a.client.memberLevel.toLowerCase() > b.client.memberLevel.toLowerCase()) {
+                if (a.client.memberLevel.toLowerCase() > b.client.memberLevel.toLowerCase())
+                {
                     return 1;
                 }
-                if (a.client.memberLevel.toLowerCase() < b.client.memberLevel.toLowerCase()) {
+                if (a.client.memberLevel.toLowerCase() < b.client.memberLevel.toLowerCase())
+                {
                     return -1;
                 }
                 // a must be equal to b
@@ -598,9 +618,9 @@ function editUserInfo(o, backFlag) {
             tips.removeClass("ui-state-highlight", 1500);
         }, 500);
     }
-    function checkRegexp(o, regexp, n)
-    {
-        if (!(regexp.test(o.val()))) {
+    function checkRegexp(o, regexp, n) {
+        if (!(regexp.test(o.val())))
+        {
             o.addClass("ui-state-error");
             updateTips(n);
             return false;
@@ -608,7 +628,8 @@ function editUserInfo(o, backFlag) {
         return true;
     }
     function checkLength(o, n, min, max) {
-        if (o.val().length > max || o.val().length < min) {
+        if (o.val().length > max || o.val().length < min)
+        {
             o.addClass("ui-state-error");
             updateTips("Length of " + n + " must be between " +
                     min + " and " + max + " characters");
@@ -641,7 +662,8 @@ function editUserInfo(o, backFlag) {
             updateTips(n);
             return false;
         }
-        else if (a.val() === b.val()) {
+        else if (a.val() === b.val())
+        {
             return true;
         }
     }
@@ -745,7 +767,8 @@ function editUserInfo(o, backFlag) {
                         updateTips("No changes were made to Client's profile.");
                         var bValid = false;
                     }
-                    else {
+                    else
+                    {
                         var av = convert.parseJsonObj(associate);
                         o.associate2 = av;
                         o.associateName = av.firstName;
@@ -787,7 +810,8 @@ function editUserInfo(o, backFlag) {
                             }
                         if (bValid)
                         {
-                            if (o.action === "updateClient" || o.action === "add") {
+                            if (o.action === "updateClient" || o.action === "add")
+                            {
                                 o.client.firstName = firstName.val();
                                 o.client.lastName = lastName.val();
                                 o.client.mobilePhone = mobilePhone.val();
@@ -813,7 +837,8 @@ function editUserInfo(o, backFlag) {
                                 renderData.alertPrefs(o, "#accordion-3");
                                 confirmUserInfo(o);
                             }
-                            else {
+                            else
+                            {
                                 var s = parseInt($("#normal-service", this).val());
                                 var n = services.getServiceName(s);
                                 var c = {
@@ -923,8 +948,7 @@ function confirmUserInfo(o) {
     });
 }
 
-function nowHour(h)
-{
+function nowHour(h) {
     var hourNum = parseInt(h);
     var hourOptArr = [];
     for (var i = 1; i < 13; i++)
@@ -939,8 +963,7 @@ function nowHour(h)
     return hourOptArr;
 }
 
-function nowMinute(m)
-{
+function nowMinute(m) {
     var minNum = parseInt(m);
     var minOptArr = [];
     for (var i = 0; i < 60; i++)
@@ -992,7 +1015,8 @@ function sendMessage(arr) {
 
 // toggle time set fields when checkbox send now is selected
     sendNow.change(function () {
-        if (sendNow.is(':checked') === true) {
+        if (sendNow.is(':checked') === true)
+        {
             dateToSendMsg.addClass('disabledTextColor');
             var nowDate = moment().format("MM/DD/YYYY"); // current date
             dateToSendMsg.val(nowDate).prop('disabled', true);
@@ -1013,7 +1037,8 @@ function sendMessage(arr) {
 
             sendAmPm.val(amPm);
         }
-        else {
+        else
+        {
             dateToSendMsg.removeClass('disabledTextColor');
             dateToSendMsg.prop('disabled', false);
             sendHour.prop('disabled', false);
@@ -1091,7 +1116,8 @@ function sendMessage(arr) {
                         errorMsgs.push("Length of  " + "<font color='#c00'>Message</font>"
                                 + " must be between " + 10 + " and " + 145 + " characters.");
                     }
-                    else {
+                    else
+                    {
                         msgValid = true;
                     }
                     if (!msgValid)
@@ -1204,30 +1230,37 @@ var renderData = {
                 + "</tbody>" + "</table>";
         return p;
     },
-    alertPrefs: function (o, e)
-    {
-        if (o.client.emailAdAlerts === true) {
+    alertPrefs: function (o, e) {
+        if (o.client.emailAdAlerts === true)
+        {
             $(e + " #email-ad-alerts").prop('checked', true);
         }
-        else {
+        else
+        {
             $(e + " #email-ad-alerts").prop('checked', false);
         }
-        if (o.client.smsAdAlerts === true) {
+        if (o.client.smsAdAlerts === true)
+        {
             $(e + " #sms-ad-alerts").prop('checked', true);
         }
-        else {
+        else
+        {
             $(e + " #sms-ad-alerts").prop('checked', false);
         }
-        if (o.client.emailApptAlerts === true) {
+        if (o.client.emailApptAlerts === true)
+        {
             $(e + " #email-appt-alerts").prop('checked', true);
         }
-        else {
+        else
+        {
             $(e + " #email-appt-alerts").prop('checked', false);
         }
-        if (o.client.smsApptAlerts === true) {
+        if (o.client.smsApptAlerts === true)
+        {
             $(e + " #sms-appt-alerts").prop('checked', true);
         }
-        else {
+        else
+        {
             $(e + " #sms-appt-alerts").prop('checked', false);
         }
     }

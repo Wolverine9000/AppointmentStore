@@ -20,7 +20,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
-import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
@@ -29,7 +28,6 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
 import store.business.Associate2;
-import store.business.CalendarCustomer;
 import store.business.Client;
 import store.business.FullCalendar2;
 import store.business.SMSAppointmentMessage;
@@ -86,9 +84,9 @@ public class CalendarData
             fc.setTextColor(cc.getTextColor());
             fc.setBackgroundColor(cc.getBackgroundColor());
             fc.setAssociate2(cc.getAssociate2());
-            fc.getServices().setStatusColor(id);
-            tStatusColor()
-            );
+//            fc.getServices().getServiceStatus().getStatusColor()(id);
+//            tStatusColor()
+//            );
             fc.setClient(cc.getClient());
             fc.setServiceTime(cc.getServiceTime());
             fc.setDurationEditable(cc.isDurationEditable());
@@ -135,22 +133,19 @@ public class CalendarData
             fc.setStart(cc.convertStartTimestamp());
             fc.setEnd(cc.convertEndTimestamp());
             fc.setServiceId(cc.getServiceId());
-            fc.setAllDay(cc.getAllDay());
-            fc.setFirstName(cc.getFirstName());
-            fc.setLastName(cc.getLastName());
-            fc.setEmailAddress(cc.getEmailAddress());
+            fc.setAllDay(cc.isAllDay());
             fc.setCustomerId(cc.getCustomerId());
             fc.setEventId(cc.getEventId());
             fc.setAssociateName(a.getFirstName());
             fc.setAssociateId(cc.getAssociateId());
             fc.setTextColor(cc.getTextColor());
-            fc.setBackgroundColor(cc.getServiceStatus().getStatusColor());
+            fc.setBackgroundColor(cc.getServices().getServiceStatus().getStatusColor());
             fc.setAssociate2(cc.getAssociate2());
             fc.setServiceStatus(cc.getServiceStatus());
             fc.setClient(cc.getClient());
             fc.setServiceTime(cc.getServiceTime());
             fc.setDurationEditable(cc.isDurationEditable());
-            fc.setEditable(cc.getEditable());
+            fc.setEditable(cc.isEditable());
             fc.setStartSql(cc.getStartSql());
             fc.setEndSql(cc.getEndSql());
             fc.setId(cc.getEventId());
@@ -202,78 +197,42 @@ public class CalendarData
         ArrayList<FullCalendar2> c;
         c = CalendarDB.selectCalendarAll();
 
-        c.stream().map(new Function<FullCalendar2, FullCalendar2>()
+        c.stream().map((FullCalendar2 cc) ->
         {
-            @Override
-            public FullCalendar2 apply(FullCalendar2 cc)
-            {
-                FullCalendar2 fc;
-                fc = new FullCalendar2();
-                fc.setClient(cc.getClient());
-                fc.setCustomerId(cc.getClient().getId());
-                fc.setAssociate2(cc.getAssociate2());
-                fc.setServices(cc.getServices());
-                fc.setStart(cc.convertStartTimestamp());
-                fc.setEnd(cc.convertEndTimestamp());
-                fc.setTitle(cc.addName());
-                fc.setNotes(cc.getNotes());
-                fc.setDurationEditable(cc.isDurationEditable());
-                fc.setTextColor(cc.getTextColor());
-                fc.setEditable(cc.isEditable());
-                fc.setServiceTime(cc.getServiceTime());
-                fc.setAllDay(cc.isAllDay());
-                fc.setId(cc.getEventId());
-                fc.setEventId(cc.getEventId());
+            FullCalendar2 fc;
+            fc = new FullCalendar2();
+            fc.setClient(cc.getClient());
+            fc.setCustomerId(cc.getClient().getId());
+            fc.setAssociate2(cc.getAssociate2());
+            fc.setServices(cc.getServices());
+            fc.setStart(cc.convertStartTimestamp());
+            fc.setEnd(cc.convertEndTimestamp());
+            fc.setTitle(cc.addName());
+            fc.setNotes(cc.getNotes());
+            fc.setDurationEditable(cc.isDurationEditable());
+            fc.setTextColor(cc.getTextColor());
+            fc.setEditable(cc.isEditable());
+            fc.setBackgroundColor(cc.getServices().getServiceStatus().getStatusColor());
+            fc.setServiceStatus(cc.getServiceStatus());
+            fc.setServiceTime(cc.getServiceTime());
+            fc.setAllDay(cc.isAllDay());
+            fc.setId(cc.getEventId());
+            fc.setEventId(cc.getEventId());
 //                 fc.setAssociateId(cc.getAssociateId());
 
-                return fc;
-            }
+            return fc;
         }).forEachOrdered((fc) ->
         {
             fullCalendar2.add(fc);
         });
-
-//        c.stream().map((FullCalendar2 cc) ->
-//        {
-//            FullCalendar2 fc = new FullCalendar2();
-//            fc.setClient(cc.getClient());
-//            fc.setAssociate2(cc.getAssociate2());
-//            fc.setTitle(cc.addName());
-//            fc.setNotes(cc.getNotes());
-//            fc.setStart(cc.convertStartTimestamp());
-//            fc.setEnd(cc.convertEndTimestamp());
-//            fc.setServiceId(cc.getServiceId());
-//            fc.setAllDay(cc.isAllDay());
-//            fc.setFirstName(cc.getClient().getFirstName());
-//           fc.setLastName(cc.getLastName());
-//            fc.setEmailAddress(cc.getEmailAddress());
-//            fc.setCustomerId(cc.getClient().getId());
-//            fc.setEventId(cc.getEventId());
-//            fc.setAssociateName(cc.getAssociate2().getFirstName());
-//            fc.setAssociateId(cc.getAssociateId());
-//            fc.setTextColor(cc.getTextColor());
-//            fc.setBackgroundColor(cc.getServiceStatus().getStatusColor());
-//            fc.setAssociate2(cc.getAssociate2());
-//            fc.setServiceStatus(cc.getServiceStatus());
-//            fc.setServiceTime(cc.getServiceTime());
-//            fc.setDurationEditable(cc.isDurationEditable());
-//            fc.setEditable(cc.isEditable());
-//            fc.setStartSql(cc.getStartSql());
-//            fc.setEndSql(cc.getEndSql());
-//            fc.setId(cc.getEventId());
-//            return fc;
-//        }).forEach((fc)
-//                ->
-//        {
-//            fullCalendar2.add(fc);
-//        });
         return fullCalendar2;
     }
 
     public static ArrayList<FullCalendar2> clientInfo(String key, String title)
     {
         ArrayList<FullCalendar2> fullCalendar2 = new ArrayList<>();
-        ArrayList<CalendarCustomer> c = null;
+        ArrayList<FullCalendar2> c;
+        c = CustomerDB.selectClientsAll(title);
         if ("getList".equals(key))
         {
             c = CustomerDB.selectClientsAll(title);
@@ -282,15 +241,14 @@ public class CalendarData
         {
             c = CustomerDB.selectClientsAll();
         }
-        for (CalendarCustomer cc : c)
+        for (FullCalendar2 cc : c)
         {
             FullCalendar2 fc = new FullCalendar2();
-            fc.setFirstName(cc.getFirstName());
-            fc.setLastName(cc.getLastName());
-            fc.setEmailAddress(cc.getEmailAddress());
+            fc.getClient().setFirstName(cc.getClient().getFirstName());
+            fc.getClient().setLastName(cc.getClient().getLastName());
+            fc.getClient().setEmail(cc.getClient().getEmail());
             fc.setCustomerId(cc.getCustomerId());
             fc.setAssociateName(cc.getAssociate2().getFirstName());
-            fc.setAssociateId(cc.getAssociateId());
             fc.setAssociate2(cc.getAssociate2());
             fc.setClient(cc.getClient());
             fc.getMemberLevels();
@@ -539,7 +497,7 @@ public class CalendarData
             {
                 case "add":
                     boolean eventExists;
-                    if (fc.getAllDay())
+                    if (fc.isAllDay())
                     { // if event is an all day calendar event, check to see if it already exists in the database
                         eventExists = CalendarDB.eventExists(fc.getEventId());
                     }
@@ -631,7 +589,7 @@ public class CalendarData
                                 sendEmailApptAlert = fc.getClient().isEmailApptAlerts();
                                 sendSmsApptAlert = fc.getClient().isSmsApptAlerts();
                                 // TODO code new appointment email/sms message
-                                String message = fc.getFirstName() + ", the service " + fc.getTitle() + " with " + fc.getAssociateName() + " has been scheduled on " + dateStr + " at " + timeString + "."
+                                String message = fc.getClient().getFirstName() + ", the service " + fc.getTitle() + " with " + fc.getAssociateName() + " has been scheduled on " + dateStr + " at " + timeString + "."
                                         + " Event:# " + eventIdStr + " Code: " + regCode;
 //                                String message = fc.getFirstName() + " " + dateStr + " at " + timeString + "."
 //                                        + "http://71.8.84.224:8081/AppointmentStore/IncomingMessage?phone=" + mobileStr2 + "&reg=" + regCodeStr;
@@ -681,7 +639,7 @@ public class CalendarData
                             }
                             if (smsApptAsso)
                             {
-                                String message = "Your client " + fc.getFirstName() + " has scheduled the service " + fc.getTitle() + " on " + dateStr + " at " + timeString + "."
+                                String message = "Your client " + fc.getClient().getFirstName() + " has scheduled the service " + fc.getTitle() + " on " + dateStr + " at " + timeString + "."
                                         + " Event# " + eventIdStr;
                                 try
                                 {
@@ -714,6 +672,7 @@ public class CalendarData
                         }
                     }
                     break;
+
                 case "delete":
                     boolean eventDeleted;
                     eventDeleted = CalendarDB.deleteAppointment(fc.getEventId());
@@ -721,7 +680,7 @@ public class CalendarData
                     {
                         // TODO code client appointment cancellation notification email/sms
                     }
-                    if (eventDeleted && fc.getRestoreTime() && !fc.getAllDay())
+                    if (eventDeleted && fc.getRestoreTime() && !fc.isAllDay())
                     {
                         boolean isAssoDateAvailable = AssociateDB.isAssociateAvailability(fc.getAssociateId(), sqlStartDate);
                         if (!isAssoDateAvailable) // if Associate Date not available, restore Associate time frame
@@ -788,7 +747,7 @@ public class CalendarData
                     }
                     break;
             }
-            boolean logAction = LogFile.associateLog("FullCalPostServlet postCalendarData", "client:" + fc.getFirstName() + " clientID:" + fc.getCustomerId() + " Event ID: " + fc.getEventId()
+            boolean logAction = LogFile.associateLog("FullCalPostServlet postCalendarData", "client:" + fc.getClient().getFirstName() + " clientID:" + fc.getClient().getId() + " Event ID: " + fc.getEventId()
                     + " service:" + fc.getTitle() + " svcDate:" + fc.getStart(), " action:" + fc.getAction());
         }
         return errorFlag;
@@ -930,7 +889,7 @@ public class CalendarData
                         }
                         break;
                 }
-                boolean logAction = LogFile.associateLog("FullCalPostServlet postClientData", "client:" + fc.getFirstName() + " clientID:" + fc.getCustomerId() + " Event ID: n/a"
+                boolean logAction = LogFile.associateLog("FullCalPostServlet postClientData", "client:" + fc.getAssociate2().getFirstName() + " clientID:" + fc.getCustomerId() + " Event ID: n/a"
                         + " svcDate: n/a", " action:" + fc.getAction());
             }
         }

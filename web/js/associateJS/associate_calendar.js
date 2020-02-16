@@ -76,13 +76,15 @@ $(document).ready(function () {
             '': .5
         }, // end dragOpacity
         loading: function (bool) {
-            if (bool) {
+            if (bool)
+            {
                 openLoading();
                 $("#loading").dialog("open"); // open loading element
                 $("#loading h4").html("Loading data.  Please wait...");
                 spinner('loading', 'auto');
             }
-            else {
+            else
+            {
                 $('#loading').data('spinner').stop(); // Stop the spinner
                 $("#loading h4").html("Done!");
                 $("#loading").dialog("close"); // close loading element
@@ -127,27 +129,29 @@ $(document).ready(function () {
                 {
                     conflickMsg2 = "<u>" + "overlaps with another appointment" + "</u>";
                 }
-                else {
+                else
+                {
                     conflickMsg2 = "<u>" + "overlaps with mulitple appointments" + "</u>";
                 }
 
-                $("#errorMsg div").html(conflickMsg + "<br>" + " Moving client:" + "<strong>" + event.firstName + "</strong>"
+                $("#errorMsg div").html(conflickMsg + "<br>" + " Moving client:" + "<strong>" + event.client.firstName + "</strong>"
                         + " scheduled service:" + "<strong>" + stripName(event.title) + "</strong>" + "<br>" + conflickMsg2);
                 $("#errorTable2 tbody").html("<tr>" + "<th title='client first name'>" + "client" + "</th>" + "<th title='appointment ID number'>"
                         + "event&#35;" + "</th>" + "<th title='service to perform'>" + "service" + "<th title='service start time'>" + "start" + "</th>"
                         + "<th title='service end time'>" + "end" + "</th>" + "<th title='current appointment status'>" + "status" + "</th>" + "</tr>");
                 $("#errorTable2 tbody").append(
-                        "<tr>" + "<td>" + event.firstName + "</td>" + "<td>" + event.eventId + "</td>" + "<td>" + stripName(event.title) + "</td>" + "<td>" + jsTime.fmtTimeAlt(event.start) + "</td>"
-                        + "<td>" + jsTime.fmtTimeAlt(event.end) + "</td>" + '<td style="color:' + event.serviceStatus.statusColor + '">' + event.serviceStatus.statusName + "</td>" + "</tr>");
+                        "<tr>" + "<td>" + event.client.firstName + "</td>" + "<td>" + event.eventId + "</td>" + "<td>" + stripName(event.title) + "</td>" + "<td>" + jsTime.fmtTimeAlt(event.start) + "</td>"
+                        + "<td>" + jsTime.fmtTimeAlt(event.end) + "</td>" + '<td style="color:' + event.services.serviceStatus.statusColor + '">' + event.serviceStatus.statusName + "</td>" + "</tr>");
                 $(".errorTable tbody").html(th);
                 $.each(hasConflict, function (index, value) {
                     $(".errorTable tbody").append(
-                            "<tr>" + "<td>" + value.firstName + "</td>" + "<td>" + value.eventId + "</td>" + "<td>" + stripName(value.title) + "</td>" + "<td>" + jsTime.fmtTimeAlt(value.start) + "</td>"
+                            "<tr>" + "<td>" + value.client.firstName + "</td>" + "<td>" + value.eventId + "</td>" + "<td>" + stripName(value.title) + "</td>" + "<td>" + jsTime.fmtTimeAlt(value.start) + "</td>"
                             + "<td>" + jsTime.fmtTimeAlt(value.end) + "</td>"
-                            + '<td style="color:' + value.serviceStatus.statusColor + '">' + value.serviceStatus.statusName + "</td>" + "<td>" + '<input type="checkbox" id="cancel" value="' + value.eventId + '">' + "</td>" + "</tr>");
+                            + '<td style="color:' + value.services.serviceStatus.statusColor + '">' + value.services.serviceStatus.statusName + "</td>" + "<td>" + '<input type="checkbox" id="cancel" value="' + value.eventId + '">' + "</td>" + "</tr>");
                 });
             }
-            else {
+            else
+            {
                 postToServer(event);
             }
         },
@@ -165,27 +169,29 @@ $(document).ready(function () {
                 {
                     conflickMsg2 = "<u>" + "overlaps with another appointment" + "</u>";
                 }
-                else {
+                else
+                {
                     conflickMsg2 = "<u>" + "overlaps with mulitple appointments" + "</u>";
                 }
 
-                $("#errorMsg div").html(conflickMsg + "<br>" + " Changing time for client:" + "<strong>" + event.firstName + "</strong>"
+                $("#errorMsg div").html(conflickMsg + "<br>" + " Changing time for client:" + "<strong>" + event.client.firstName + "</strong>"
                         + " scheduled service:" + "<strong>" + stripName(event.title) + "</strong>" + "<br>" + conflickMsg2);
                 $("#errorTable2 tbody").html("<tr>" + "<th title='client first name'>" + "client" + "</th>" + "<th title='appointment ID number'>"
                         + "event&#35;" + "</th>" + "<th title='service to perform'>" + "service" + "<th title='service start time'>" + "start" + "</th>"
                         + "<th title='service end time'>" + "end" + "</th>" + "<th title='current appointment status'>" + "status" + "</th>" + "</tr>");
                 $("#errorTable2 tbody").append(
-                        "<tr>" + "<td>" + event.firstName + "</td>" + "<td>" + event.eventId + "</td>" + "<td>" + stripName(event.title) + "</td>" + "<td>" + jsTime.fmtTimeAlt(event.start) + "</td>"
-                        + "<td>" + jsTime.fmtTimeAlt(event.end) + "</td>" + '<td style="color:' + event.serviceStatus.statusColor + '">' + event.serviceStatus.statusName + "</td>" + "</tr>");
+                        "<tr>" + "<td>" + event.client.firstName + "</td>" + "<td>" + event.eventId + "</td>" + "<td>" + stripName(event.title) + "</td>" + "<td>" + jsTime.fmtTimeAlt(event.start) + "</td>"
+                        + "<td>" + jsTime.fmtTimeAlt(event.end) + "</td>" + '<td style="color:' + event.services.serviceStatus.statusColor + '">' + event.serviceStatus.statusName + "</td>" + "</tr>");
                 $(".errorTable tbody").html(th);
                 $.each(hasConflict, function (index, value) {
                     $(".errorTable tbody").append(
                             "<tr>" + "<td>" + value.firstName + "</td>" + "<td>" + value.eventId + "</td>" + "<td>" + stripName(value.title) + "</td>" + "<td>" + jsTime.fmtTimeAlt(value.start) + "</td>"
                             + "<td>" + jsTime.fmtTimeAlt(value.end) + "</td>"
-                            + '<td style="color:' + value.serviceStatus.statusColor + '">' + value.serviceStatus.statusName + "</td>" + "<td>" + '<input type="checkbox" id="cancel" value="' + value.eventId + '">' + "</td>" + "</tr>");
+                            + '<td style="color:' + value.services.serviceStatus.statusColor + '">' + value.services.serviceStatus.statusName + "</td>" + "<td>" + '<input type="checkbox" id="cancel" value="' + value.eventId + '">' + "</td>" + "</tr>");
                 });
             }
-            else {
+            else
+            {
                 postToServer(event);
             }
         },
@@ -197,7 +203,8 @@ $(document).ready(function () {
                 data: {
                     title: idlNum,
                     start: 'start',
-                    end: 'end'
+                    end: 'end',
+                    backgroundColor: 'red'
                 },
                 error: function () {
                     $("#postDataError").html(fetchError);
@@ -234,8 +241,7 @@ $(function () {
 }); // end update Calendar function
 
 // this function checks for events with overlapping times and then returns them in an array
-function eventConflictCk(event)
-{
+function eventConflictCk(event) {
     var conflictEvts = [],
             stJs = jsDate.convToJsDate(event.start),
             etJs = jsDate.convToJsDate(event.end),
@@ -254,7 +260,7 @@ function eventConflictCk(event)
         if (std.getDate() === vst.getDate() && parseInt(event.associateId) === value.associateId)
         {
             if (!value.allDay && value.id !== event.eventId
-                    && value.serviceStatus.statusName === "Confirmed")
+                    && value.services.serviceStatus.statusName === "Confirmed")
             {
                 vst = vst.getTime();
                 vet = vet.getTime();
@@ -318,7 +324,8 @@ function newEvent(start, end, jsEvent, view) {
                 + "<tr>" + "<td>" + "time:" + "</td>" + "<td>" + jsTime.formatTime(start) + "&nbsp;&nbsp;" + jsTime.formatTime(end) + "</td>" + "</tr>");
         $("#pastTable tfoot").html("<tr>" + "<th colspan='2'>" + " select a future date &#38; time" + "</th>" + "</tr>");
     }
-    else {
+    else
+    {
         var svcOpt = services.getSvcsStringify(); // list services select group
         var assoOpt = associateClass.getAssociateList(); // list associate select group
         $(".notifyTable #normal-service").html(svcOpt);
@@ -491,7 +498,8 @@ function createEvent(start, end, jsEvent, view) {
         endTime.val(jsTime.formatTime(e));
         startTime.val(jsTime.formatTime(start));
     }
-    else {
+    else
+    {
         $("#startend").hide();
     }
 
@@ -598,7 +606,8 @@ function createEvent(start, end, jsEvent, view) {
                             mobilePhone: mobilePhone
                         };
                     }
-                    else {
+                    else
+                    {
                         // convert client string data to js object
                         client = convert.parseJsonObj(clientInfoObj);
                     }
@@ -640,6 +649,8 @@ function createEvent(start, end, jsEvent, view) {
                     eventObj.end = endObj;
                     eventObj.allDay = allDay;
                     eventObj.backgroundColor = backgroundColor;
+                    eventObj.editable = editable;
+                    eventObj.durationEditable = durationEditable;
                     eventObj.eventId = eventId;
                     eventObj.serviceId = serviceId;
                     eventObj.serviceTime = serviceTime;
@@ -702,7 +713,8 @@ function openMsg(event, revertFunc) {
                     {
                         newEvt(event.start, event.end, event.allDay);
                     }
-                    else {
+                    else
+                    {
                         var cancelVal = [];
                         $("#cancel:checked").each(function () {
                             cancelVal.push(this.value);
@@ -784,7 +796,8 @@ function evtClick(calEvent, jsEvent) {
         calEvtElem.dialog("option", "maxWidth", 580);
         $(".calEvent .eventInfoTable").html(eventInfo);
     }
-    else {
+    else
+    {
         $("#statusField").show();
         var notes = calEvent.notes;
         if (typeof notes === "undefined")
@@ -857,7 +870,8 @@ function openEvent(event) {
             }
         });
     }
-    else {
+    else
+    {
         var currentStatus = event.services.serviceStatus.statusId;
         var statusId = $("#updateStatus").val(currentStatus);
         calEvent.dialog({
@@ -918,7 +932,8 @@ function removeEvent(event) {
                 {
                     event.action = "delAssociateTimeSlot";
                 }
-                else {
+                else
+                {
                     event.restoreTime = $("#restoreTime:checked").val();
                     event.notifyClient = $("#notifyClient:checked").val();
                     $("#calendar").fullCalendar('removeEvents', event._id);

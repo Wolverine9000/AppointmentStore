@@ -1401,7 +1401,7 @@ public class AssociateDB
             if (rs.next())
             {
                 Associate2 a = new Associate2();
-//                a.setImgUpl(rs.getBoolean("associate_imgUpload"));
+                a.setImgUpl(rs.getBoolean("associate_imgUpload"));
                 a.setFirstName(rs.getString("first_name"));
                 a.setLastName(rs.getString("last_name"));
                 a.setEmail(rs.getString("email"));

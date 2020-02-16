@@ -945,6 +945,7 @@ var EventObj = function (event) {
     this.client = event.client;
     this.associate2 = event.associate2;
     this.services = event.services;
+    this.serviceStatus = event.serviceStatus;
     this.memberLevels = event.memberLevels;
 }; // end EventObj function
 
