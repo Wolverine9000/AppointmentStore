@@ -509,7 +509,7 @@ public class CustomerDB
             ps = connection.prepareStatement(query);
             ps.setInt(1, statusId);
             ps.setString(2, c.getPhoneNumber());
-            ps.setInt(3, c.getAssociateSender().getId());
+            ps.setInt(3, c.getAssociate2().getId());
 
             ps.executeUpdate();
         }
@@ -752,7 +752,7 @@ public class CustomerDB
             {
                 c.setPhoneNumber(rs.getString("member_request_phone"));
                 a.setId(rs.getInt("request_associate_id"));
-                c.setAssociateSender(a);
+                c.setAssociate2(a);
                 c.setMsgError("no error");
                 return c;
             }

@@ -12,4 +12,8 @@ package store.business;
 public class SMSBasicMessage extends SMSMessage
 {
 
+    public SMSBasicMessage()
+    {
+        super();
+    }
 }

@@ -46,7 +46,7 @@ public abstract class SMSMessage implements SystemAccounts
     private JSONArray phoneNumbers;
     private String phoneNumber;
     boolean isMessageInvite;
-    Associate2 associateSender;
+    Associate2 associate2;
     private Client client;
     private ArrayList<Client> clients;
     private String response;
@@ -84,7 +84,7 @@ public abstract class SMSMessage implements SystemAccounts
         phoneNumbers = null;
         phoneNumber = "";
         isMessageInvite = false;
-        associateSender = null;
+        associate2 = null;
         client = null;
         clients = null;
         isClientOfAssociate = false;
@@ -354,14 +354,14 @@ public abstract class SMSMessage implements SystemAccounts
         this.phoneNumber = phoneNumber;
     }
 
-    public Associate2 getAssociateSender()
+    public Associate2 getAssociate2()
     {
-        return associateSender;
+        return associate2;
     }
 
-    public void setAssociateSender(Associate2 associateSender)
+    public void setAssociate2(Associate2 associate2)
     {
-        this.associateSender = associateSender;
+        this.associate2 = associate2;
     }
 
     public Client getClient()

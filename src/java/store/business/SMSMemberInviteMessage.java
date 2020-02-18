@@ -23,17 +23,17 @@ public class SMSMemberInviteMessage extends SMSMessage
     {
         this.isMessageInvite = isMessageInvite;
     }
-
-    @Override
-    public Associate2 getAssociateSender()
-    {
-        return associateSender;
-    }
-
-    @Override
-    public void setAssociateSender(Associate2 associateSender)
-    {
-        this.associateSender = associateSender;
-    }
+//
+//    @Override
+//    public Associate2 getAssociateSender()
+//    {
+//        return associateSender;
+//    }
+//
+//    @Override
+//    public void setAssociateSender(Associate2 associateSender)
+//    {
+//        this.associateSender = associateSender;
+//    }
 
 }

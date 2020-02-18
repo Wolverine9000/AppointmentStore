@@ -32,6 +32,7 @@ public class FullCalendar2 implements Serializable
     private Services services;
     private ServiceStatus serviceStatus;
     private Associate2 associate2;
+    private SMSMessage smsMessage;
     private Client client;
     private String start;
     private String end;
@@ -70,6 +71,8 @@ public class FullCalendar2 implements Serializable
     private String associateName;
     private String associateLastName;
     private int associateId;
+    private String timeToSend;
+    private int messageId;
     private final Map<String, Object> otherProperties = new HashMap<>();
 
     public FullCalendar2()
@@ -97,6 +100,9 @@ public class FullCalendar2 implements Serializable
         message = "no message";
         services = new Services();
         serviceStatus = new ServiceStatus();
+        smsMessage = new SMSAppointmentMessage();
+        timeToSend = "";
+        messageId = 0;
 
     }
 
@@ -668,6 +674,36 @@ public class FullCalendar2 implements Serializable
     public void setAssociateLastName(String associateLastName)
     {
         this.associateLastName = associateLastName;
+    }
+
+    public SMSMessage getSmsMessage()
+    {
+        return smsMessage;
+    }
+
+    public void setSmsMessage(SMSMessage smsMessage)
+    {
+        this.smsMessage = smsMessage;
+    }
+
+    public String getTimeToSend()
+    {
+        return timeToSend;
+    }
+
+    public void setTimeToSend(String timeToSend)
+    {
+        this.timeToSend = timeToSend;
+    }
+
+    public int getMessageId()
+    {
+        return messageId;
+    }
+
+    public void setMessageId(int messageId)
+    {
+        this.messageId = messageId;
     }
 
 }

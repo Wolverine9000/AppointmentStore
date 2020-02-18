@@ -236,4 +236,78 @@ public class AdminUserDB
         }
     }
 
+    public static String selectSmsSystemUsername(int sysId)
+    {
+        ConnectionPool pool = ConnectionPool.getInstance();
+        Connection connection = pool.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        String query = "SELECT system_sms_username FROM appointment.system_users "
+                + "WHERE system_userid = ?";
+
+        try
+        {
+            ps = connection.prepareStatement(query);
+            ps.setInt(1, sysId);
+            rs = ps.executeQuery();
+
+            if (rs.next());
+            {
+                String e = rs.getString("system_sms_username");
+
+                return e;
+            }
+        }
+
+        catch (SQLException e)
+        {
+            LogFile.databaseError("AdminUserDB selectSmsSystemUsername", e.getMessage(), e.toString());
+            return null;
+        }
+        finally
+        {
+            DBUtil.closeResultSet(rs);
+            DBUtil.closePreparedStatement(ps);
+            pool.freeConnection(connection);
+        }
+    }
+
+    public static String selectSmsSystemPassword(int sysId)
+    {
+        ConnectionPool pool = ConnectionPool.getInstance();
+        Connection connection = pool.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        String query = "SELECT system_sms_password FROM appointment.system_users "
+                + "WHERE system_userid = ?";
+
+        try
+        {
+            ps = connection.prepareStatement(query);
+            ps.setInt(1, sysId);
+            rs = ps.executeQuery();
+
+            if (rs.next());
+            {
+                String e = rs.getString("system_sms_password");
+
+                return e;
+            }
+        }
+
+        catch (SQLException e)
+        {
+            LogFile.databaseError("AdminUserDB selectSmsSystemPassword", e.getMessage(), e.toString());
+            return null;
+        }
+        finally
+        {
+            DBUtil.closeResultSet(rs);
+            DBUtil.closePreparedStatement(ps);
+            pool.freeConnection(connection);
+        }
+    }
+
 }

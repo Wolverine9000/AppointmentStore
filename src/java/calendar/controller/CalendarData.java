@@ -578,7 +578,7 @@ public class CalendarData
 
                             boolean smsSent = true;
                             SMSAppointmentMessage m = new SMSAppointmentMessage();
-                            m.setAssociateSender(fc.getAssociate2());
+                            m.setAssociate2(fc.getAssociate2());
                             m.setSentById(associateSession.getId());
                             m.setClient(fc.getClient());
                             m.setMessageTypeID("1");
@@ -650,7 +650,7 @@ public class CalendarData
                                     m.setMessage(message);
                                     m.setPhoneNumStrArr(associateMobile);
                                     m.setPhoneArray(mobilePhAssocArr);
-                                    m.setSubject(m.getAssociateSender().getFirstName());
+                                    m.setSubject(m.getAssociate2().getFirstName());
                                     smsSent = SendingSMSMessagesJSON.sendSMSMessage(m);
                                 }
                                 catch (Exception ex)
@@ -796,7 +796,7 @@ public class CalendarData
             for (FullCalendar2 fc : fcArray) // loop through array of users
             {
                 m.setStampToSend(fc.getTimeToSend()); // get long unix format timeToSend string from fc object
-                m.setAssociateSender(fc.getAssociate2());
+                m.setAssociate2(fc.getAssociate2());
                 m.setSentById(associate.getId());
                 m.setClient(fc.getClient());
                 c.add(fc.getClient());
@@ -910,10 +910,10 @@ public class CalendarData
         m.setStampToSend(jsonObj.getString("stampToSend"));
         m.setIsMessageInvite(jsonObj.getBoolean("isMessageInvite"));
         m.setMessageTypeID("1");
-        m.setAssociateSender(associate);
+        m.setAssociate2(associate);
         m.setSentById(associate.getId());
-        String f = m.getAssociateSender().getFirstName();
-        String l = m.getAssociateSender().getLastName();
+        String f = m.getAssociate2().getFirstName();
+        String l = m.getAssociate2().getLastName();
         m.setMessage(f + " " + l + " " + m.messageDatabase(0));
         m.setSubject(m.subjectDatabase(4));
         try
@@ -927,7 +927,7 @@ public class CalendarData
             {
                 m.getConvertedPhoneNumersString().forEach((String mobilePh) ->
                 {
-                    MessagesDB.insertInvitationRequests(mobilePh, m.getAssociateSender().getId(), m.getSqlTimestamp(), m.getTimeToSendInteger());
+                    MessagesDB.insertInvitationRequests(mobilePh, m.getAssociate2().getId(), m.getSqlTimestamp(), m.getTimeToSendInteger());
                 });
             }
         }

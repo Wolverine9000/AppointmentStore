@@ -22,7 +22,7 @@ import store.util.StringUtil;
  */
 public class ProcessNewClient
 {
-    
+
     public static void processClientInvite(String message, String mobilePh)
     {
         boolean isSMSMsgSent = false;
@@ -34,20 +34,20 @@ public class ProcessNewClient
         JSONArray jsArray = new JSONArray();
         jsArray.add(c.getPhoneNumber());
         c.setPhoneNumbers(jsArray);
-        
+
         if (message.toLowerCase().contains("y".toLowerCase()) || message.toLowerCase().contains("yes".toLowerCase()))
         {
             c = CustomerDB.selectClientInvite(c);
             if ("no error".equals(c.getMsgError()))
             {
                 String pn = c.getPhoneNumber();
-                int as = c.getAssociateSender().getId();
+                int as = c.getAssociate2().getId();
                 c.setClient(CustomerDB.isClientOfAssociate(pn, as));
-                c.setAssociateSender(AssociateDB.selectAssociateInfo(as));
+                c.setAssociate2(AssociateDB.selectAssociateInfo(as));
                 String sendNow = DateUtil.dateNowLong();
                 c.setTimeToSend(sendNow);
                 c.setMessageTypeID("1");
-                
+
                 if (c.getClient() != null)
                 {
                     /* update client request
@@ -64,9 +64,9 @@ public class ProcessNewClient
                         // send sms message reponse to client they are already a member
                         c.setMessage(c.getClient().getFirstName() + " " + c.messageDatabase(1));
                         c.setSubject(c.messageDatabase(4));
-                        
+
                         isSMSMsgSent = SendingSMSMessagesJSON.sendSMSMessage(c);
-                        //Update 
+                        //Update
                         if (!isSMSMsgSent)
                         {
                             LogFile.smsError(ProcessNewClient.class.getName(), c.getMessage(), null);
@@ -105,8 +105,8 @@ public class ProcessNewClient
             c = CustomerDB.selectClientInvite(c);
             if (c != null)
             {
-                c.setAssociateSender(AssociateDB.selectAssociateInfo(c.getAssociateSender().getId()));
-                c.setMessage(c.messageDatabase(2) + " " + c.getAssociateSender().getFirstName());
+                c.setAssociate2(AssociateDB.selectAssociateInfo(c.getAssociate2().getId()));
+                c.setMessage(c.messageDatabase(2) + " " + c.getAssociate2().getFirstName());
                 c.setMessageTypeID("1");
                 try
                 {
@@ -124,7 +124,7 @@ public class ProcessNewClient
             }
         }
     }
-    
+
     private static ArrayList<String> addPhoneToList(String mobilePh)
     {
         ArrayList<String> ph = new ArrayList();

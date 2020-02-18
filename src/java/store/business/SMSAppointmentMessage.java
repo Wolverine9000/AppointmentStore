@@ -18,6 +18,7 @@ public class SMSAppointmentMessage extends SMSMessage
 
     public SMSAppointmentMessage()
     {
+        super();
         eventId = 0;
     }
 

@@ -15,6 +15,7 @@ import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
 import org.apache.commons.io.IOUtils;
 import store.business.SMSMessage;
+import store.business.SmsAuthenticator;
 import store.business.SystemAdmin;
 import store.data.AdminUserDB;
 import store.data.MessagesDB;
@@ -23,7 +24,7 @@ import store.data.MessagesDB;
  *
  * @author williamdobbs
  */
-public class SendingSMSMessagesJSON
+public class SendingSMSMessagesJSON implements SmsAuthenticator
 {
 
     // private static final String URL = "https://app.eztexting.com/sending/messages?format=json";

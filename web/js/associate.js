@@ -947,6 +947,7 @@ var EventObj = function (event) {
     this.services = event.services;
     this.serviceStatus = event.serviceStatus;
     this.memberLevels = event.memberLevels;
+    this.smsMessage = event.smsMessage;
 }; // end EventObj function
 
 // remove client name from title

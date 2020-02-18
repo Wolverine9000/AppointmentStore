@@ -48,7 +48,7 @@ public class MessagesDB
             ps = connection.prepareStatement(query);
             ps.setString(1, m.getStatus());
             ps.setInt(2, Integer.parseInt(m.getCode()));
-            ps.setInt(3, m.getAssociateSender().getId());
+            ps.setInt(3, m.getAssociate2().getId());
             ps.setInt(4, m.getSentById());
             ps.setBoolean(5, m.getIsMessageInvite());
             ps.setBoolean(6, m.isGroupMessage());
@@ -341,7 +341,7 @@ public class MessagesDB
         Connection connection = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
-        
+
         String query = "SELECT "
                 + "idmessage_response, "
                 + "message_id, "
@@ -409,7 +409,7 @@ public class MessagesDB
                 m.setTimeToSendInteger(rs.getInt("unix_timestamp"));
                 m.setSentById(rs.getInt("msg_sentBy_id"));
                 m.setIsMessageInvite(rs.getBoolean("ismessage_invite"));
-                m.setAssociateSender(AssociateDB.selectAssociateInfo(rs.getInt("msg_assocoteId")));
+                m.setAssociate2(AssociateDB.selectAssociateInfo(rs.getInt("msg_assocoteId")));
 
                 if (m.getClient() == null)
                 {
@@ -670,7 +670,7 @@ public class MessagesDB
             }
             else
             {
-                String name = smsMsg.getAssociateSender().getFirstName() + " " + smsMsg.getAssociateSender().getLastName();
+                String name = smsMsg.getAssociate2().getFirstName() + " " + smsMsg.getAssociate2().getLastName();
                 String smsMessage = smsMsg.getMessage();
                 LogFile.databaseError("MessagesDB selectSmsStatus int statusNumber FAILED ", name, smsMessage);
                 return smsMsg;
@@ -712,7 +712,7 @@ public class MessagesDB
             }
             else
             {
-                String name = smsMsg.getAssociateSender().getFirstName() + " " + smsMsg.getAssociateSender().getLastName();
+                String name = smsMsg.getAssociate2().getFirstName() + " " + smsMsg.getAssociate2().getLastName();
                 String smsMessage = smsMsg.getMessage();
                 LogFile.databaseError("MessagesDB selectSmsStatus int statusNumber FAILED ", name, smsMessage);
                 return smsMsg;
