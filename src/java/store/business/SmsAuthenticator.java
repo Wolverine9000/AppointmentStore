@@ -5,6 +5,7 @@
  */
 package store.business;
 
+import store.data.AdminUserDB;
 import static store.data.AdminUserDB.selectSmsSystemPassword;
 import static store.data.AdminUserDB.selectSmsSystemUsername;
 
@@ -24,4 +25,10 @@ public interface SmsAuthenticator
     {
         return selectSmsSystemUsername(2);
     }
+
+    static SystemAdmin smsCredentials()
+    {
+        return AdminUserDB.selectSysAdmin(2);
+    }
+
 }

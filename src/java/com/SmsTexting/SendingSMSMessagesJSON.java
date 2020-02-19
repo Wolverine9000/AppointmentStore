@@ -16,8 +16,6 @@ import net.sf.json.JSONSerializer;
 import org.apache.commons.io.IOUtils;
 import store.business.SMSMessage;
 import store.business.SmsAuthenticator;
-import store.business.SystemAdmin;
-import store.data.AdminUserDB;
 import store.data.MessagesDB;
 
 /**
@@ -30,18 +28,14 @@ public class SendingSMSMessagesJSON implements SmsAuthenticator
     // private static final String URL = "https://app.eztexting.com/sending/messages?format=json";
     public static boolean sendSMSMessage(SMSMessage msg) throws Exception
     {
-        SystemAdmin sa = AdminUserDB.selectSysAdmin(2);
-        String smsURL = sa.getSmsURL();
-        String smsUsername = sa.getSmsUsername();
-        String smsPwd = sa.getSmsPassword();
 
 //        String convStrArray = StringUtil.convStrArray(msg.getConvertedPhoneNumersString());
 //  The list of allowed characters for messages and subjects is: a-z, A-Z, 0-9 and these special characters: .,:;!?()~=+-_\/@$#&%'"
 // The following characters count as two characters when used: ~, @, #, %, +, =, /, \, \r\n
-        String data = "User=" + smsUsername + "&Password=" + smsPwd + "&PhoneNumbers[]="
+        String data = "User=" + SmsAuthenticator.smsUsername() + "&Password=" + SmsAuthenticator.smsPassword() + "&PhoneNumbers[]="
                 + msg.getPhoneNumStrArr() + "&Subject=" + msg.getSubject() + "&Message=" + msg.getMessage() + "&StampToSend=" + msg.getStampToSend() + "&MessageTypeID=" + msg.getMessageTypeID();
 
-        URL url = new URL(smsURL);
+        URL url = new URL(SmsAuthenticator.smsCredentials().getSmsURL());
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setDoOutput(true);
         conn.setRequestMethod("POST");

@@ -19,8 +19,6 @@ import static store.util.StringUtil.convertArrayToList;
 public abstract class SMSMessage implements SystemAccounts
 {
 
-    private String smsUserName;
-    private String smsPassword;
     private String recipientsCount;
     private String credits;
     private int messageId;
@@ -58,8 +56,7 @@ public abstract class SMSMessage implements SystemAccounts
 
     public SMSMessage()
     {
-        smsUserName = "";
-        smsPassword = "";
+
         recipientsCount = "";
         credits = "";
         messageId = 0;
@@ -91,26 +88,6 @@ public abstract class SMSMessage implements SystemAccounts
         isAccountActive = true;
         groupMessage = false;
         phoneNumStrArr = "";
-    }
-
-    public String getSmsUserName()
-    {
-        return smsUserName = "whdobbs8128";
-    }
-
-    public void setSmsUserName(String smsUserName)
-    {
-        this.smsUserName = smsUserName;
-    }
-
-    public String getSmsPassword()
-    {
-        return smsPassword = "hcr-6G6-wgX-GoW";
-    }
-
-    public void setSmsPassword(String smsPassword)
-    {
-        this.smsPassword = smsPassword;
     }
 
     public void setCode(String code)

@@ -417,15 +417,10 @@ public class CalendarDB
                 cc.setServiceDescription(rs.getString("service_description"));
                 cc.setNotes(rs.getString("notes"));
                 cc.setServiceTime(rs.getInt("service_time"));
-//                cc.setAssociateTime(rs.getTime("calendar_time"));
                 cc.setDate(rs.getDate("calendar_date"));
                 cc.setServiceId(rs.getInt("service_id"));
-//                cc.getClient().setFirstName(rs.getString("customer_firstName"));
-//                cc.getClient().setLastName(rs.getString("customer_lastName"));
-//                cc.getClient().setEmail(rs.getString("customer_emailAddress"));
                 cc.setAllDay(rs.getBoolean("allDayEvent"));
                 cc.setEventId(rs.getInt("event_id"));
-//                cc.getAssociate2().setId(rs.getInt("associate_id"));
                 cc.setTextColor(rs.getString("textColor"));
                 cc.setDurationEditable(rs.getBoolean("durationEditable"));
                 cc.setEditable(rs.getBoolean("editable"));
