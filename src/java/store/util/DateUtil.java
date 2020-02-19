@@ -198,7 +198,7 @@ public class DateUtil
 
     public static Date convertDateSched(String dateString)
     {
-        Date date = null;
+        Date date;
 
         if (dateString.contains("T"))
         {
