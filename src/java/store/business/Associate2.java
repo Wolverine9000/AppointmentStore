@@ -48,6 +48,7 @@ public class Associate2 extends User
     private String afternoonTimeOut;
     private ArrayList<String> adminLevels;
     private HashMap<String, Integer> memberSettings;
+    private Time associateTime;
 
     public Associate2()
     {
@@ -68,6 +69,7 @@ public class Associate2 extends User
         assocAvailEndTimeStamp = null;
         adminUser = false;
         superAdminUser = false;
+        associateTime = null;
     }
 
     public HashMap<String, Integer> getMemberSettings()
@@ -431,4 +433,15 @@ public class Associate2 extends User
         }
         return startTimeFormat;
     }
+
+    public Time getAssociateTime()
+    {
+        return associateTime;
+    }
+
+    public void setAssociateTime(Time associateTime)
+    {
+        this.associateTime = associateTime;
+    }
+
 }

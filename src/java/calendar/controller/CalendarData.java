@@ -66,13 +66,13 @@ public class CalendarData
         c.stream().map((FullCalendar2 cc) ->
         {
             Associate2 a;
-            a = selectAssociateInfo(cc.getId());
+            a = selectAssociateInfo(cc.getAssociate2().getId());
             FullCalendar2 fc = new FullCalendar2();
             fc.setTitle(cc.addName());
             fc.setNotes(cc.getNotes());
             fc.setStart(cc.convertStartTimestamp());
             fc.setEnd(cc.convertEndTimestamp());
-            fc.setServiceId(cc.getServiceId());
+            fc.getServices().setServiceId(cc.getServices().getServiceId());
             fc.setAllDay(cc.isAllDay());
             fc.getAssociate2().setFirstName(a.getFirstName());
             fc.getAssociate2().setLastName(a.getLastName());
@@ -93,7 +93,7 @@ public class CalendarData
             fc.setEditable(cc.isEditable());
             fc.setStartSql(cc.getStartSql());
             fc.setEndSql(cc.getEndSql());
-            fc.setId(cc.getEventId());
+            fc.setEventId(cc.getEventId());
 
             return fc;
         }).forEach((fc)
@@ -126,13 +126,13 @@ public class CalendarData
         c.stream().map((FullCalendar2 cc) ->
         {
             Associate2 a;
-            a = selectAssociateInfo(cc.getAssociateId());
+            a = selectAssociateInfo(cc.getAssociate2().getId());
             FullCalendar2 fc = new FullCalendar2();
             fc.setTitle(cc.addName());
             fc.setNotes(cc.getNotes());
             fc.setStart(cc.convertStartTimestamp());
             fc.setEnd(cc.convertEndTimestamp());
-            fc.setServiceId(cc.getServiceId());
+            fc.getServices().setServiceId(cc.getServices());
             fc.setAllDay(cc.isAllDay());
             fc.setCustomerId(cc.getCustomerId());
             fc.setEventId(cc.getEventId());
@@ -435,15 +435,25 @@ public class CalendarData
     {
         boolean errorFlag = false;
         boolean dataInsert;
+        String userJson = "[{'start':'2020-02-20T19:45:00.000Z','end':'2020-02-20T20:00:00.000Z','title':'Hair cut kid: Babe','serviceTime':15,'notifyClient':false,'action':'add','"
+                + "client':{'ccNumber':'','memberLevel':'gold','memLevelClr':'#E6B800','company':'iRockwell 2 Records','preferredAssociateId':0,'d':'\u0000'"
+                + ",'serviceNormalid':1001,'serviceName':'Hair cut kid','id':2,'firstName':'Babe','lastName':'Dobbs','email':'williamdobbs@charter.net','address':'17214 Santa Barbara','homePhone':'(205) 329-3692','workPhone':''"
+                + ",'mobilePhone':'2052668143','otherPhone':'','city':'Detroit','state':'MI','zip':'48221','password':'','securityAnswer':'','securityQuestion':'','imgUpl':true,'defaultCalendarView':'agendaWeek'"
+                + ",'smsAdAlerts':true,'emailAdAlerts':true,'smsApptAlerts':true,'emailApptAlerts':true,'isAccountActive':true}}]";
+//        ,'smsAdAlerts':true,'emailAdAlerts':true,'smsApptAlerts':true,'emailApptAlerts':true,'isAccountActive':true
+//                + ",'allDay':false,'backgroundColor':'#539E6C','editable':true,'durationEditable':true,'eventId':4125,'serviceId':0,'associateName':'','customerId':2,'associateId':0,'notes':'','statusId':5,'notifyClient':false,'restoreTime':false,'action':'add','client':{'ccNumber':'','memberLevel':'gold','memLevelClr':'#E6B800','company':'iRockwell 2 Records','preferredAssociateId':0,'d':'\\u0000','serviceNormalid':1001,'serviceName':'Hair cut kid','id':2,'firstName':'Babe','lastName':'Dobbs','email':'williamdobbs@charter.net','address':'17214 Santa Barbara','homePhone':'(205) 329-3692','workPhone':'','mobilePhone':'2052668143','otherPhone':'','city':'Detroit','state':'MI','zip':'48221','password':'','securityAnswer':'','securityQuestion':'','imgUpl':true,'defaultCalendarView':'agendaWeek','smsAdAlerts':true,'emailAdAlerts':true,'smsApptAlerts':true,'emailApptAlerts':true,'isAccountActive':true}]";
 
         Gson gson = new Gson();
 
+        // Convert JSON File to Java Object
         // create the type for the collection. In this case define that the collection is of type Dataset
-        java.lang.reflect.Type datasetListType = new TypeToken<Collection<FullCalendar2>>()
+        java.lang.reflect.Type datasetListType;
+        datasetListType = new TypeToken<Collection<FullCalendar2>>()
         {
         }.getType();
 
         List<FullCalendar2> fcArray = gson.fromJson(json, datasetListType);
+
         for (FullCalendar2 fc : fcArray)
         {
             String t = fc.getTitle();

@@ -54,10 +54,10 @@ public class CalendarDB
                 c.setYear(rs.getInt("year"));
                 c.setCustomerId(rs.getInt("customer_id"));
                 c.setServiceDescription(rs.getString("description"));
-                c.setAssociateName(rs.getString("first_name"));
-                c.setAssociateLastName(rs.getString("last_name"));
-                c.setAssociateTime(rs.getTime("calendar_time"));
-                c.setAssociateId(rs.getInt("associate_id"));
+                c.getAssociate2().setFirstName(rs.getString("first_name"));
+                c.getAssociate2().setLastName(rs.getString("last_name"));
+                c.getAssociate2().setAssociateTime(rs.getTime("calendar_time"));
+                c.getAssociate2().setId(rs.getInt("associate_id"));
 
                 calendarCustomer.add(c);
             }
@@ -113,12 +113,12 @@ public class CalendarDB
                 c.setYear(rs.getInt("year"));
                 c.setCustomerId(rs.getInt("customer_id"));
                 c.setServiceDescription(rs.getString("description"));
-                c.setAssociateName(rs.getString("first_name"));
-                c.setAssociateLastName(rs.getString("last_name"));
-                c.setAssociateTime(rs.getTime("calendar_time"));
-                c.setAssociateId(rs.getInt("associate_id"));
+                c.getAssociate2().setFirstName(rs.getString("first_name"));
+                c.getAssociate2().setLastName(rs.getString("last_name"));
+                c.getAssociate2().setAssociateTime(rs.getTime("calendar_time"));
+                c.getAssociate2().setId(rs.getInt("associate_id"));
                 c.setDate(rs.getDate("calendar_date"));
-                c.setServiceId(rs.getInt("service_id"));
+                c.getServices().setServiceId(rs.getInt("service_id"));
 
                 calendarCustomer.add(c);
             }
@@ -418,7 +418,7 @@ public class CalendarDB
                 cc.setNotes(rs.getString("notes"));
                 cc.setServiceTime(rs.getInt("service_time"));
                 cc.setDate(rs.getDate("calendar_date"));
-                cc.setServiceId(rs.getInt("service_id"));
+                cc.getServices().setServiceId(rs.getInt("service_id"));
                 cc.setAllDay(rs.getBoolean("allDayEvent"));
                 cc.setEventId(rs.getInt("event_id"));
                 cc.setTextColor(rs.getString("textColor"));
@@ -484,9 +484,9 @@ public class CalendarDB
                 cc.setServiceDescription(rs.getString("service_description"));
                 cc.setNotes(rs.getString("notes"));
                 cc.setServiceTime(rs.getInt("service_time"));
-                cc.setAssociateTime(rs.getTime("calendar_time"));
+                cc.getAssociate2().setAssociateTime(rs.getTime("calendar_time"));
                 cc.setDate(rs.getDate("calendar_date"));
-                cc.setServiceId(rs.getInt("service_id"));
+                cc.getServices().setServiceId(rs.getInt("service_id"));
                 cc.getClient().setFirstName(rs.getString("customer_firstName"));
                 cc.getClient().setLastName(rs.getString("customer_lastName"));
                 cc.getClient().setEmail(rs.getString("customer_emailAddress"));
@@ -558,9 +558,9 @@ public class CalendarDB
                 cc.setServiceDescription(rs.getString("service_description"));
                 cc.setNotes(rs.getString("notes"));
                 cc.setServiceTime(rs.getInt("service_time"));
-                cc.setAssociateTime(rs.getTime("calendar_time"));
+                cc.getAssociate2().setAssociateTime(rs.getTime("calendar_time"));
                 cc.setDate(rs.getDate("calendar_date"));
-                cc.setServiceId(rs.getInt("service_id"));
+                cc.getServices().setServiceId(rs.getInt("service_id"));
                 cc.getClient().setFirstName(rs.getString("customer_firstName"));
                 cc.getClient().setLastName(rs.getString("customer_lastName"));
                 cc.getClient().setEmail(rs.getString("customer_emailAddress"));
@@ -630,10 +630,10 @@ public class CalendarDB
                 c.setYear(rs.getInt("year"));
                 c.setCustomerId(rs.getInt("customer_id"));
                 c.setServiceDescription(rs.getString("description"));
-                c.setAssociateName(rs.getString("first_name"));
-                c.setAssociateLastName(rs.getString("last_name"));
-                c.setAssociateTime(rs.getTime("calendar_time"));
-                c.setAssociateId(rs.getInt("associate_id"));
+                c.getAssociate2().setFirstName(rs.getString("first_name"));
+                c.getAssociate2().setLastName(rs.getString("last_name"));
+                c.getAssociate2().setAssociateTime(rs.getTime("calendar_time"));
+                c.getAssociate2().setId(rs.getInt("associate_id"));
                 c.setDate(rs.getDate("calendar_date"));
 
                 calendarCustomer.add(c);
@@ -687,10 +687,10 @@ public class CalendarDB
                 c.setYear(rs.getInt("year"));
                 c.setCustomerId(rs.getInt("customer_id"));
                 c.setServiceDescription(rs.getString("description"));
-                c.setAssociateName(rs.getString("first_name"));
-                c.setAssociateLastName(rs.getString("last_name"));
+                c.getAssociate2().setFirstName(rs.getString("first_name"));
+                c.getAssociate2().setLastName(rs.getString("last_name"));
 //                c.setAssociateDate(rs.getDate("calendar_date"));
-                c.setAssociateTime(rs.getTime("calendar_time"));
+                c.getAssociate2().setAssociateTime(rs.getTime("calendar_time"));
 
                 calendarCustomer.add(c);
             }
@@ -737,8 +737,8 @@ public class CalendarDB
                 fc.setEventId(rs.getInt("event_id"));
                 fc.setCustomerId(rs.getInt("customer_id"));
                 fc.setServiceDescription(rs.getString("service_description"));
-                fc.setAssociateName(rs.getString("associate_name"));
-                fc.setAssociateId(rs.getInt("associate_id"));
+                fc.getAssociate2().setFirstName(rs.getString("associate_name"));
+                fc.getAssociate2().setId(rs.getInt("associate_id"));
                 fc.setStartSql(rs.getTimestamp("start_timestamp"));
                 fc.setStart(fc.convertStartTimestamp());
 
@@ -787,13 +787,13 @@ public class CalendarDB
                 fc.setEventId(rs.getInt("event_id"));
                 fc.setCustomerId(rs.getInt("customer_id"));
                 fc.setServiceDescription(rs.getString("service_description"));
-                fc.setAssociateName(rs.getString("associate_name"));
-                fc.setAssociateId(rs.getInt("associate_id"));
+                fc.getAssociate2().setFirstName(rs.getString("associate_name"));
+                fc.getAssociate2().setId(rs.getInt("associate_id"));
                 fc.setStartSql(rs.getTimestamp("start_timestamp"));
                 fc.setStart(fc.convertStartTimestamp());
                 fc.setEndSql(rs.getTimestamp("end_timestamp"));
                 fc.setEnd(fc.convertEndTimestamp());
-                fc.setStatusId(rs.getInt("service_status"));
+                fc.getServices().getServiceStatus().setStatusId(rs.getInt("service_status"));
 
                 fcArr.add(fc);
             }
@@ -914,12 +914,12 @@ public class CalendarDB
             ps = connection.prepareStatement(query);
             ps.setBoolean(1, fc.isAllDay());
             ps.setString(2, fc.getTitle());
-            ps.setInt(3, fc.getServiceId());
+            ps.setInt(3, fc.getServices().getServiceId());
             ps.setInt(4, fc.getServiceTime());
             ps.setTimestamp(5, fc.getStartSql());
             ps.setTimestamp(6, fc.getEndSql());
             ps.setString(7, fc.getBackgroundColor());
-            ps.setString(8, fc.getAssociateName());
+            ps.setString(8, fc.getAssociate2().getFirstName());
             ps.setString(9, fc.getClient().getFirstName());
             ps.setString(10, fc.getClient().getLastName());
             ps.setString(11, fc.getClient().getEmail());
@@ -929,7 +929,7 @@ public class CalendarDB
             ps.setBoolean(15, fc.isEditable());
             ps.setTime(16, startTime);
             ps.setTime(17, endTime);
-            ps.setInt(18, fc.getAssociateId());
+            ps.setInt(18, fc.getAssociate2().getId());
             ps.setString(19, fc.getNotes());
             ps.setInt(20, fc.getCustomerId());
             ps.setInt(21, startMonth);
@@ -946,7 +946,7 @@ public class CalendarDB
             ps.setInt(32, startMinute);
             ps.setInt(33, endHour);
             ps.setInt(34, endMinute);
-            ps.setInt(35, fc.getStatusId());
+            ps.setInt(35, fc.getServices().getServiceStatus().getStatusId());
 
             ps.executeUpdate();
             //Get the event ID from the last INSERT statement.
@@ -962,7 +962,7 @@ public class CalendarDB
         catch (SQLException sql)
         {
             LogFile.databaseError("CalendarDB - Full Calendar insertAppointment ", sql.toString(), " Associate "
-                    + fc.getAssociateName());
+                    + fc.getAssociate2().getFirstName());
             return 0;
         }
         finally
@@ -1015,7 +1015,7 @@ public class CalendarDB
         try
         {
             ps = connection.prepareStatement(query);
-            ps.setInt(1, fc.getStatusId());
+            ps.setInt(1, fc.getServiceStatus().getStatusId());
             ps.setInt(2, fc.getEventId());
 
             return ps.executeUpdate();

@@ -152,12 +152,13 @@ $(document).ready(function () {
             }
             else
             {
+                event = updateEvent(event);
                 postToServer(event);
             }
         },
         eventResize: function (event, revertFunc) {
-            event.serviceTime = event.end.diff(event.start, 'minutes');
-            event.action = "add";
+//            event.serviceTime = event.end.diff(event.start, 'minutes');
+//            event.action = "add";
             var hasConflict = eventConflictCk(event); // check for time conflict
             if (hasConflict.length > 0)
             {
@@ -192,6 +193,7 @@ $(document).ready(function () {
             }
             else
             {
+                event = updateEvent(event);
                 postToServer(event);
             }
         },
@@ -213,7 +215,34 @@ $(document).ready(function () {
         ]
     });
 }); // end Full Calendar document ready
+function updateEvent(event)
+{
+    var addEventObj = new Object();
+    addEventObj.action = event.action;
+    addEventObj.client = event.client;
+    addEventObj.associate2 = event.associate2;
+    addEventObj.editable = event.editable;
+    addEventObj.end = event.end;
+    addEventObj.start = event.start;
+    addEventObj.title = event.title;
+    addEventObj.serviceDescription = event.serviceDescription;
+    addEventObj.notifyClient = event.notifyClient;
+    addEventObj.notes = event.notes;
+    addEventObj.userType = event.userType;
+    addEventObj.services = event.services;
+    addEventObj.serviceStatus = event.serviceStatus;
+    addEventObj.eventId = event.eventId;
+    addEventObj.serviceId = event.serviceId;
+    addEventObj.durationEditable = event.durationEditable;
+    addEventObj.editable = event.editable;
+    addEventObj.allDay = event.allDay;
+    addEventObj.serviceTime = event.serviceTime;
+    addEventObj.backgroundColor = event.backgroundColor;
+    addEventObj.serviceStatus.statusId = event.serviceStatus.statusId;
 
+    return addEventObj;
+
+}
 // refresh calendar function button
 $(function () {
     $("#refreshCalendar").click(function () {
@@ -885,8 +914,9 @@ function openEvent(event) {
                     statusId = statusId.val(); // get event status ID
                     if (currentStatus !== parseInt(statusId))
                     {
-                        event.statusId = statusId; // update event status ID
+                        event.serviceStatus.statusId = statusId; // update event status ID
                         event.action = "updateStatus"; // change event action so server can process update
+                        event = updateEvent(event);
                         postToServer(event);
                     }
                     $(this).dialog("close");
