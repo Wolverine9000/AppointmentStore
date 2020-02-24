@@ -23,7 +23,6 @@ public class FullCalendar2 implements Serializable
 {
 
     private int customerId;
-//    private int serviceId;
     private int eventId;
     private int serviceTime;
     private String serviceDescription;
@@ -36,16 +35,15 @@ public class FullCalendar2 implements Serializable
     private String end;
     private String title;
     private String action;
-    private Boolean notifyClient;
-    private Boolean restoreTime;
-    private Boolean newClient;
+    private boolean notifyClient;
+    private boolean eventChange;
+    private boolean restoreTime;
+    private boolean newClient;
     private boolean isAssociate;
-//    private int statusId;
     private String userType;
     private ArrayList<Integer> cancelEvts;
     private ArrayList<MemberExtras> memberLevels;
     private String message;
-//    private int id;
     private int month;
     private int day;
     private int date;
@@ -65,10 +63,6 @@ public class FullCalendar2 implements Serializable
     private String color;
     private String notes;
     private String mobilePhone;
-//    private Time associateTime;
-//    private String associateName;
-//    private String associateLastName;
-//    private int associateId;
     private String timeToSend;
     private int messageId;
     private final Map<String, Object> otherProperties = new HashMap<>();
@@ -76,20 +70,18 @@ public class FullCalendar2 implements Serializable
     public FullCalendar2()
     {
         eventId = 0;
-//        serviceId = 0;
         serviceDescription = null;
         serviceTime = 0;
         customerId = 0;
-        associate2 = null;
+        associate2 = new Associate2();
         client = new Client();
         start = null;
         end = null;
         title = null;
         notifyClient = false;
         restoreTime = false;
-        newClient = null;
+        newClient = false;
         action = "";
-//        statusId = 5;
         isAssociate = false;
         userType = "";
         memberLevels = null;
@@ -101,7 +93,7 @@ public class FullCalendar2 implements Serializable
         smsMessage = new SMSAppointmentMessage();
         timeToSend = "";
         messageId = 0;
-//        associateName = "";
+        eventChange = false;
 
     }
 
@@ -155,6 +147,12 @@ public class FullCalendar2 implements Serializable
         this.eventId = eventId;
     }
 
+    public String eventIdStr()
+    {
+        String eventIdStr = String.valueOf(this.eventId);
+        return eventIdStr;
+    }
+
     public int getServiceTime()
     {
         return serviceTime;
@@ -174,16 +172,6 @@ public class FullCalendar2 implements Serializable
     {
         this.serviceDescription = serviceDescription;
     }
-//
-//    public int getServiceId()
-//    {
-//        return serviceId;
-//    }
-//
-//    public void setServiceId(int serviceId)
-//    {
-//        this.serviceId = serviceId;
-//    }
 
     public int getCustomerId()
     {
@@ -214,16 +202,6 @@ public class FullCalendar2 implements Serializable
     {
         this.cancelEvts = cancelEvts;
     }
-//
-//    public int getStatusId()
-//    {
-//        return statusId;
-//    }
-//
-//    public void setStatusId(int statusId)
-//    {
-//        this.statusId = statusId;
-//    }
 
     public String getStart()
     {
@@ -345,16 +323,6 @@ public class FullCalendar2 implements Serializable
     {
         this.message = message;
     }
-//
-//    public int getId()
-//    {
-//        return id;
-//    }
-//
-//    public void setId(int id)
-//    {
-//        this.id = id;
-//    }
 
     public int getMonth()
     {
@@ -545,23 +513,6 @@ public class FullCalendar2 implements Serializable
     {
         this.mobilePhone = mobilePhone;
     }
-////
-////    public Time getAssociateTime()
-////    {
-////        return associateTime;
-////    }
-////
-////    public void setAssociateTime(Time associateTime)
-////    {
-////        this.associateTime = associateTime;
-////    }
-//
-//    public String getTimestampFormat()
-//    {
-//        DateFormat shortTime = DateFormat.getTimeInstance(DateFormat.SHORT);
-//        String strTime = shortTime.format(associateTime);
-//        return strTime;
-//    }
 
     public String convertStartTimestamp()
     {
@@ -644,36 +595,6 @@ public class FullCalendar2 implements Serializable
         String titleFirstNm = this.serviceDescription + ": " + this.client.getFirstName();
         return titleFirstNm;
     }
-//
-//    public String getAssociateName()
-//    {
-//        return associateName;
-//    }
-//
-//    public void setAssociateName(String associateName)
-//    {
-//        this.associateName = associateName;
-//    }
-//
-//    public int getAssociateId()
-//    {
-//        return associateId;
-//    }
-//
-//    public void setAssociateId(int associateId)
-//    {
-//        this.associateId = associateId;
-//    }
-//
-//    public String getAssociateLastName()
-//    {
-//        return associateLastName;
-//    }
-//
-//    public void setAssociateLastName(String associateLastName)
-//    {
-//        this.associateLastName = associateLastName;
-//    }
 
     public SMSMessage getSmsMessage()
     {
@@ -703,6 +624,16 @@ public class FullCalendar2 implements Serializable
     public void setMessageId(int messageId)
     {
         this.messageId = messageId;
+    }
+
+    public boolean isEventChange()
+    {
+        return eventChange;
+    }
+
+    public void setEventChange(boolean eventChange)
+    {
+        this.eventChange = eventChange;
     }
 
 }

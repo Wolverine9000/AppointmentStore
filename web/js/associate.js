@@ -927,14 +927,8 @@ var EventObj = function (event) {
     this.durationEditable = event.durationEditable;
     this.textColor = event.textColor;
     this.eventId = event.eventId;
-    this.serviceId = event.serviceId;
-//    this.firstName = event.firstName;
-//    this.lastName = event.lastName;
-//    this.mobilePhone = event.mobilePhone;
-//    this.emailAddress = event.emailAddress;
+    this.services = event.services;
     this.associateName = event.associateName;
-//    this.customerId = event.customerId;
-//    this.associateId = event.associateId;
     this.notes = event.notes;
     this.statusId = event.statusId;
     this.notifyClient = event.notifyClient;
@@ -948,6 +942,7 @@ var EventObj = function (event) {
     this.serviceStatus = event.serviceStatus;
     this.memberLevels = event.memberLevels;
     this.smsMessage = event.smsMessage;
+    this.eventChange = event.eventChange;
 }; // end EventObj function
 
 // remove client name from title
@@ -1072,6 +1067,7 @@ var SMSMessage = function (obj) {
     this.isClientOfAssociate = obj.isClientOfAssociate;
     this.isAccountActive = obj.isAccountActive;
     this.clientMessage = obj.clientMessage;
+    this.associate2 = obj.associate2;
 };
 Message.prototype.name = function () {
     return this.clientId + " " + this.status;
@@ -1858,7 +1854,7 @@ var eventsRendering = {
             for (var i in eventsArr)
             {
                 e[i] = "<tr>" + "<td>" + jsDate.formatDate2(eventsArr[i].start) + "</td>" + "<td>" + jsTime.formatTime(eventsArr[i].start) + "</td>"
-                        + "<td>" + eventsArr[i].associateName + "</td>" + "<td>" + eventsArr[i].serviceDescription + "</td>" + "</tr>";
+                        + "<td>" + eventsArr[i].associate2.firstName + "</td>" + "<td>" + eventsArr[i].serviceDescription + "</td>" + "</tr>";
             }
             if (eventsArr.length === 0 || eventsArr === null)
             {
@@ -1874,9 +1870,9 @@ var eventsRendering = {
         {
             for (var i in eventsArr)
             {
-                var statusObj = services.getServiceStatusObj(eventsArr[i].statusId);
+//                var statusObj = services.getServiceStatusObj(eventsArr[i].statusId);
                 e[i] = "<tr>" + "<td>" + jsDate.formatDate2(eventsArr[i].start) + "</td>" + "<td>" + jsTime.formatTime(eventsArr[i].start) + "</td>"
-                        + "<td>" + eventsArr[i].associateName + "</td>" + "<td>" + eventsArr[i].serviceDescription + "</td>" + "<td style='color:" + statusObj.statusColor + "'>" + statusObj.statusName + "</td>" + "</tr>";
+                        + "<td>" + eventsArr[i].associate2.firstName + "</td>" + "<td>" + eventsArr[i].serviceDescription + "</td>" + "<td style='color:" + eventsArr[i].services.serviceStatus.statusColor + "'>" + eventsArr[i].services.serviceStatus.statusName + "</td>" + "</tr>";
             }
             if (eventsArr.length === 0 || eventsArr === null)
             {

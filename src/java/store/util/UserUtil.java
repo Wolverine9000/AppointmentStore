@@ -44,8 +44,8 @@ public class UserUtil
         }
         else if (clientExists)
         {
-            int updateClient = CustomerDB.update(fc.getCustomerId(), fc.getClient());
-            clientId = fc.getCustomerId();
+            int updateClient = CustomerDB.update(fc.getClient().getId(), fc.getClient());
+            clientId = fc.getClient().getId();
             if (updateClient == 0)
             {
                 LogFile.generalLog("UserUtil processUserId", "UPDATE client FAILED clientName "

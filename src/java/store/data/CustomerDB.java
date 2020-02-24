@@ -308,7 +308,7 @@ public class CustomerDB
         }
     }
 
-    public static int update(int clienId, Client c)
+    public static int update(int clientId, Client c)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
@@ -328,7 +328,7 @@ public class CustomerDB
             ps.setString(2, c.getLastName());
             ps.setString(3, c.getEmail());
             ps.setString(4, c.getMobilePhone());
-            ps.setInt(5, clienId);
+            ps.setInt(5, clientId);
 
             return ps.executeUpdate();
         }
@@ -966,7 +966,7 @@ public class CustomerDB
                 fc.getClient().setFirstName(rs.getString("first_name"));
                 fc.getClient().setLastName(rs.getString("last_name"));
                 fc.getClient().setEmail(rs.getString("email"));
-                fc.setAssociateId(rs.getInt("preferred_associateID"));
+                fc.getAssociate2().setId(rs.getInt("preferred_associateID"));
                 fc.setAssociate2(AssociateDB.selectAssociateInfo(rs.getInt("preferred_associateID")));
                 fc.setClient(CustomerDB.selectClient(rs.getInt("id")));
 
@@ -1108,7 +1108,6 @@ public class CustomerDB
                 cc.getClient().setFirstName(rs.getString("first_name"));
                 cc.getClient().setLastName(rs.getString("last_name"));
                 cc.getClient().setEmail(rs.getString("email"));
-                cc.setAssociateId(rs.getInt("preferred_associateID"));
                 cc.setAssociate2(AssociateDB.selectAssociateInfo(rs.getInt("preferred_associateID")));
                 cc.setClient(CustomerDB.selectClient(rs.getInt("id")));
 
@@ -1155,7 +1154,7 @@ public class CustomerDB
                 cc.getClient().setLastName(rs.getString("first_name"));
                 cc.getClient().setLastName(rs.getString("last_name"));
                 cc.getClient().setEmail(rs.getString("email"));
-                cc.setAssociateId(rs.getInt("preferred_associateID"));
+                cc.getAssociate2().setId(rs.getInt("preferred_associateID"));
                 cc.setAssociate2(AssociateDB.selectAssociateInfo(rs.getInt("preferred_associateID")));
                 cc.setClient(CustomerDB.selectClient(rs.getInt("id")));
 

@@ -11,7 +11,7 @@ import store.data.MessagesDB;
  *
  * @author whdobbs
  */
-public class SMSAppointmentMessage extends SMSMessage
+public class SMSAppointmentMessage extends SMSBasicMessage
 {
 
     private int eventId;

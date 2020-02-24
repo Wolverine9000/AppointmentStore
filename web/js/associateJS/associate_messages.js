@@ -1,4 +1,4 @@
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -27,19 +27,19 @@ $(document).on("click", "#senttext .next-page, #senttext .prev-page, #senttext .
     {
         startAtMsg = startAtMsg - 20;
     }
-     else if (target.is('#senttext .first-page'))
+    else if (target.is('#senttext .first-page'))
     {
         startAtMsg = 0;
     }
-    if ( startAtMsg < 0 )
+    if (startAtMsg < 0)
     {
         evt.preventDefault();
-        startAtMsg=0;
-        limitMsgs=20;
+        startAtMsg = 0;
+        limitMsgs = 20;
         return;
     }
     messageListing = messagesList.getNextMsgs(startAtMsg, limitMsgs, orderBy, associateInfo, "../Messages", false)
-renderMessages(messageListing, sortBy);
+    renderMessages(messageListing, sortBy);
 });
 
 $(function () {
@@ -289,7 +289,7 @@ var messagesClass = {
                 + "<tr>" + "<td>" + "phone&#35&#58;" + "</td>" + "<td>" + formatPhone(msgObj.client.mobilePhone) + "</td>" + "</tr>"
                 + "<tr>" + "<td>" + "client&#35&#58;" + "</td>" + "<td>" + msgObj.client.id + "</td>" + "</tr>"
                 + "<tr>" + "<td>" + "code&#58;" + "</td>" + "<td>" + msgObj.code + "</td>" + "</tr>"
-                + "<tr>" + "<td>" + "sent by&#58;" + "</td>" + "<td>" + msgObj.associateSender.firstName + " " + msgObj.associateSender.lastName + "</td>" + "</tr>";
+                + "<tr>" + "<td>" + "sent by&#58;" + "</td>" + "<td>" + msgObj.associate2.firstName + " " + msgObj.associate2.lastName + "</td>" + "</tr>";
         return msgInfoTable;
     },
     renderInviteWindow: function (smsObjArray) {
@@ -308,7 +308,8 @@ var messagesClass = {
                         + "<td>" + " <input id='send-checked' name='send-checked' type='checkbox' value='" + JSON.stringify(smsObjArray[i]) + "'>" + "</td>"
                         + "</tr>");
             }
-            else {
+            else
+            {
                 inviteTable.push("<tr>" + "<td>" + "<input type='hidden' name='message-obj' id='message-obj' value='" + JSON.stringify(smsObjArray[i]) + "'>"
                         + formatPhone(smsObjArray[i].client.mobilePhone) + "</td>"
                         + "<td>" + " <input id='send-checked'name='send-checked' type='checkbox' checked  value='" + JSON.stringify(smsObjArray[i]) + "'>" + "</td>"
@@ -512,12 +513,15 @@ var sortMessages = {
         msgArray["sortArraySmsID"] = "";
         msgArray["sortArrayS"] = "";
         var currentSort = msgArray["sortArrayID"];
-        if (typeof currentSort !== 'boolean') {
+        if (typeof currentSort !== 'boolean')
+        {
             msgArray.sort(function (a, b) {
-                if (a.idMessageResponse < b.idMessageResponse) {
+                if (a.idMessageResponse < b.idMessageResponse)
+                {
                     return 1;
                 }
-                if (a.idMessageResponse > b.idMessageResponse) {
+                if (a.idMessageResponse > b.idMessageResponse)
+                {
                     return -1;
                 }
 // a must be equal to b
@@ -539,12 +543,15 @@ var sortMessages = {
         msgArray["sortArraySmsID"] = "";
         msgArray["sortArrayS"] = "";
         var currentSort = msgArray["sortArrayN"];
-        if (typeof currentSort !== 'boolean') {
+        if (typeof currentSort !== 'boolean')
+        {
             msgArray.sort(function (a, b) {
-                if (a.client.firstName.toLowerCase() > b.client.firstName.toLowerCase()) {
+                if (a.client.firstName.toLowerCase() > b.client.firstName.toLowerCase())
+                {
                     return 1;
                 }
-                if (a.client.firstName.toLowerCase() < b.client.firstName.toLowerCase()) {
+                if (a.client.firstName.toLowerCase() < b.client.firstName.toLowerCase())
+                {
                     return -1;
                 }
                 // a must be equal to b
@@ -566,12 +573,15 @@ var sortMessages = {
         msgArray["sortArraySmsID"] = "";
         msgArray["sortArrayS"] = "";
         var currentSort = msgArray["sortArrayM"];
-        if (typeof currentSort !== 'boolean') {
+        if (typeof currentSort !== 'boolean')
+        {
             msgArray.sort(function (a, b) {
-                if (a.message.toLowerCase() > b.message.toLowerCase()) {
+                if (a.message.toLowerCase() > b.message.toLowerCase())
+                {
                     return 1;
                 }
-                if (a.message.toLowerCase() < b.message.toLowerCase()) {
+                if (a.message.toLowerCase() < b.message.toLowerCase())
+                {
                     return -1;
                 }
                 // a must be equal to b
@@ -593,12 +603,15 @@ var sortMessages = {
         msgArray["sortArrayM"] = "";
         msgArray["sortArrayS"] = "";
         var currentSort = msgArray["sortArraySmsID"];
-        if (typeof currentSort !== 'boolean') {
+        if (typeof currentSort !== 'boolean')
+        {
             msgArray.sort(function (a, b) {
-                if (a.messageId > b.messageId) {
+                if (a.messageId > b.messageId)
+                {
                     return 1;
                 }
-                if (a.messageId < b.messageId) {
+                if (a.messageId < b.messageId)
+                {
                     return -1;
                 }
                 // a must be equal to b
@@ -620,14 +633,17 @@ var sortMessages = {
         msgArray["sortArraySmsID"] = "";
         msgArray["sortArrayS"] = "";
         var currentSort = msgArray["sortArrayD"];
-        if (typeof currentSort !== 'boolean') {
+        if (typeof currentSort !== 'boolean')
+        {
             msgArray.sort(function (a, b) {
                 a = moment(a.timeToSend, "MM-DD-YYYY hh:mm A"); // convert to Moment objects for  date comparison
                 b = moment(b.timeToSend, "MM-DD-YYYY hh:mm A");
-                if (a < b) {
+                if (a < b)
+                {
                     return 1;
                 }
-                if (a > b) {
+                if (a > b)
+                {
                     return -1;
                 }
                 // a must be equal to b
@@ -649,12 +665,15 @@ var sortMessages = {
         msgArray["sortArrayD"] = "";
         msgArray["sortArraySmsID"] = "";
         var currentSort = msgArray["sortArrayS"];
-        if (typeof currentSort !== 'boolean') {
+        if (typeof currentSort !== 'boolean')
+        {
             msgArray.sort(function (a, b) {
-                if (a.status > b.status) {
+                if (a.status > b.status)
+                {
                     return 1;
                 }
-                if (a.status < b.status) {
+                if (a.status < b.status)
+                {
                     return -1;
                 }
                 // a must be equal to b
@@ -685,8 +704,8 @@ $(document).on("click", ".message-list-table  th:nth-child(3)", function (evt) {
     renderMessages(messageListing, "message");
 });
 $(document).on("click", ".message-list-table  th:nth-child(4)", function (evt) {
-    sortBy = 
-    renderMessages(messageListing, "sms_id");
+    sortBy =
+            renderMessages(messageListing, "sms_id");
 });
 $(document).on("click", ".message-list-table  th:nth-child(5)", function (evt) {
     renderMessages(messageListing, "sent on");
@@ -701,10 +720,12 @@ function eliminateDuplicates(arr) {
             out = [],
             obj = {};
 
-    for (i = 0; i < len; i++) {
+    for (i = 0; i < len; i++)
+    {
         obj[arr[i]] = 0;
     }
-    for (i in obj) {
+    for (i in obj)
+    {
         out.push(i);
     }
     return out;

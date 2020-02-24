@@ -118,6 +118,8 @@ $(document).ready(function () {
 //        },
         eventDrop: function (event, revertFunc) {
             event.action = "add";
+            event.notifyClient = true;
+            event.eventChange = true;
             var hasConflict = eventConflictCk(event); // check for time conflict
             if (hasConflict.length > 0)
             {
@@ -157,8 +159,10 @@ $(document).ready(function () {
             }
         },
         eventResize: function (event, revertFunc) {
-//            event.serviceTime = event.end.diff(event.start, 'minutes');
-//            event.action = "add";
+            event.serviceTime = event.end.diff(event.start, 'minutes');
+            event.action = "add";
+            event.notifyClient = true;
+            event.eventChange = true;
             var hasConflict = eventConflictCk(event); // check for time conflict
             if (hasConflict.length > 0)
             {
@@ -215,8 +219,7 @@ $(document).ready(function () {
         ]
     });
 }); // end Full Calendar document ready
-function updateEvent(event)
-{
+function updateEvent(event) {
     var addEventObj = new Object();
     addEventObj.action = event.action;
     addEventObj.client = event.client;
@@ -232,13 +235,15 @@ function updateEvent(event)
     addEventObj.services = event.services;
     addEventObj.serviceStatus = event.serviceStatus;
     addEventObj.eventId = event.eventId;
-    addEventObj.serviceId = event.serviceId;
+    addEventObj.services.serviceId = event.services.serviceId;
     addEventObj.durationEditable = event.durationEditable;
     addEventObj.editable = event.editable;
     addEventObj.allDay = event.allDay;
     addEventObj.serviceTime = event.serviceTime;
     addEventObj.backgroundColor = event.backgroundColor;
     addEventObj.serviceStatus.statusId = event.serviceStatus.statusId;
+    addEventObj.eventChange = event.eventChange;
+    addEventObj.restoreTime = event.restoreTime;
 
     return addEventObj;
 
@@ -673,6 +678,13 @@ function createEvent(start, end, jsEvent, view) {
                             true // make the event "stick"
                             );
                     var eventObj = new Object(); // add data to eventObj
+                    var services = new Object();
+                    var serviceStatus = new Object();
+
+                    serviceStatus.statusId = statusId;
+                    services.serviceId = serviceId;
+                    services.serviceStatus = serviceStatus;
+
                     eventObj.title = title;
                     eventObj.start = startMomObj;
                     eventObj.end = endObj;
@@ -681,7 +693,7 @@ function createEvent(start, end, jsEvent, view) {
                     eventObj.editable = editable;
                     eventObj.durationEditable = durationEditable;
                     eventObj.eventId = eventId;
-                    eventObj.serviceId = serviceId;
+                    eventObj.services = services;
                     eventObj.serviceTime = serviceTime;
                     eventObj.firstName = firstName;
                     eventObj.lastName = lastName;
@@ -691,9 +703,8 @@ function createEvent(start, end, jsEvent, view) {
                     eventObj.associate2 = associateObj;
                     eventObj.client = client;
                     eventObj.notes = notes;
-                    eventObj.associateName = associateName;
+                    eventObj.associate2.firstName = associateName;
                     eventObj.customerId = customerId;
-                    eventObj.statusId = statusId;
                     eventObj.notifyClient = notifyClient;
                     eventObj.newClient = newClient;
                     eventObj.action = "add";
@@ -964,12 +975,13 @@ function removeEvent(event) {
                 }
                 else
                 {
-                    event.restoreTime = $("#restoreTime:checked").val();
-                    event.notifyClient = $("#notifyClient:checked").val();
+                    event.restoreTime = $("#delete #notifyField #restoreTime:checked").val();
+                    event.notifyClient = $("#delete #notifyField #notifyClient:checked").val();
                     $("#calendar").fullCalendar('removeEvents', event._id);
                     event.action = "delete";
                 }
                 $(this).dialog("close");
+                event = updateEvent(event);
                 postToServer(event);
             }
         }

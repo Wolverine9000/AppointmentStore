@@ -88,6 +88,7 @@ public abstract class SMSMessage implements SystemAccounts
         isAccountActive = true;
         groupMessage = false;
         phoneNumStrArr = "";
+        associate2 = new Associate2();
     }
 
     public void setCode(String code)

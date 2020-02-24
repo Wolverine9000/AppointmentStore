@@ -30,7 +30,7 @@ public class Services extends Product
         graceTime = 0;
         serviceProductId = 0;
         serviceId = 0;
-        serviceStatus = null;
+        serviceStatus = new ServiceStatus();
     }
 
     public HashMap getServicesHashMap()

@@ -5,7 +5,7 @@
  */
 package store.business;
 
-public class SMSMemberInviteMessage extends SMSMessage
+public class SMSMemberInviteMessage extends SMSBasicMessage
 {
 
     public SMSMemberInviteMessage()

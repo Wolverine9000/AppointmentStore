@@ -458,7 +458,8 @@ public class MessagesDB
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        String query = "SELECT idmember_request, member_request_phone, timestamp_request_tz, member_request_status "
+        String query = "SELECT idmember_request, member_request_phone, timestamp_request_tz, member_request_status, "
+                + "request_associate_id "
                 + "FROM (SELECT * FROM appointment.member_invite_requests "
                 + "WHERE request_associate_id = ? "
                 + "ORDER BY timestamp_request_tz DESC LIMIT ?) sub "
@@ -475,6 +476,7 @@ public class MessagesDB
             {
                 SMSMemberInviteMessage m = new SMSMemberInviteMessage();
                 m.setStatusNumber(rs.getInt("member_request_status"));
+                m.setAssociate2(AssociateDB.selectAssociateProfile(rs.getInt("request_associate_id")));
                 m.setPhoneNumber(rs.getString("member_request_phone"));
                 m.setTimeToSend(DateUtil.createDateString(rs.getTimestamp("timestamp_request_tz")));
                 m = selectSmsStatus(m);

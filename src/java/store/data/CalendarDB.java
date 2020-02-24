@@ -365,7 +365,8 @@ public class CalendarDB
             ps.setString(20, fc.getNotes());
             ps.setInt(21, fc.getEventId());
 
-            return ps.executeUpdate();
+            ps.executeUpdate();
+            return 1;
         }
         catch (SQLException e)
         {
@@ -931,7 +932,7 @@ public class CalendarDB
             ps.setTime(17, endTime);
             ps.setInt(18, fc.getAssociate2().getId());
             ps.setString(19, fc.getNotes());
-            ps.setInt(20, fc.getCustomerId());
+            ps.setInt(20, fc.getClient().getId());
             ps.setInt(21, startMonth);
             ps.setInt(22, startDay);
             ps.setInt(23, startDate);
