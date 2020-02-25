@@ -214,13 +214,13 @@ public class MailUtil implements Emailer
                     + "The Salon Store Development Team", WILLIAMDOBBS, true);
             return true;
         }
-        if (subject.equalsIgnoreCase("Your Appointment has been CHANGED"))
+        if (subject.contains("re-schedule"))
         {
 
             // send appointment confirmtion email to the Client
             sendMail(email, WHDTECHNOLOGIESEMAIL, subject + " " + eventId,
                     "Hello " + firstName + ",<br><br>"
-                    + "Your appointment has been CHANGED to " + dateString + " at " + startTime + ".<br><br>"
+                    + "Your appointment has been RE-SCHEDULED to " + dateString + " at " + startTime + ".<br><br>"
                     + "<table style=\"height: 206px; float: left;\" width=\"547\">" + " <tbody>"
                     + "<tr>"
                     + "<td style=\"text-align: right; color: #f68b09;\">" + "Appointment " + "</td>" + "<td style=\"color: #f68b09;\">" + " Summary" + "</td>"

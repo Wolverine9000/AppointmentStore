@@ -521,8 +521,8 @@ public class CalendarData
 
             if (fc.isEventChange())
             {
-                smsEventChangeMsg = " has been CHANGED to ";
-                m.setSubject("OnTime CHANGE");
+                smsEventChangeMsg = " has been re-scheduled to ";
+                m.setSubject("RE-SCHEDULE");
             }
             else if ("delete".equals(fc.getAction()))
             {
@@ -583,7 +583,7 @@ public class CalendarData
                             if (fc.getAssociate2().isSmsAdAlerts())
                             {
                                 m.setMessage(fc.getAssociate2().getFirstName() + ", the service " + fc.getTitle() + " with "
-                                        + fc.getAssociate2().getFirstName() + smsEventChangeMsg + dateStr + " at " + timeString + "."
+                                        + fc.getClient().getFirstName() + smsEventChangeMsg + dateStr + " at " + timeString + "."
                                         + " Event:# " + fc.eventIdStr());
                                 // send associate sms message
                                 smsSent = sendSMS(m, fc);
@@ -596,7 +596,7 @@ public class CalendarData
                             {
                                 // email associate
                                 boolean sendConfirmation;
-                                sendConfirmation = MailUtil.sendAssociateConfirm("Appointment CHANGE " + smsEventChangeMsg, dateStr, timeString, fc, a, s, regCode);
+                                sendConfirmation = MailUtil.sendAssociateConfirm("Appointment RE-SCHEDULED " + smsEventChangeMsg, dateStr, timeString, fc, a, s, regCode);
                                 if (sendConfirmation == false)
                                 {
                                     errorFlag = true;
