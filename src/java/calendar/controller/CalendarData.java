@@ -521,7 +521,7 @@ public class CalendarData
 
             if (fc.isEventChange())
             {
-                smsEventChangeMsg = " has been re-scheduled to ";
+                smsEventChangeMsg = " has been RE-SCHEDULE to ";
                 m.setSubject("RE-SCHEDULE");
             }
             else if ("delete".equals(fc.getAction()))
