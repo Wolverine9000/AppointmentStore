@@ -209,8 +209,7 @@ $(document).ready(function () {
                 data: {
                     title: idlNum,
                     start: 'start',
-                    end: 'end',
-                    backgroundColor: 'red'
+                    end: 'end'
                 },
                 error: function () {
                     $("#postDataError").html(fetchError);

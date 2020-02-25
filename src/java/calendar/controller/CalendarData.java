@@ -522,10 +522,12 @@ public class CalendarData
             if (fc.isEventChange())
             {
                 smsEventChangeMsg = " has been CHANGED to ";
+                m.setSubject("OnTime CHANGE");
             }
             else if ("delete".equals(fc.getAction()))
             {
                 smsEventChangeMsg = " has been CANCELLED for ";
+                m.setSubject("CANCELLED");
             }
 
             boolean emailApptAsso = fc.getAssociate2().isEmailApptAlerts();
@@ -556,10 +558,12 @@ public class CalendarData
                             m.setMessage(fc.getClient().getFirstName() + ", the service " + fc.getTitle() + " with "
                                     + fc.getAssociate2().getFirstName() + smsEventChangeMsg + dateStr + " at " + timeString + "."
                                     + " Event:# " + fc.eventIdStr());
+
                             if (notifyClient)
                             {
                                 if (fc.getClient().isSmsApptAlerts())
                                 {
+                                    // send client sms message
                                     smsSent = sendSMS(m, fc);
                                     if (smsSent == false)
                                     {
@@ -568,11 +572,34 @@ public class CalendarData
                                 }
                                 if (fc.getClient().isEmailApptAlerts())
                                 {
-                                    boolean sendConfirmation = MailUtil.sendConfirmation("Your Appointment has been CHANGED", dateStr, timeString, fc, a, s, regCode);
+                                    // email client
+                                    boolean sendConfirmation = MailUtil.sendConfirmation("Your Appointment " + smsEventChangeMsg, dateStr, timeString, fc, a, s, regCode);
                                     if (sendConfirmation == false)
                                     {
                                         errorFlag = true;
                                     }
+                                }
+                            }
+                            if (fc.getAssociate2().isSmsAdAlerts())
+                            {
+                                m.setMessage(fc.getAssociate2().getFirstName() + ", the service " + fc.getTitle() + " with "
+                                        + fc.getAssociate2().getFirstName() + smsEventChangeMsg + dateStr + " at " + timeString + "."
+                                        + " Event:# " + fc.eventIdStr());
+                                // send associate sms message
+                                smsSent = sendSMS(m, fc);
+                                if (smsSent == false)
+                                {
+                                    errorFlag = true;
+                                }
+                            }
+                            if (fc.getAssociate2().isEmailApptAlerts())
+                            {
+                                // email associate
+                                boolean sendConfirmation;
+                                sendConfirmation = MailUtil.sendAssociateConfirm("Appointment CHANGE " + smsEventChangeMsg, dateStr, timeString, fc, a, s, regCode);
+                                if (sendConfirmation == false)
+                                {
+                                    errorFlag = true;
                                 }
                             }
 
@@ -707,6 +734,7 @@ public class CalendarData
                         {
                             m.setMessage(fc.getClient().getFirstName() + ", the service " + fc.getTitle() + " with " + fc.getAssociate2().getFirstName() + smsEventChangeMsg + dateStr + " at " + timeString + "."
                                     + " Event:# " + fc.eventIdStr() + " Code: " + regCode);
+
                             smsSent = sendSMS(m, fc);
                             if (smsSent == false)
                             {

@@ -157,6 +157,8 @@ public class CalendarDB
         }
         catch (SQLException e)
         {
+            LogFile.databaseError("CalendarDB eventExists timestamp ", e.toString(), " event ID "
+                    + eventId);
             return false;
         }
         finally
@@ -185,6 +187,8 @@ public class CalendarDB
         }
         catch (SQLException e)
         {
+            LogFile.databaseError("CalendarDB eventExists event ID arg only ", e.toString(), " event ID "
+                    + eventId);
             return false;
         }
         finally
@@ -225,7 +229,8 @@ public class CalendarDB
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            LogFile.databaseError("CalendarDB serviceStatus status ID arg only ", e.toString(), " status ID "
+                    + statusId);
             return null;
         }
         finally
@@ -262,7 +267,7 @@ public class CalendarDB
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            LogFile.databaseError("CalendarDB serviceStatusAll ", e.toString(), " serviceStatusAll");
             return null;
         }
         finally
@@ -298,7 +303,8 @@ public class CalendarDB
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            LogFile.databaseError("CalendarDB serviceStatus ", e.toString(), " statusName" + statusName
+                    + " " + e.getMessage());
             return 0;
         }
         finally
