@@ -32,12 +32,12 @@
 
             <h3><a href="<c:url value='associateSettings'/>">Settings</a></h3>
 
-            <h3><a href="<c:url value='associate_messages'/>">Messages</a></h3>    
+            <h3><a href="<c:url value='associate_messages'/>">Messages</a></h3>
 
             <h3><a href="<c:url value='associate_services'/>">Services</a></h3>
 
             <h3><a href="<c:url value='#'/>">Account</a></h3>
-            
+
             <h3><a href="<c:url value='associate_admin'/>">Admin</a></h3>
 
             <h3><a href="<c:url value='logoutAssociate'/>">Logout</a></h3>
@@ -52,6 +52,7 @@
         </div>
         <div id="messages">
             <p class="error">${notFoundMessage}</p>
+            <p class="error">${message}</p>
             <div id="postDataError" class="error smallText "></div>
             <div id="postDataSuccess" class="good smallText "></div>
         </div>
@@ -60,7 +61,7 @@
             <div id="gotodiv">
                 <table id="gototable">
                     <td><label for="calendarAssociate">goto:</label></td>
-                    <td><input size="11" type="text" 
+                    <td><input size="11" type="text"
                                title="Enter a  Date" placeholder="" id="calendarAssociate"></td>
                 </table>
             </div>
@@ -127,7 +128,7 @@
         </div>
 
         <div id="delete">
-            <span class="ui-icon ui-icon-alert"></span>    
+            <span class="ui-icon ui-icon-alert"></span>
             <div id="deleteHeader"></div>
             <table class="deleteTable alignRight-td table-stripe-main border-bottom-table">
                 <tbody>
@@ -184,7 +185,7 @@
                             </tr>
                             <tr>
                                 <td><label for="mobilePhone" title="client moblie phone">mobile&#58;</label></td>
-                                <td><input type="tel" name="mobilePhone" id="mobilePhone" maxlength="45" value="" class="text ui-widget-content ui-corner-all"  
+                                <td><input type="tel" name="mobilePhone" id="mobilePhone" maxlength="45" value="" class="text ui-widget-content ui-corner-all"
                                            placeholder="phone number" pattern="\d{10}?|(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}" title="Must be a 10 digit number"></td>
                             </tr>
 
@@ -210,7 +211,7 @@
                         </tr>
                         <tr>
                             <td><label for="notes" title="service notes">notes&#58;</label></td>
-                            <td><input type="text" name="notes" id="notes"  placeholder="100 characters or less" 
+                            <td><input type="text" name="notes" id="notes"  placeholder="100 characters or less"
                                        class="text ui-widget-content ui-corner-all" maxlength="100"></td>
                         </tr>
                         <tr>

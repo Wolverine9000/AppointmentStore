@@ -576,6 +576,8 @@ public class CalendarData
                                     boolean sendConfirmation = MailUtil.sendConfirmation("Your Appointment " + smsEventChangeMsg, dateStr, timeString, fc, a, s, regCode);
                                     if (sendConfirmation == false)
                                     {
+                                        String message = "there was an error sending email to client";
+                                        request.setAttribute("message", message);
                                         errorFlag = true;
                                     }
                                 }
