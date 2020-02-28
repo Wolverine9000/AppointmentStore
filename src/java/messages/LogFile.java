@@ -10,7 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import store.business.SMSMessage;
+import store.business.SMScommunicator;
 import store.util.DateUtil;
 
 public class LogFile
@@ -217,11 +217,11 @@ public class LogFile
         catch (IOException ioe)
         {
             Logger.getLogger(LogFile.class.getName()).log(Level.SEVERE, null, ioe);
-           generalLog("LogFile associateLog" + ioe.toString(), currentDate);
+            generalLog("LogFile associateLog" + ioe.toString(), currentDate);
         }
     }
 
-    public static void smsError(String failPoint, String message, SMSMessage m)
+    public static void smsError(String failPoint, String message, SMScommunicator m)
     {
         String today = DateUtil.todaysDate();
         String currentDate = DateUtil.formatDate();

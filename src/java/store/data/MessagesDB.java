@@ -16,9 +16,9 @@ import messages.LogFile;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import store.business.Client;
-import store.business.SMSAppointmentMessage;
-import store.business.SMSMemberInviteMessage;
-import store.business.SMSMessage;
+import store.business.SMSAppointmentCommunicator;
+import store.business.SMSMemberInviteCommunicator;
+import store.business.SMScommunicator;
 import store.util.DateUtil;
 
 /**
@@ -28,7 +28,7 @@ import store.util.DateUtil;
 public class MessagesDB
 {
 
-    public static int insertSmsMsg(SMSMessage m)
+    public static int insertSmsMsg(SMScommunicator m)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
@@ -77,7 +77,7 @@ public class MessagesDB
         }
     }
 
-    public static void updateSmsRespnse(JSONObject r, SMSMessage s)
+    public static void updateSmsRespnse(JSONObject r, SMScommunicator s)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
@@ -335,7 +335,7 @@ public class MessagesDB
         }
     }
 
-    public static ArrayList<SMSAppointmentMessage> sentMessages2(int idNumber, int startAtMsg, int limitMsgs)
+    public static ArrayList<SMSAppointmentCommunicator> sentMessages2(int idNumber, int startAtMsg, int limitMsgs)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
@@ -376,13 +376,13 @@ public class MessagesDB
             ps.setInt(1, idNumber);
             ps.setInt(2, startAtMsg);
             ps.setInt(3, limitMsgs);
-            ArrayList<SMSAppointmentMessage> messages = new ArrayList();
-            ArrayList<SMSAppointmentMessage> groupMessages = new ArrayList();
+            ArrayList<SMSAppointmentCommunicator> messages = new ArrayList();
+            ArrayList<SMSAppointmentCommunicator> groupMessages = new ArrayList();
             rs = ps.executeQuery();
 
             while (rs.next())
             {
-                SMSAppointmentMessage m = new SMSAppointmentMessage();
+                SMSAppointmentCommunicator m = new SMSAppointmentCommunicator();
                 m.setStatus(rs.getString("message_status"));
                 m.setStatusColor(m.getStatusColor());
                 m.setMessageId(rs.getInt("message_id"));
@@ -451,7 +451,7 @@ public class MessagesDB
         return null;
     }
 
-    public static ArrayList<SMSMemberInviteMessage> selectRecentAssociateRequests(int associateId, int daysBack)
+    public static ArrayList<SMSMemberInviteCommunicator> selectRecentAssociateRequests(int associateId, int daysBack)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
@@ -470,11 +470,11 @@ public class MessagesDB
             ps.setInt(1, associateId);
             ps.setInt(2, daysBack);
             rs = ps.executeQuery();
-            ArrayList<SMSMemberInviteMessage> reqMsgs = new ArrayList();
+            ArrayList<SMSMemberInviteCommunicator> reqMsgs = new ArrayList();
 
             while (rs.next())
             {
-                SMSMemberInviteMessage m = new SMSMemberInviteMessage();
+                SMSMemberInviteCommunicator m = new SMSMemberInviteCommunicator();
                 m.setStatusNumber(rs.getInt("member_request_status"));
                 m.setAssociate2(AssociateDB.selectAssociateProfile(rs.getInt("request_associate_id")));
                 m.setPhoneNumber(rs.getString("member_request_phone"));
@@ -564,7 +564,7 @@ public class MessagesDB
         }
     }
 
-    public static SMSMemberInviteMessage selectMsgInviteRequest(SMSMemberInviteMessage i, int id)
+    public static SMSMemberInviteCommunicator selectMsgInviteRequest(SMSMemberInviteCommunicator i, int id)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
@@ -649,7 +649,7 @@ public class MessagesDB
         }
     }
 
-    public static SMSMemberInviteMessage selectSmsStatus(SMSMemberInviteMessage smsMsg)
+    public static SMSMemberInviteCommunicator selectSmsStatus(SMSMemberInviteCommunicator smsMsg)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
@@ -691,7 +691,7 @@ public class MessagesDB
         }
     }
 
-    public static SMSAppointmentMessage selectSmsStatus(SMSAppointmentMessage smsMsg)
+    public static SMSAppointmentCommunicator selectSmsStatus(SMSAppointmentCommunicator smsMsg)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();

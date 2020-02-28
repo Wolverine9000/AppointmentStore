@@ -15,8 +15,8 @@ import messages.LogFile;
 import store.business.Associate2;
 import store.business.Category;
 import store.business.FullCalendar2;
-import store.business.SMSAppointmentMessage;
-import store.business.SMSMemberInviteMessage;
+import store.business.SMSAppointmentCommunicator;
+import store.business.SMSMemberInviteCommunicator;
 import store.business.ServiceStatus;
 import store.business.Services;
 import store.data.AssociateDB;
@@ -48,9 +48,9 @@ public class FullCalendarServlet extends HttpServlet
         ArrayList<Category> cat = new ArrayList<>();
         HashMap<Integer, String> m = null;
         ArrayList<FullCalendar2> messages = null;
-        SMSMemberInviteMessage m1 = null;
-        ArrayList<SMSMemberInviteMessage> m2 = null;
-        ArrayList<SMSAppointmentMessage> m3 = null;
+        SMSMemberInviteCommunicator m1 = null;
+        ArrayList<SMSMemberInviteCommunicator> m2 = null;
+        ArrayList<SMSAppointmentCommunicator> m3 = null;
 
         // get calendar id number and key id characters
         String title = request.getParameter("title");

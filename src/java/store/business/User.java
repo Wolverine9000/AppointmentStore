@@ -1,6 +1,8 @@
 package store.business;
 
+import java.util.ArrayList;
 import java.util.Map;
+import store.data.CustomerDB;
 import store.util.PhoneUtil;
 
 /**
@@ -11,6 +13,7 @@ public abstract class User
 {
 
     private int id;
+    private int userStatus;
     private String firstName;
     private String lastName;
     private String email;
@@ -23,6 +26,12 @@ public abstract class User
     private String state;
     private String zip;
     private String password;
+    private String ccNumber;
+    private String emailPromos;
+    private String memberLevel;
+    private String memLevelClr;
+    private char d;
+    private String company;
     private String securityAnswer;
     private String securityQuestion;
     private boolean imgUpl;
@@ -33,6 +42,7 @@ public abstract class User
     private boolean emailApptAlerts;
     private boolean isAccountActive;
     private Map<Integer, String> security;
+    private ArrayList<MemberExtras> memberLevels;
 
     public User()
     {
@@ -58,6 +68,22 @@ public abstract class User
         smsApptAlerts = true;
         emailApptAlerts = true;
         isAccountActive = true;
+        userStatus = 1;
+        ccNumber = "";
+        company = "";
+        memLevelClr = "";
+        memberLevels = null;
+
+    }
+
+    public int getUserStatus()
+    {
+        return userStatus;
+    }
+
+    public void setUserStatus(int userStatus)
+    {
+        this.userStatus = userStatus;
     }
 
     public String getDefaultCalendarView()
@@ -203,6 +229,80 @@ public abstract class User
     public void sethomePhone(String homePhone)
     {
         this.homePhone = homePhone;
+    }
+
+    public String getCompany()
+    {
+        return company;
+    }
+
+    public void setCompany(String company)
+    {
+        this.company = company;
+    }
+
+    public String getCcNumber()
+    {
+        return ccNumber;
+    }
+
+    public void setCcNumber(String ccNumber)
+    {
+        this.ccNumber = ccNumber;
+    }
+
+    public String getEmailPromos()
+    {
+        return emailPromos;
+    }
+
+    public void setEmailPromos(String emailPromos)
+    {
+        this.emailPromos = emailPromos;
+    }
+
+    public String getMemberLevel()
+    {
+        return memberLevel;
+    }
+
+    public void setMemberLevel(String memberLevel)
+    {
+        this.memberLevel = memberLevel;
+    }
+
+    public ArrayList<MemberExtras> getMemberLevels()
+    {
+        memberLevels = CustomerDB.selectMemberLevels();
+        return memberLevels;
+    }
+
+    public void setMemberLevels(ArrayList<MemberExtras> memberLevels)
+    {
+        memberLevels = CustomerDB.selectMemberLevels();
+        this.memberLevels = memberLevels;
+    }
+
+    public StringBuilder getCreditCardFormat()
+    {
+        StringBuilder creditCard = new StringBuilder();
+        creditCard.append(ccNumber);
+        for (int i = 0; i < creditCard.length() - 4; i++)
+        {
+            creditCard.setCharAt(i, d);
+        }
+
+        return creditCard;
+    }
+
+    public String getMemLevelClr()
+    {
+        return memLevelClr;
+    }
+
+    public void setMemLevelClr(String memLevelClr)
+    {
+        this.memLevelClr = memLevelClr;
     }
 
     public String getSecurityQuestion()
@@ -362,4 +462,15 @@ public abstract class User
             return null;
         }
     }
+
+    public Map<Integer, String> getSecurity()
+    {
+        return security;
+    }
+
+    public void setSecurity(Map<Integer, String> security)
+    {
+        this.security = security;
+    }
+
 }

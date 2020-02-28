@@ -30,9 +30,9 @@ import net.sf.json.JSONSerializer;
 import store.business.Associate2;
 import store.business.Client;
 import store.business.FullCalendar2;
-import store.business.SMSAppointmentMessage;
-import store.business.SMSBasicMessage;
-import store.business.SMSMemberInviteMessage;
+import store.business.SMSAppointmentCommunicator;
+import store.business.SMSBasicCommunicator;
+import store.business.SMSMemberInviteCommunicator;
 import store.business.Services;
 import store.data.AssociateDB;
 import static store.data.AssociateDB.selectAssociateInfo;
@@ -257,18 +257,18 @@ public class CalendarData
     }
 
 // Get sms messages
-//    public static ArrayList<SMSAppointmentMessage> messages(String key, String idnumber)
+//    public static ArrayList<SMSAppointmentCommunicator> messages(String key, String idnumber)
 //    {
-//        ArrayList<SMSAppointmentMessage> messages;
+//        ArrayList<SMSAppointmentCommunicator> messages;
 //        int id = Integer.parseInt(idnumber);
 //        messages = MessagesDB.sentMessages2(id);
 //
 //        return messages;
 //    }
     // Get sms   messages
-    public static ArrayList<SMSAppointmentMessage> messages(String key1, String key2, String key3, String userId)
+    public static ArrayList<SMSAppointmentCommunicator> messages(String key1, String key2, String key3, String userId)
     {
-        ArrayList<SMSAppointmentMessage> messages;
+        ArrayList<SMSAppointmentCommunicator> messages;
         int id = Integer.parseInt(userId);
         int start = Integer.parseInt(key1);
         int limit = Integer.parseInt(key2);
@@ -279,9 +279,9 @@ public class CalendarData
     }
 
 // Get sms invite messages
-    public static ArrayList<SMSMemberInviteMessage> inviteMessages(String key, String idnumber, String altKey)
+    public static ArrayList<SMSMemberInviteCommunicator> inviteMessages(String key, String idnumber, String altKey)
     {
-        ArrayList<SMSMemberInviteMessage> messages;
+        ArrayList<SMSMemberInviteCommunicator> messages;
         int id = Integer.parseInt(idnumber);
         int altkeyInt = Integer.parseInt(altKey);
         messages = MessagesDB.selectRecentAssociateRequests(id, altkeyInt);
@@ -290,10 +290,10 @@ public class CalendarData
     }
 
 // Get sms selected invite messages
-    public static SMSMemberInviteMessage selectInviteMessage(String id, String json)
+    public static SMSMemberInviteCommunicator selectInviteMessage(String id, String json)
     {
 
-        SMSMemberInviteMessage m = new SMSMemberInviteMessage();
+        SMSMemberInviteCommunicator m = new SMSMemberInviteCommunicator();
         JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(json);
         m.setIsMessageInvite(jsonObj.getBoolean("isMessageInvite"));
         m.setStampToSend(jsonObj.getString("timeToSendInteger"));
@@ -304,10 +304,10 @@ public class CalendarData
         return m;
     }
 
-    public static ArrayList<SMSMemberInviteMessage> isClientOfAssociate(String json, String title) // Get sms messages
+    public static ArrayList<SMSMemberInviteCommunicator> isClientOfAssociate(String json, String title) // Get sms messages
     {
 
-        ArrayList<SMSMemberInviteMessage> smsObjArray = new ArrayList();
+        ArrayList<SMSMemberInviteCommunicator> smsObjArray = new ArrayList();
 
         Associate2 a = new Associate2();
         JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(json);
@@ -317,9 +317,9 @@ public class CalendarData
         int associateId = a.getId();
         for (int i = 0; i < strPhArr.size(); i++)
         {
-            SMSMemberInviteMessage m;
+            SMSMemberInviteCommunicator m;
             Client c;
-            m = new SMSMemberInviteMessage();
+            m = new SMSMemberInviteCommunicator();
             String n = strPhArr.get(i);
             c = CustomerDB.isClientAndActive(n, associateId);
             if (c != null)
@@ -494,9 +494,7 @@ public class CalendarData
             // convert current date and time to long string of numbers
             String nowTimeUnix = DateUtil.dateNowLong();
 
-            Random random = new Random();
-            int regCode;
-            regCode = random.nextInt(999999);
+            int regCode = RandomCode();
 
             String regCodeStr = String.valueOf(regCode);
 
@@ -504,7 +502,7 @@ public class CalendarData
             Services s = ProductDB.selectService(fc.getServices().getServiceId());
 
             boolean smsSent = true;
-            SMSAppointmentMessage m = new SMSAppointmentMessage();
+            SMSAppointmentCommunicator m = new SMSAppointmentCommunicator();
             m.setAssociate2(fc.getAssociate2());
             m.setSentById(associateSession.getId());
             m.setClient(fc.getClient());
@@ -537,6 +535,7 @@ public class CalendarData
             {
                 case "add":
                     boolean eventExists;
+                    String actionType = fc.getActionType();
                     if (fc.isAllDay())
                     { // if event is an all day calendar event, check to see if it already exists in the database
                         eventExists = CalendarDB.eventExists(fc.getEventId());
@@ -576,8 +575,6 @@ public class CalendarData
                                     boolean sendConfirmation = MailUtil.sendConfirmation("Your Appointment " + smsEventChangeMsg, dateStr, timeString, fc, a, s, regCode);
                                     if (sendConfirmation == false)
                                     {
-                                        String message = "there was an error sending email to client";
-                                        request.setAttribute("message", message);
                                         errorFlag = true;
                                     }
                                 }
@@ -849,7 +846,7 @@ public class CalendarData
             ArrayList<String> emailArr = new ArrayList<>();
             ArrayList<Client> c = new ArrayList<>();
             // create Message Object
-            SMSBasicMessage m = new SMSBasicMessage();
+            SMSBasicCommunicator m = new SMSBasicCommunicator();
             m.setMessage(msg);
             m.setSubject(subject);
             m.setMessageTypeID("1");
@@ -967,7 +964,7 @@ public class CalendarData
         boolean errorFlag = false;
         boolean smsSent;
 
-        SMSMemberInviteMessage m = new SMSMemberInviteMessage();
+        SMSMemberInviteCommunicator m = new SMSMemberInviteCommunicator();
         JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(json);
 
         m.setPhoneNumbers(jsonObj.getJSONArray("phoneNumbers"));
@@ -984,7 +981,7 @@ public class CalendarData
         m.setSubject(m.subjectDatabase(4));
         try
         {
-            smsSent = SendingSMSMessagesJSON.sendSMSMessage(m);
+            smsSent = SendingSMScommunicatorJSON.sendSMScommunicator(m);
             if (smsSent == false)
             {
                 errorFlag = true;
@@ -1007,7 +1004,7 @@ public class CalendarData
         return errorFlag;
     }
 
-    private static boolean sendSMS(SMSBasicMessage m, FullCalendar2 fc)
+    private static boolean sendSMS(SMSBasicCommunicator m, FullCalendar2 fc)
     {
         boolean smsSent = false;
 
@@ -1019,7 +1016,7 @@ public class CalendarData
             String mobileNumbers = StringUtil.convStrArray(mobilePhAssocArr);
             m.setPhoneNumStrArr(mobileNumbers);
             m.setPhoneArray(mobilePhAssocArr);
-            smsSent = SendingSMSMessagesJSON.sendSMSMessage(m);
+            smsSent = SendingSMScommunicatorJSON.sendSMScommunicator(m);
 
         }
         catch (Exception ex)
@@ -1028,5 +1025,11 @@ public class CalendarData
             LogFile.smsError("CalendarData sendSMS", ex.toString(), m);
         }
         return smsSent;
+    }
+
+    private static int RandomCode()
+    {
+        Random random = new Random();
+        return random.nextInt(999999);
     }
 }

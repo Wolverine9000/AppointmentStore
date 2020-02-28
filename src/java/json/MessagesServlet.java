@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import static javax.servlet.http.HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 import messages.LogFile;
 import store.business.Associate2;
-import store.business.SMSAppointmentMessage;
+import store.business.SMSAppointmentCommunicator;
 
 /**
  *
@@ -38,11 +38,11 @@ public class MessagesServlet extends HttpServlet
     public void doGet(HttpServletRequest request,
             HttpServletResponse response)
             throws ServletException, IOException
-    {        
+    {
         Associate2 associate = null;
-        ArrayList<SMSAppointmentMessage> msgs = null;
-        
-        // get calendar id number and key id characters 
+        ArrayList<SMSAppointmentCommunicator> msgs = null;
+
+        // get calendar id number and key id characters
         String userId = request.getParameter("userId");
         String key1 = request.getParameter("key1");
         String key2 = request.getParameter("key2");
@@ -50,23 +50,23 @@ public class MessagesServlet extends HttpServlet
         String jsonMessage = null;
         // retrieve messages
         msgs = CalendarData.messages(key1, key2, key3, userId);
-        
-         Gson gson = new Gson();
-         
-         jsonMessage = gson.toJson(msgs);
-         
-         response.setContentType("application/json");
+
+        Gson gson = new Gson();
+
+        jsonMessage = gson.toJson(msgs);
+
+        response.setContentType("application/json");
         response.setHeader("Cache-Control", "no-cache");
         try
         {
-            response.getWriter().write(jsonMessage);            
+            response.getWriter().write(jsonMessage);
         }
         catch (IOException e)
         {
             LogFile.databaseError("MessagesServlet  ", e.toString(), e.getMessage());
             response.setStatus(SC_INTERNAL_SERVER_ERROR);
         }
-    
+
     }
 
 }

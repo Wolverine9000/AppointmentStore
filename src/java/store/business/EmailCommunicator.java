@@ -7,13 +7,16 @@ package store.business;
 
 /**
  *
- * @author whdobbs
+ * @author williamdobbs
  */
-public class SMSBasicMessage extends SMSMessage
+public class EmailCommunicator extends Communicator
 {
 
-    public SMSBasicMessage()
+    String emailBody;
+
+    public EmailCommunicator()
     {
         super();
     }
+
 }

@@ -935,6 +935,7 @@ var EventObj = function (event) {
     this.restoreTime = event.restoreTime;
     this.newClient = event.newClient;
     this.action = event.action;
+    this.actionType = event.actionType;
     this.cancelEvts = event.cancelEvts;
     this.client = event.client;
     this.associate2 = event.associate2;

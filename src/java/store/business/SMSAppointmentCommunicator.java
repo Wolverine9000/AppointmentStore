@@ -11,12 +11,12 @@ import store.data.MessagesDB;
  *
  * @author whdobbs
  */
-public class SMSAppointmentMessage extends SMSBasicMessage
+public class SMSAppointmentCommunicator extends SMSBasicCommunicator
 {
 
     private int eventId;
 
-    public SMSAppointmentMessage()
+    public SMSAppointmentCommunicator()
     {
         super();
         eventId = 0;
