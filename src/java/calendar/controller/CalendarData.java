@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
@@ -231,7 +230,6 @@ public class CalendarData
     {
         ArrayList<FullCalendar2> fullCalendar2 = new ArrayList<>();
         ArrayList<FullCalendar2> c;
-        c = CustomerDB.selectClientsAll(title);
         if ("getList".equals(key))
         {
             c = CustomerDB.selectClientsAll(title);
@@ -240,7 +238,7 @@ public class CalendarData
         {
             c = CustomerDB.selectClientsAll();
         }
-        for (FullCalendar2 cc : c)
+        c.stream().map((cc) ->
         {
             FullCalendar2 fc = new FullCalendar2();
             fc.getClient().setFirstName(cc.getClient().getFirstName());
@@ -249,10 +247,15 @@ public class CalendarData
             fc.setCustomerId(cc.getCustomerId());
             fc.setAssociate2(cc.getAssociate2());
             fc.setClient(cc.getClient());
+            return fc;
+        }).map((fc) ->
+        {
             fc.getMemberLevels();
-
+            return fc;
+        }).forEachOrdered((fc) ->
+        {
             fullCalendar2.add(fc);
-        }
+        });
         return fullCalendar2;
     }
 
@@ -349,9 +352,8 @@ public class CalendarData
         }.getType();
         Collection<Associate2> associateArray = gson.fromJson(json, collectionType);
 
-        for (Iterator<Associate2> it = associateArray.iterator(); it.hasNext();)
+        for (Associate2 associate : associateArray)
         {
-            Associate2 associate = it.next();
             if (null != actionTitle)
             {
                 switch (actionTitle)

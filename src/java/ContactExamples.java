@@ -3,20 +3,21 @@ import com.SmsTexting.Contact;
 import com.SmsTexting.Encoding;
 import com.SmsTexting.SmsTextingConnection;
 import com.SmsTexting.SmsTextingException;
+import store.business.SmsAuthenticator;
 
 /**
  * Demonstration of Contacts usage.
  */
-public class ContactExamples
+public class ContactExamples implements SmsAuthenticator
 {
 
     public static void main(String[] args) throws Exception
     {
 
         try
-            {
+        {
             System.out.println("Contact JSON example");
-            SmsTextingConnection sms = new SmsTextingConnection("whdobbs8128", "hcr-6G6-wgX-GoW", Encoding.JSON);
+            SmsTextingConnection sms = new SmsTextingConnection(SmsAuthenticator.smsUsername(), SmsAuthenticator.smsPassword(), Encoding.JSON);
 
             System.out.println("Get contacts from group Honey Lovers: " + sms.getContacts(null, null, null, "Honey Lovers", null, null, null, null));
 
@@ -37,10 +38,10 @@ public class ContactExamples
 
             //try to get exception - delete already deleted item
             sms.delete(contact);
-            }
+        }
         catch (SmsTextingException e)
-            {
+        {
             System.out.println("SmsTexting error code:" + e.getResponseCode() + "; messages:" + e.getMessage());
-            }
+        }
     }
 }
