@@ -118,6 +118,7 @@ $(document).ready(function () {
 //        },
         eventDrop: function (event, revertFunc) {
             event.action = "add";
+            event.actionType = "eventDrop";
             event.notifyClient = true;
             event.eventChange = true;
             var hasConflict = eventConflictCk(event); // check for time conflict
@@ -161,6 +162,7 @@ $(document).ready(function () {
         eventResize: function (event, revertFunc) {
             event.serviceTime = event.end.diff(event.start, 'minutes');
             event.action = "add";
+            event.actionType = "resize";
             event.notifyClient = true;
             event.eventChange = true;
             var hasConflict = eventConflictCk(event); // check for time conflict
@@ -221,6 +223,7 @@ $(document).ready(function () {
 function updateEvent(event) {
     var addEventObj = new Object();
     addEventObj.action = event.action;
+    addEventObj.actionType = event.actionType;
     addEventObj.client = event.client;
     addEventObj.associate2 = event.associate2;
     addEventObj.editable = event.editable;

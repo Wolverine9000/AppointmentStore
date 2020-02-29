@@ -52,7 +52,6 @@
         </div>
         <div id="messages">
             <p class="error">${notFoundMessage}</p>
-            <p class="error">${message}</p>
             <div id="postDataError" class="error smallText "></div>
             <div id="postDataSuccess" class="good smallText "></div>
         </div>

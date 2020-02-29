@@ -5,90 +5,61 @@
  */
 package store.business;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import net.sf.json.JSONArray;
 import store.data.MessagesDB;
-import store.util.DateUtil;
 import static store.util.StringUtil.convertArrayToList;
 
 /**
  *
  * @author whdobbs
  */
-public abstract class SMSMessage implements SystemAccounts
+public class SMScommunicator extends Communicator implements SystemAccounts
 {
 
     private String recipientsCount;
     private String credits;
-    private int messageId;
     private String code;
     private String status;
     private String statusColor;
     private int statusNumber;
-    String subject;
     private String trimmedSubject;
-    private String messageTypeID;
-    String message;
     private String trimmedMessage;
-    private String msgError;
     private int idMessageResponse;
     private JSONArray msgSentGroup;
     private int msgMessageGrpId;
-    private Timestamp timestamp;
-    private java.sql.Timestamp sqlTimestamp;
-    private String stampToSend;
     private String timeToSend;
-    private int timeToSendInteger;
-    private int sentById;
     private JSONArray phoneNumbers;
     private String phoneNumber;
     boolean isMessageInvite;
-    Associate2 associate2;
-    private Client client;
-    private ArrayList<Client> clients;
     private String response;
-    private boolean isClientOfAssociate;
     private boolean isAccountActive;
     private boolean groupMessage;
     private String phoneNumStrArr;
     private ArrayList<String> phoneArray;
 
-    public SMSMessage()
+    public SMScommunicator()
     {
 
+        super(); // call constructor from superclass
         recipientsCount = "";
         credits = "";
-        messageId = 0;
         code = "";
         status = null;
         statusColor = "";
         statusNumber = 0;
-        subject = "";
         trimmedSubject = "";
-        messageTypeID = "1";
-        message = "";
         trimmedMessage = "";
-        msgError = "";
         idMessageResponse = 0;
         msgSentGroup = null;
         msgMessageGrpId = 0;
-        timestamp = null;
-        sqlTimestamp = null;
-        stampToSend = "";
         timeToSend = "";
-        sentById = 0;
         phoneNumbers = null;
         phoneNumber = "";
         isMessageInvite = false;
-        associate2 = null;
-        client = null;
-        clients = null;
-        isClientOfAssociate = false;
         isAccountActive = true;
         groupMessage = false;
         phoneNumStrArr = "";
-        associate2 = new Associate2();
     }
 
     public void setCode(String code)
@@ -131,16 +102,6 @@ public abstract class SMSMessage implements SystemAccounts
         this.statusNumber = statusNumber;
     }
 
-    public void setSubject(String subject)
-    {
-        this.subject = subject;
-    }
-
-    public String getSubject()
-    {
-        return subject;
-    }
-
     public String getTrimmedSubject()
     {
 
@@ -162,26 +123,6 @@ public abstract class SMSMessage implements SystemAccounts
         this.trimmedMessage = trimmedMessage;
     }
 
-    public String getMessageTypeID()
-    {
-        return messageTypeID;
-    }
-
-    public void setMessageTypeID(String MessageTypeID)
-    {
-        this.messageTypeID = MessageTypeID;
-    }
-
-    public String getMessage()
-    {
-        return message;
-    }
-
-    public void setMessage(String message)
-    {
-        this.message = message;
-    }
-
     public boolean getIsMessageInvite()
     {
         return isMessageInvite;
@@ -190,11 +131,6 @@ public abstract class SMSMessage implements SystemAccounts
     public void setIsMessageInvite(boolean isMessageInvite)
     {
         this.isMessageInvite = isMessageInvite;
-    }
-
-    public void setMsgError(String msgError)
-    {
-        this.msgError = msgError;
     }
 
     public void setIdMessageResponse(int idMessageResponse)
@@ -222,21 +158,6 @@ public abstract class SMSMessage implements SystemAccounts
         this.msgMessageGrpId = msgMessageGrpId;
     }
 
-    public int getMessageId()
-    {
-        return messageId;
-    }
-
-    public void setMessageId(int messageId)
-    {
-        this.messageId = messageId;
-    }
-
-    public String getMsgError()
-    {
-        return msgError;
-    }
-
     public int getMsgMessageGrpId()
     {
         return msgMessageGrpId;
@@ -262,16 +183,6 @@ public abstract class SMSMessage implements SystemAccounts
         return credits;
     }
 
-    public Timestamp getTimestamp()
-    {
-        return timestamp;
-    }
-
-    public void setTimestamp(Timestamp timestamp)
-    {
-        this.timestamp = timestamp;
-    }
-
     public String getTimeToSend()
     {
         return timeToSend;
@@ -280,36 +191,6 @@ public abstract class SMSMessage implements SystemAccounts
     public void setTimeToSend(String timeToSend)
     {
         this.timeToSend = timeToSend;
-    }
-
-    public String getStampToSend()
-    {
-        return stampToSend;
-    }
-
-    public void setStampToSend(String stampToSend)
-    {
-        this.stampToSend = stampToSend;
-    }
-
-    public int getTimeToSendInteger()
-    {
-        return timeToSendInteger = Integer.parseInt(this.stampToSend);
-    }
-
-    public void setTimeToSendInteger(int timeToSendInteger)
-    {
-        this.timeToSendInteger = timeToSendInteger;
-    }
-
-    public int getSentById()
-    {
-        return sentById;
-    }
-
-    public void setSentById(int sentById)
-    {
-        this.sentById = sentById;
     }
 
     public void setPhoneNumbers(JSONArray phoneNumers)
@@ -332,46 +213,6 @@ public abstract class SMSMessage implements SystemAccounts
         this.phoneNumber = phoneNumber;
     }
 
-    public Associate2 getAssociate2()
-    {
-        return associate2;
-    }
-
-    public void setAssociate2(Associate2 associate2)
-    {
-        this.associate2 = associate2;
-    }
-
-    public Client getClient()
-    {
-        return client;
-    }
-
-    public void setClient(Client client)
-    {
-        this.client = client;
-    }
-
-    public ArrayList<Client> getClients()
-    {
-        return clients;
-    }
-
-    public void setClients(ArrayList<Client> clients)
-    {
-        this.clients = clients;
-    }
-
-    public boolean isIsClientOfAssociate()
-    {
-        return isClientOfAssociate;
-    }
-
-    public void setIsClientOfAssociate(boolean isClientOfAssociate)
-    {
-        this.isClientOfAssociate = isClientOfAssociate;
-    }
-
     public boolean isIsAccountActive()
     {
         return isAccountActive;
@@ -380,18 +221,6 @@ public abstract class SMSMessage implements SystemAccounts
     public void setIsAccountActive(boolean isAccountActive)
     {
         this.isAccountActive = isAccountActive;
-    }
-
-    public Timestamp getSqlTimestamp()
-    {
-        int t = Integer.parseInt(stampToSend);
-        java.util.Date time = new java.util.Date((long) t * 1000);
-        return sqlTimestamp = new java.sql.Timestamp(time.getTime());
-    }
-
-    public String getTimeStampString()
-    {
-        return DateUtil.createDateString(timestamp);
     }
 
     public String getResponse()

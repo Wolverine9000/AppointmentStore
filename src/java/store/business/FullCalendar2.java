@@ -29,12 +29,13 @@ public class FullCalendar2 implements Serializable
     private Services services;
     private ServiceStatus serviceStatus;
     private Associate2 associate2;
-    private SMSMessage smsMessage;
+    private SMScommunicator smsMessage;
     private Client client;
     private String start;
     private String end;
     private String title;
     private String action;
+    private String actionType;
     private boolean notifyClient;
     private boolean eventChange;
     private boolean restoreTime;
@@ -82,6 +83,7 @@ public class FullCalendar2 implements Serializable
         restoreTime = false;
         newClient = false;
         action = "";
+        actionType = "";
         isAssociate = false;
         userType = "";
         memberLevels = null;
@@ -90,7 +92,7 @@ public class FullCalendar2 implements Serializable
         message = "no message";
         services = new Services();
         serviceStatus = new ServiceStatus();
-        smsMessage = new SMSAppointmentMessage();
+        smsMessage = new SMSAppointmentCommunicator();
         timeToSend = "";
         messageId = 0;
         eventChange = false;
@@ -261,6 +263,46 @@ public class FullCalendar2 implements Serializable
     public void setAction(String action)
     {
         this.action = action;
+    }
+
+    public String getActionType()
+    {
+        return actionType;
+    }
+
+    public void setActionType(String actionType)
+    {
+        this.actionType = actionType;
+    }
+
+    public boolean isNotifyClient()
+    {
+        return notifyClient;
+    }
+
+    public void setNotifyClient(boolean notifyClient)
+    {
+        this.notifyClient = notifyClient;
+    }
+
+    public boolean isRestoreTime()
+    {
+        return restoreTime;
+    }
+
+    public void setRestoreTime(boolean restoreTime)
+    {
+        this.restoreTime = restoreTime;
+    }
+
+    public boolean isNewClient()
+    {
+        return newClient;
+    }
+
+    public void setNewClient(boolean newClient)
+    {
+        this.newClient = newClient;
     }
 
     public Boolean getNotifyClient()
@@ -596,12 +638,12 @@ public class FullCalendar2 implements Serializable
         return titleFirstNm;
     }
 
-    public SMSMessage getSmsMessage()
+    public SMScommunicator getSmsMessage()
     {
         return smsMessage;
     }
 
-    public void setSmsMessage(SMSMessage smsMessage)
+    public void setSmsMessage(SMScommunicator smsMessage)
     {
         this.smsMessage = smsMessage;
     }

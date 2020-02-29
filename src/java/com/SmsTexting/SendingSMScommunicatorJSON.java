@@ -14,7 +14,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
 import org.apache.commons.io.IOUtils;
-import store.business.SMSMessage;
+import store.business.SMScommunicator;
 import store.business.SmsAuthenticator;
 import store.data.MessagesDB;
 
@@ -22,11 +22,11 @@ import store.data.MessagesDB;
  *
  * @author williamdobbs
  */
-public class SendingSMSMessagesJSON implements SmsAuthenticator
+public class SendingSMScommunicatorJSON implements SmsAuthenticator
 {
 
     // private static final String URL = "https://app.eztexting.com/sending/messages?format=json";
-    public static boolean sendSMSMessage(SMSMessage msg) throws Exception
+    public static boolean sendSMScommunicator(SMScommunicator msg) throws Exception
     {
 
 //        String convStrArray = StringUtil.convStrArray(msg.getConvertedPhoneNumersString());

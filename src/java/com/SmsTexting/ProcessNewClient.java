@@ -10,7 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import messages.LogFile;
 import net.sf.json.JSONArray;
-import store.business.SMSMemberInviteMessage;
+import store.business.SMSMemberInviteCommunicator;
 import store.data.AssociateDB;
 import store.data.CustomerDB;
 import store.util.DateUtil;
@@ -26,7 +26,7 @@ public class ProcessNewClient
     public static void processClientInvite(String message, String mobilePh)
     {
         boolean isSMSMsgSent = false;
-        SMSMemberInviteMessage c = new SMSMemberInviteMessage();
+        SMSMemberInviteCommunicator c = new SMSMemberInviteCommunicator();
         ArrayList<String> phArr = new ArrayList<>();
         c.setPhoneArray(phArr);
         c.setPhoneNumStrArr(StringUtil.mobilePhToSMS(mobilePh));
@@ -65,7 +65,7 @@ public class ProcessNewClient
                         c.setMessage(c.getClient().getFirstName() + " " + c.messageDatabase(1));
                         c.setSubject(c.messageDatabase(4));
 
-                        isSMSMsgSent = SendingSMSMessagesJSON.sendSMSMessage(c);
+                        isSMSMsgSent = SendingSMScommunicatorJSON.sendSMScommunicator(c);
                         //Update
                         if (!isSMSMsgSent)
                         {
@@ -85,7 +85,7 @@ public class ProcessNewClient
                     c.setMessage(c.messageDatabase(3));
                     try
                     {
-                        isSMSMsgSent = SendingSMSMessagesJSON.sendSMSMessage(c);
+                        isSMSMsgSent = SendingSMScommunicatorJSON.sendSMScommunicator(c);
                         if (!isSMSMsgSent)
                         {
                             LogFile.smsError(ProcessNewClient.class.getName(), c.getMessage(), null);
@@ -110,7 +110,7 @@ public class ProcessNewClient
                 c.setMessageTypeID("1");
                 try
                 {
-                    isSMSMsgSent = SendingSMSMessagesJSON.sendSMSMessage(c);
+                    isSMSMsgSent = SendingSMScommunicatorJSON.sendSMScommunicator(c);
                 }
                 catch (Exception ex)
                 {

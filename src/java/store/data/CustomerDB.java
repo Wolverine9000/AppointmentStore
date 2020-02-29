@@ -18,7 +18,7 @@ import store.business.Associate2;
 import store.business.Client;
 import store.business.FullCalendar2;
 import store.business.MemberExtras;
-import store.business.SMSMemberInviteMessage;
+import store.business.SMSMemberInviteCommunicator;
 
 /**
  *
@@ -495,7 +495,7 @@ public class CustomerDB
         }
     }
 
-    public static void updateClientInviteRequest(int statusId, SMSMemberInviteMessage c)
+    public static void updateClientInviteRequest(int statusId, SMSMemberInviteCommunicator c)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
@@ -730,7 +730,7 @@ public class CustomerDB
      * @param c
      * @return
      */
-    public static SMSMemberInviteMessage selectClientInvite(SMSMemberInviteMessage c)
+    public static SMSMemberInviteCommunicator selectClientInvite(SMSMemberInviteCommunicator c)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();

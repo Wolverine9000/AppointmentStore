@@ -169,11 +169,11 @@ public class MailUtil implements Emailer
         int id = fc.getClient().getId();
         String notes = fc.getNotes();
 
-        if (subject.equalsIgnoreCase("Appointment Confirmation"))
+        if (subject.equalsIgnoreCase("Appointment Confirmation") || subject.contains("Your Appointment"))
         {
 
             // send appointment confirmtion email to the Client
-            sendMail(email, WHDTECHNOLOGIESEMAIL, subject + " " + eventId,
+            sendMail(email, WHDTECHNOLOGIESEMAIL, subject + " event ID " + eventId,
                     "Hello " + firstName + ",<br><br>"
                     + "Thank you for scheduling an appointment with The Salon Store on " + dateString + " at " + startTime + ".<br><br>"
                     + "<table style=\"height: 206px; float: left;\" width=\"547\">" + " <tbody>"
