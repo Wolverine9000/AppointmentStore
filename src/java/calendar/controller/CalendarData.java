@@ -883,7 +883,8 @@ public class CalendarData
 
             MailUtil.sendShortMsg(fc1, subject, msg, emailBccStr);
 
-            LogFile.generalLog("CalendarData postClientData quick sms " + fc1.getAssociate2().getFirstName() + " " + fc1.getAssociate2().getLastName() + " "
+            LogFile.generalLog("CalendarData postClientData quick sms " + fc1.getAssociate2().getFirstName() + " "
+                    + fc1.getAssociate2().getLastName() + " "
                     + msg, " - email addresses " + emailBccStr);
 
             if (m.getPhoneNumStrArr() != null)
@@ -1018,6 +1019,7 @@ public class CalendarData
             String mobileNumbers = StringUtil.convStrArray(mobilePhAssocArr);
             m.setPhoneNumStrArr(mobileNumbers);
             m.setPhoneArray(mobilePhAssocArr);
+            // sne SMS message
             smsSent = SendingSMScommunicatorJSON.sendSMScommunicator(m);
 
         }

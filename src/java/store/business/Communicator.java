@@ -30,7 +30,6 @@ public abstract class Communicator
     private Timestamp timestamp;
     private java.sql.Timestamp sqlTimestamp;
     private int messageId;
-    static final String RESIZE = "NO";
 
     public Communicator()
     {

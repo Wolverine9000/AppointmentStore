@@ -40,14 +40,14 @@ public class FullCalendarServlet extends HttpServlet
 
         Associate2 associate = null;
 
-        ArrayList<FullCalendar2> fc2 = new ArrayList<>();
-        FullCalendar2 fc2Info = new FullCalendar2();
-        ArrayList<Services> svcs = new ArrayList<>();
-        ArrayList<ServiceStatus> svcStatusArr = new ArrayList<>();
-        ArrayList<Associate2> associates = new ArrayList<>();
-        ArrayList<Category> cat = new ArrayList<>();
+        ArrayList<FullCalendar2> fc2 = null;
+        FullCalendar2 fc2Info = null;
+        ArrayList<Services> svcs = null;
+        ArrayList<ServiceStatus> svcStatusArr = null;
+        ArrayList<Associate2> associates = null;
+        ArrayList<Category> cat = null;
         HashMap<Integer, String> m = null;
-        ArrayList<FullCalendar2> messages = null;
+        ArrayList<FullCalendar2> messages;
         SMSMemberInviteCommunicator m1 = null;
         ArrayList<SMSMemberInviteCommunicator> m2 = null;
         ArrayList<SMSAppointmentCommunicator> m3 = null;

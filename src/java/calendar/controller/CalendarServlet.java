@@ -57,7 +57,7 @@ public class CalendarServlet extends HttpServlet
         int iMonth = 0;
 
         int iYear = 0;
-        String cMonth = null;
+        String cMonth;
         int day = 0;
         boolean viewWeek = false;
         boolean viewDay = false;
@@ -87,8 +87,8 @@ public class CalendarServlet extends HttpServlet
                     if ("/gotoDate".equals(userPath))
                     {
                         gotoDate = request.getParameter("gotoDate");
-                        Date date = null;
-                        boolean validateDate = false;
+                        Date date;
+                        boolean validateDate;
                         validateDate = Validator.isDateValid(gotoDate);
                         if (validateDate == false)
                         {
