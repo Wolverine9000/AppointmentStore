@@ -162,7 +162,7 @@ $(document).ready(function () {
         eventResize: function (event, revertFunc) {
             event.serviceTime = event.end.diff(event.start, 'minutes');
             event.action = "add";
-            event.actionType = "resize";
+            event.actionType = "RESIZE";
             event.notifyClient = true;
             event.eventChange = true;
             var hasConflict = eventConflictCk(event); // check for time conflict

@@ -9,7 +9,9 @@ package store.business;
  *
  * @author whdobbs
  */
-public interface Messanger
+public interface MessageConstants
 {
 
+    String RESIZE = " the ETA of your appointment has changed ";
+    String MOVE = "your appoinment has been RE-SCHECULED";
 }

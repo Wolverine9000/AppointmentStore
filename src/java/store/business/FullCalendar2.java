@@ -19,7 +19,7 @@ import store.util.DateUtil;
  *
  * @author williamdobbs
  */
-public class FullCalendar2 implements Serializable
+public class FullCalendar2 implements Serializable, MessageConstants
 {
 
     private int customerId;
@@ -358,6 +358,18 @@ public class FullCalendar2 implements Serializable
 
     public String getMessage()
     {
+        if ("RESIZE".equals(this.actionType))
+        {
+            message = MessageConstants.RESIZE;
+        }
+        else if ("MOVE".equals(this.actionType))
+        {
+            message = MessageConstants.MOVE;
+        }
+        else
+        {
+
+        }
         return message;
     }
 
@@ -676,6 +688,20 @@ public class FullCalendar2 implements Serializable
     public void setEventChange(boolean eventChange)
     {
         this.eventChange = eventChange;
+    }
+
+    public void smsMessage()
+    {
+
+        this.client.getFirstName();
+
+    }
+
+    private Date convertTime(String dt)
+    {
+        Date dateTime;
+        dateTime = (Date) DateUtil.convertDateSched(dt);
+        return dateTime;
     }
 
 }

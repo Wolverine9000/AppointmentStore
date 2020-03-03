@@ -537,7 +537,6 @@ public class CalendarData
             {
                 case "add":
                     boolean eventExists;
-                    String actionType = fc.getActionType();
                     if (fc.isAllDay())
                     { // if event is an all day calendar event, check to see if it already exists in the database
                         eventExists = CalendarDB.eventExists(fc.getEventId());
