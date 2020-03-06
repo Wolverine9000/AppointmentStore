@@ -449,6 +449,8 @@ public class CalendarData
 
         for (FullCalendar2 fc : fcArray)
         {
+            String startString = fc.getStart();
+            int lastindex = startString.lastIndexOf("Z");
             String t = fc.getTitle();
             // strip client name from calendar title; stripName function
             // client-side javascript should have already done this
@@ -456,15 +458,28 @@ public class CalendarData
             // convert start date-time strings to Date object
             Date startDate = DateUtil.convertDateSched(fc.getStart());
             Date endDate = DateUtil.convertDateSched(fc.getEnd());
+            //----------------------------------------------------
+            fc.setStartDate(DateUtil.convertDateSched(fc.getStart()));
+            fc.setEndDate(DateUtil.convertDateSched(fc.getEnd()));
+
             // get sql start and end times
             Time sqlStartTime = new java.sql.Time(startDate.getTime());
             Time sqlEndTime = new java.sql.Time(endDate.getTime());
+            //----------------------------------------------------
+            fc.setStartTime(new java.sql.Time(startDate.getTime()));
+            fc.setEndTime(new java.sql.Time(endDate.getTime()));
+
             // get sql start date and end date
             java.sql.Date sqlStartDate = new java.sql.Date(startDate.getTime());
             java.sql.Date sqlEndDate = new java.sql.Date(endDate.getTime());
+            //----------------------------------------------------
+            fc.setStartDate(new java.sql.Date(startDate.getTime()));
+            fc.setEndDate(new java.sql.Date(endDate.getTime()));
+
             // get Calendar object instances
             Calendar calStart = Calendar.getInstance();
             Calendar calEnd = Calendar.getInstance();
+
             // set Calendar objects from Date objects
             calStart.setTime(startDate);
             calEnd.setTime(endDate);
@@ -475,6 +490,13 @@ public class CalendarData
             int calStartMinute = calStart.get(Calendar.MINUTE);
             int startDayOfMonth = calStart.get(Calendar.DAY_OF_MONTH);
             int startYear = calStart.get(Calendar.YEAR);
+            //----------------------------------------------------
+            fc.setStartMonth(calStart.get(Calendar.MONTH));
+            fc.setStartDayOfWeek(calStart.get(Calendar.DAY_OF_WEEK));
+            fc.setStartTimeHour(calStart.get(Calendar.HOUR_OF_DAY));
+            fc.setStartTimeMin(calStart.get(Calendar.MINUTE));
+            fc.setStartDayOfMonth(calStart.get(Calendar.DAY_OF_MONTH));
+            fc.setStartYear(calStart.get(Calendar.YEAR));
             // get end date and time calendar object integers
             int endMonth = calEnd.get(Calendar.MONTH);
             int endDayOfWeek = calEnd.get(Calendar.DAY_OF_WEEK);
@@ -482,6 +504,13 @@ public class CalendarData
             int calEndMinute = calEnd.get(Calendar.MINUTE);
             int endDayOfMonth = calEnd.get(Calendar.DAY_OF_MONTH);
             int endYear = calEnd.get(Calendar.YEAR);
+            //----------------------------------------------------
+            fc.setEndMonth(calEnd.get(Calendar.MONTH));
+            fc.setEndDayOfWeek(calEnd.get(Calendar.DAY_OF_WEEK));
+            fc.setEndTimeHour(calEnd.get(Calendar.HOUR_OF_DAY));
+            fc.setEndTimeMin(calEnd.get(Calendar.MINUTE));
+            fc.setEndDayOfMonth(calEnd.get(Calendar.DAY_OF_MONTH));
+            fc.setEndYear(calEnd.get(Calendar.YEAR));
             // convert date-time strings to sql date-time objects
             fc.setStartSql(DateUtil.convertDate(fc.getStart())); // convert start time to sql timestamp
             fc.setEndSql(DateUtil.convertDate(fc.getEnd())); // convert end time to sql timestamp
@@ -548,7 +577,7 @@ public class CalendarData
                     if (eventExists)
                     {
                         // if event exists, update the calendar event in the database
-                        int updateCalendar = CalendarDB.updateCalendar(fc, sqlStartTime, sqlStartDate, sqlEndDate, sqlEndTime);
+                        int updateCalendar = CalendarDB.updateCalendar(fc, fc.getStartTime(), sqlStartDate, sqlEndDate, sqlEndTime);
                         if (updateCalendar == 0)
                         {
                             errorFlag = true;
@@ -639,8 +668,8 @@ public class CalendarData
                         }
                         // insert new calendar event into database
                         fc.setEventId(CalendarDB.insertAppointment(fc, sqlStartDate, sqlEndDate, startMonth, startDayOfWeek,
-                                startDayOfMonth, startYear, endMonth, endDayOfWeek, endDayOfMonth, endYear, sqlStartTime,
-                                sqlEndTime, calStartHour, calStartMinute, calEndHour, calEndMinute));
+                                startDayOfMonth, startYear, endMonth, endDayOfWeek, endDayOfMonth, endYear, fc.getStartTime(),
+                                fc.getEndTime(), calStartHour, calStartMinute, calEndHour, calEndMinute));
 
                         if (fc.getEventId() != 0)
                         {

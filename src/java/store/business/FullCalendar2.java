@@ -6,10 +6,11 @@
 package store.business;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import store.data.CustomerDB;
@@ -45,17 +46,29 @@ public class FullCalendar2 implements Serializable, MessageConstants
     private ArrayList<Integer> cancelEvts;
     private ArrayList<MemberExtras> memberLevels;
     private String message;
-    private int month;
-    private int day;
     private int date;
-    private int year;
+    private int startMonth;
+    private int startDay;
+    private int startYear;
+    private int startDayOfWeek;
+    private int startDayOfMonth;
     private int startTimeHour;
     private int startTimeMin;
+    private int endMonth;
+    private int endDay;
+    private int endYear;
+    private int endDayOfWeek;
+    private int endDayOfMonth;
     private int endTimeHour;
     private int endTimeMin;
     private java.sql.Date sqlCalendarDate;
+    private java.sql.Date calendarDate;
     private Timestamp startSql;
     private Timestamp endSql;
+    private Time startTime;
+    private Time endTime;
+    private Date startDate;
+    private Date endDate;
     private boolean allDay;
     private String backgroundColor;
     private String textColor;
@@ -205,6 +218,16 @@ public class FullCalendar2 implements Serializable, MessageConstants
         this.cancelEvts = cancelEvts;
     }
 
+    public int getDate()
+    {
+        return date;
+    }
+
+    public void setDate(int date)
+    {
+        this.date = date;
+    }
+
     public String getStart()
     {
         return start;
@@ -225,6 +248,26 @@ public class FullCalendar2 implements Serializable, MessageConstants
         this.end = end;
     }
 
+    public Date getStartDate()
+    {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate)
+    {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate()
+    {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate)
+    {
+        this.endDate = endDate;
+    }
+
     public String getTitle()
     {
         return title;
@@ -233,26 +276,6 @@ public class FullCalendar2 implements Serializable, MessageConstants
     public void setTitle(String title)
     {
         this.title = title;
-    }
-
-    public String getStartDate()
-    {
-        return start;
-    }
-
-    public void setStartDate(String startDate)
-    {
-        this.start = startDate;
-    }
-
-    public String getEndDate()
-    {
-        return end;
-    }
-
-    public void setEndDate(String endDate)
-    {
-        this.end = endDate;
     }
 
     public String getAction()
@@ -378,49 +401,59 @@ public class FullCalendar2 implements Serializable, MessageConstants
         this.message = message;
     }
 
-    public int getMonth()
-    {
-        return month;
-    }
-
-    public void setMonth(int month)
-    {
-        this.month = month;
-    }
-
-    public int getDay()
-    {
-        return day;
-    }
-
-    public void setDay(int day)
-    {
-        this.day = day;
-    }
-
-    public int getDate()
-    {
-        return date;
-    }
-
-    public void setDate(int date)
-    {
-        this.date = date;
-    }
-
-    public int getYear()
-    {
-        return year;
-    }
-
-    public void setYear(int year)
-    {
-        this.year = year;
-    }
-
     public int getStartTimeHour()
     {
         return startTimeHour;
+    }
+
+    public int getStartMonth()
+    {
+        return startMonth;
+    }
+
+    public void setStartMonth(int startMonth)
+    {
+        this.startMonth = startMonth;
+    }
+
+    public int getStartDay()
+    {
+        return startDay;
+    }
+
+    public void setStartDay(int startDay)
+    {
+        this.startDay = startDay;
+    }
+
+    public int getStartYear()
+    {
+        return startYear;
+    }
+
+    public void setStartYear(int startYear)
+    {
+        this.startYear = startYear;
+    }
+
+    public int getStartDayOfWeek()
+    {
+        return startDayOfWeek;
+    }
+
+    public void setStartDayOfWeek(int startDayOfWeek)
+    {
+        this.startDayOfWeek = startDayOfWeek;
+    }
+
+    public int getStartDayOfMonth()
+    {
+        return startDayOfMonth;
+    }
+
+    public void setStartDayOfMonth(int startDayOfMonth)
+    {
+        this.startDayOfMonth = startDayOfMonth;
     }
 
     public void setStartTimeHour(int startTimeHour)
@@ -458,12 +491,72 @@ public class FullCalendar2 implements Serializable, MessageConstants
         this.endTimeMin = endTimeMin;
     }
 
+    public int getEndDay()
+    {
+        return endDay;
+    }
+
+    public void setEndDay(int endDay)
+    {
+        this.endDay = endDay;
+    }
+
+    public int getEndMonth()
+    {
+        return endMonth;
+    }
+
+    public void setEndMonth(int endMonth)
+    {
+        this.endMonth = endMonth;
+    }
+
+    public int getEndYear()
+    {
+        return endYear;
+    }
+
+    public void setEndYear(int endYear)
+    {
+        this.endYear = endYear;
+    }
+
+    public int getEndDayOfWeek()
+    {
+        return endDayOfWeek;
+    }
+
+    public void setEndDayOfWeek(int endDayOfWeek)
+    {
+        this.endDayOfWeek = endDayOfWeek;
+    }
+
+    public int getEndDayOfMonth()
+    {
+        return endDayOfMonth;
+    }
+
+    public void setEndDayOfMonth(int endDayOfMonth)
+    {
+        this.endDayOfMonth = endDayOfMonth;
+    }
+
+    public java.sql.Date getCalendarDate()
+    {
+        return calendarDate;
+    }
+
+    public void setCalendarDate(java.sql.Date calendarDate)
+    {
+        this.calendarDate = calendarDate;
+    }
+
     public Date getSqlCalendarDate()
     {
         return sqlCalendarDate;
     }
 
-    public void setSqlCalendarDate(Date sqlCalendarDate)
+    public void setSqlCalendarDate(java.sql.Date sqlCalendarDate)
     {
         this.sqlCalendarDate = sqlCalendarDate;
     }
@@ -475,6 +568,7 @@ public class FullCalendar2 implements Serializable, MessageConstants
 
     public void setStartSql(Timestamp startSql)
     {
+
         this.startSql = startSql;
     }
 
@@ -625,11 +719,6 @@ public class FullCalendar2 implements Serializable, MessageConstants
         return endTimeFormat;
     }
 
-    public void setDate(java.sql.Date date)
-    {
-        sqlCalendarDate = new java.sql.Date(date.getTime());
-    }
-
     // strip client first name from calendar title
     public String stripName(String t)
     {
@@ -646,7 +735,8 @@ public class FullCalendar2 implements Serializable, MessageConstants
 
     public String addName()
     {
-        String titleFirstNm = this.serviceDescription + ": " + this.client.getFirstName();
+        String titleFirstNm = this.serviceDescription + ": " + this.client.getFirstName() + " "
+                + this.client.getLastName();
         return titleFirstNm;
     }
 
@@ -697,11 +787,25 @@ public class FullCalendar2 implements Serializable, MessageConstants
 
     }
 
-    private Date convertTime(String dt)
+    public Time getStartTime()
     {
-        Date dateTime;
-        dateTime = (Date) DateUtil.convertDateSched(dt);
-        return dateTime;
+        return startTime;
+    }
+
+    public void setStartTime(Time startTime)
+    {
+        this.startTime = startTime;
+    }
+
+    public Time getEndTime()
+    {
+
+        return endTime;
+    }
+
+    public void setEndTime(Time endTime)
+    {
+        this.endTime = endTime;
     }
 
 }
