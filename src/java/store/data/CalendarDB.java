@@ -315,7 +315,7 @@ public class CalendarDB
         }
     }
 
-    public static int updateCalendar(FullCalendar2 fc, Time startTime, Date sqlStartDate, Date sqlEndDate, Time endTime)
+    public static int updateCalendar(FullCalendar2 fc)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
@@ -362,10 +362,10 @@ public class CalendarDB
             ps.setTimestamp(11, fc.getStartSql());
             ps.setTimestamp(12, fc.getEndSql());
             ps.setBoolean(13, fc.isEditable());
-            ps.setTime(14, startTime);
-            ps.setTime(15, endTime);
-            ps.setDate(16, sqlStartDate);
-            ps.setDate(17, sqlEndDate);
+            ps.setTime(14, fc.getSqlStartTime());
+            ps.setTime(15, fc.getSqlEndTime());
+            ps.setDate(16, fc.getSqlStartDate());
+            ps.setDate(17, fc.getSqlEndDate());
             ps.setBoolean(18, fc.isAllDay());
             ps.setInt(19, fc.getServiceTime());
             ps.setString(20, fc.getNotes());
@@ -884,8 +884,7 @@ public class CalendarDB
         }
     }
 
-    public static int insertAppointment(FullCalendar2 fc, Date sqlStartDate, Date sqlEndDate, int startMonth, int startDay, int startDate, int startYear,
-            int endMonth, int endDay, int endDate, int endYear, Time startTime, Time endTime, int startHour, int startMinute, int endHour, int endMinute)
+    public static int insertAppointment(FullCalendar2 fc)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
@@ -934,25 +933,25 @@ public class CalendarDB
             ps.setString(13, fc.getTextColor());
             ps.setBoolean(14, fc.isDurationEditable());
             ps.setBoolean(15, fc.isEditable());
-            ps.setTime(16, startTime);
-            ps.setTime(17, endTime);
+            ps.setTime(16, fc.getSqlStartTime());
+            ps.setTime(17, fc.getSqlEndTime());
             ps.setInt(18, fc.getAssociate2().getId());
             ps.setString(19, fc.getNotes());
             ps.setInt(20, fc.getClient().getId());
-            ps.setInt(21, startMonth);
-            ps.setInt(22, startDay);
-            ps.setInt(23, startDate);
-            ps.setInt(24, startYear);
-            ps.setInt(25, endMonth);
-            ps.setInt(26, endDay);
-            ps.setInt(27, endDate);
-            ps.setInt(28, endYear);
-            ps.setDate(29, sqlStartDate);
-            ps.setDate(30, sqlEndDate);
-            ps.setInt(31, startHour);
-            ps.setInt(32, startMinute);
-            ps.setInt(33, endHour);
-            ps.setInt(34, endMinute);
+            ps.setInt(21, fc.getStartMonth());
+            ps.setInt(22, fc.getStartDayOfWeek());
+            ps.setInt(23, fc.getStartDayOfMonth());
+            ps.setInt(24, fc.getStartYear());
+            ps.setInt(25, fc.getEndMonth());
+            ps.setInt(26, fc.getEndDayOfWeek());
+            ps.setInt(27, fc.getEndDayOfMonth());
+            ps.setInt(28, fc.getEndYear());
+            ps.setDate(29, fc.getSqlStartDate());
+            ps.setDate(30, fc.getSqlEndDate());
+            ps.setInt(31, fc.getStartTimeHour());
+            ps.setInt(32, fc.getStartTimeMin());
+            ps.setInt(33, fc.getEndTimeHour());
+            ps.setInt(34, fc.getEndTimeMin());
             ps.setInt(35, fc.getServices().getServiceStatus().getStatusId());
 
             ps.executeUpdate();
