@@ -11,8 +11,8 @@ import com.google.gson.reflect.TypeToken;
 import static java.lang.Integer.parseInt;
 import java.lang.reflect.Type;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.text.DateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -449,48 +449,32 @@ public class CalendarData
 
         for (FullCalendar2 fc : fcArray)
         {
-            String startString = fc.getStart();
-            int lastindex = startString.lastIndexOf("Z");
             String t = fc.getTitle();
+            LocalDateTime startDateTime = DateUtil.convertDateTimeString(fc.getStart());
+            LocalDateTime endDateTime = DateUtil.convertDateTimeString(fc.getEnd());
             // strip client name from calendar title; stripName function
             // client-side javascript should have already done this
             fc.setTitle(fc.stripName(t));
             // convert start date-time strings to Date object
-            Date startDate = DateUtil.convertDateSched(fc.getStart());
-            Date endDate = DateUtil.convertDateSched(fc.getEnd());
-            //----------------------------------------------------
             fc.setStartDate(DateUtil.convertDateSched(fc.getStart()));
             fc.setEndDate(DateUtil.convertDateSched(fc.getEnd()));
 
             // get sql start and end times
-            Time sqlStartTime = new java.sql.Time(startDate.getTime());
-            Time sqlEndTime = new java.sql.Time(endDate.getTime());
-            //----------------------------------------------------
-            fc.setStartTime(new java.sql.Time(startDate.getTime()));
-            fc.setEndTime(new java.sql.Time(endDate.getTime()));
+            fc.setSqlStartTime(new java.sql.Time(fc.getStartDate().getTime()));
+            fc.setSqlEndTime(new java.sql.Time(fc.getEndDate().getTime()));
 
-            // get sql start date and end date
-            java.sql.Date sqlStartDate = new java.sql.Date(startDate.getTime());
-            java.sql.Date sqlEndDate = new java.sql.Date(endDate.getTime());
-            //----------------------------------------------------
-            fc.setStartDate(new java.sql.Date(startDate.getTime()));
-            fc.setEndDate(new java.sql.Date(endDate.getTime()));
+            // get sql start  and end dates
+            fc.setSqlStartDate(new java.sql.Date(fc.getStartDate().getTime()));
+            fc.setSqlEndDate(new java.sql.Date(fc.getEndDate().getTime()));
 
             // get Calendar object instances
             Calendar calStart = Calendar.getInstance();
             Calendar calEnd = Calendar.getInstance();
 
             // set Calendar objects from Date objects
-            calStart.setTime(startDate);
-            calEnd.setTime(endDate);
+            calStart.setTime(fc.getSqlStartTime());
+            calEnd.setTime(fc.getSqlEndTime());
             // get integers for start date and time calendar objects
-            int startMonth = calStart.get(Calendar.MONTH);
-            int startDayOfWeek = calStart.get(Calendar.DAY_OF_WEEK);
-            int calStartHour = calStart.get(Calendar.HOUR_OF_DAY);
-            int calStartMinute = calStart.get(Calendar.MINUTE);
-            int startDayOfMonth = calStart.get(Calendar.DAY_OF_MONTH);
-            int startYear = calStart.get(Calendar.YEAR);
-            //----------------------------------------------------
             fc.setStartMonth(calStart.get(Calendar.MONTH));
             fc.setStartDayOfWeek(calStart.get(Calendar.DAY_OF_WEEK));
             fc.setStartTimeHour(calStart.get(Calendar.HOUR_OF_DAY));
@@ -498,13 +482,6 @@ public class CalendarData
             fc.setStartDayOfMonth(calStart.get(Calendar.DAY_OF_MONTH));
             fc.setStartYear(calStart.get(Calendar.YEAR));
             // get end date and time calendar object integers
-            int endMonth = calEnd.get(Calendar.MONTH);
-            int endDayOfWeek = calEnd.get(Calendar.DAY_OF_WEEK);
-            int calEndHour = calEnd.get(Calendar.HOUR_OF_DAY);
-            int calEndMinute = calEnd.get(Calendar.MINUTE);
-            int endDayOfMonth = calEnd.get(Calendar.DAY_OF_MONTH);
-            int endYear = calEnd.get(Calendar.YEAR);
-            //----------------------------------------------------
             fc.setEndMonth(calEnd.get(Calendar.MONTH));
             fc.setEndDayOfWeek(calEnd.get(Calendar.DAY_OF_WEEK));
             fc.setEndTimeHour(calEnd.get(Calendar.HOUR_OF_DAY));
@@ -577,7 +554,7 @@ public class CalendarData
                     if (eventExists)
                     {
                         // if event exists, update the calendar event in the database
-                        int updateCalendar = CalendarDB.updateCalendar(fc, fc.getStartTime(), sqlStartDate, sqlEndDate, sqlEndTime);
+                        int updateCalendar = CalendarDB.updateCalendar(fc);
                         if (updateCalendar == 0)
                         {
                             errorFlag = true;
@@ -667,9 +644,7 @@ public class CalendarData
                             }
                         }
                         // insert new calendar event into database
-                        fc.setEventId(CalendarDB.insertAppointment(fc, sqlStartDate, sqlEndDate, startMonth, startDayOfWeek,
-                                startDayOfMonth, startYear, endMonth, endDayOfWeek, endDayOfMonth, endYear, fc.getStartTime(),
-                                fc.getEndTime(), calStartHour, calStartMinute, calEndHour, calEndMinute));
+                        fc.setEventId(CalendarDB.insertAppointment(fc));
 
                         if (fc.getEventId() != 0)
                         {
@@ -773,10 +748,10 @@ public class CalendarData
                     }
                     if (eventDeleted && fc.getRestoreTime() && !fc.isAllDay())
                     {
-                        boolean isAssoDateAvailable = AssociateDB.isAssociateAvailability(fc.getAssociate2().getId(), sqlStartDate);
+                        boolean isAssoDateAvailable = AssociateDB.isAssociateAvailability(fc.getAssociate2().getId(), fc.getSqlStartDate());
                         if (!isAssoDateAvailable) // if Associate Date not available, restore Associate time frame
                         {
-                            int insertAvailDate = AssociateDB.insertAvailableDate(fc.getAssociate2().getId(), sqlStartDate);
+                            int insertAvailDate = AssociateDB.insertAvailableDate(fc.getAssociate2().getId(), fc.getSqlStartDate());
                             if (insertAvailDate == 0)
                             {
                                 errorFlag = true;
@@ -785,9 +760,9 @@ public class CalendarData
                         // convert frequency to multiplier number
                         int calculateTimes = CalendarUtil.calculateTimes(15);
                         // calculate the number of times to insert into database using for-loop
-                        int totalTime = (calEndHour - calStartHour) * calculateTimes;
+                        int totalTime = (fc.getEndTimeHour() - fc.getStartTimeHour()) * calculateTimes;
                         // get total loops adjustment conversion
-                        totalTime = CalendarUtil.totalTimes(calStartMinute, calEndMinute, 15, totalTime);
+                        totalTime = CalendarUtil.totalTimes(fc.getStartTimeMin(), fc.getEndTimeMin(), 15, totalTime);
                         for (int j = 0; j < totalTime; j++)
                         {
                             Date newTime = calStart.getTime();
@@ -799,11 +774,11 @@ public class CalendarData
                             Date end = DateUtil.convertCal(calStart, et); // use calendar date and time to convert to end-time Date object
                             fc.setEndSql(new java.sql.Timestamp(end.getTime())); // create sql end-time sql timestamp
                             // check if time-slot is not avialable/open
-                            boolean isAssoTimeAvailable = AssociateDB.isAssociateTimeAvailable(fc.getAssociate2().getId(), sqlStartDate, sqlStartTime);
+                            boolean isAssoTimeAvailable = AssociateDB.isAssociateTimeAvailable(fc.getAssociate2().getId(), fc.getSqlStartDate(), fc.getSqlStartTime());
                             if (!isAssoTimeAvailable)
                             {
                                 // insert new scheduled date, time, start timestamp, end timestamp and associate id into database
-                                int insertSchedule = AssociateDB.insertAssociateSchedule(sqlStartDate, sqlStTime, fc.getAssociate2().getId(), fc.getStartSql(), fc.getEndSql());
+                                int insertSchedule = AssociateDB.insertAssociateSchedule(fc.getSqlStartDate(), sqlStTime, fc.getAssociate2().getId(), fc.getStartSql(), fc.getEndSql());
                             }
                             // add appointment interval frequency time to scheduled date
                             calStart.add(Calendar.MINUTE, 15); // add frequency time
@@ -823,7 +798,7 @@ public class CalendarData
                                 + associateFirstName + " associateLastName:"
                                 + associateLastName + " AssociateID:" + associateId
                                 + " Event ID: " + fc.getEventId()
-                                + " Start Time slot deleted: " + startDate + " End Time slot deleted:" + endDate, " action:" + action);
+                                + " Start Time slot deleted: " + fc.getStartDate() + " End Time slot deleted:" + fc.getEndDate(), " action:" + action);
                     }
                     if (delAssoicateTimeSlot == 0)
                     {

@@ -63,6 +63,10 @@ public class FullCalendar2 implements Serializable, MessageConstants
     private int endTimeMin;
     private java.sql.Date sqlCalendarDate;
     private java.sql.Date calendarDate;
+    private java.sql.Date sqlStartDate;
+    private java.sql.Date sqlEndDate;
+    private java.sql.Time sqlStartTime;
+    private java.sql.Time sqlEndTime;
     private Timestamp startSql;
     private Timestamp endSql;
     private Time startTime;
@@ -559,6 +563,46 @@ public class FullCalendar2 implements Serializable, MessageConstants
     public void setSqlCalendarDate(java.sql.Date sqlCalendarDate)
     {
         this.sqlCalendarDate = sqlCalendarDate;
+    }
+
+    public java.sql.Date getSqlStartDate()
+    {
+        return sqlStartDate;
+    }
+
+    public void setSqlStartDate(java.sql.Date sqlStartDate)
+    {
+        this.sqlStartDate = sqlStartDate;
+    }
+
+    public java.sql.Date getSqlEndDate()
+    {
+        return sqlEndDate;
+    }
+
+    public void setSqlEndDate(java.sql.Date sqlEndDate)
+    {
+        this.sqlEndDate = sqlEndDate;
+    }
+
+    public Time getSqlStartTime()
+    {
+        return sqlStartTime;
+    }
+
+    public void setSqlStartTime(Time sqlStartTime)
+    {
+        this.sqlStartTime = sqlStartTime;
+    }
+
+    public Time getSqlEndTime()
+    {
+        return sqlEndTime;
+    }
+
+    public void setSqlEndTime(Time sqlEndTime)
+    {
+        this.sqlEndTime = sqlEndTime;
     }
 
     public Timestamp getStartSql()

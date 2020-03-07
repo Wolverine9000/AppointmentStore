@@ -10,6 +10,8 @@ import java.text.DateFormat;
 import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -261,6 +263,16 @@ public class DateUtil
             LogFile.databaseError("DateUtil convertTime error ", ex.getMessage(), ex.toString());
             return null;
         }
+    }
+
+    public static LocalDateTime convertDateTimeString(String dateTimeString)
+    {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        int z = dateTimeString.indexOf(".", 0);// get index number for iso time
+        String s = dateTimeString.substring(0, z);
+        s = s + "Z";
+        LocalDateTime pdt = LocalDateTime.parse(s, formatter);
+        return pdt;
     }
 
     public static Date convertCalendar(Calendar calendar)
