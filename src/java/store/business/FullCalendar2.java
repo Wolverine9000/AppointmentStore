@@ -90,6 +90,7 @@ public class FullCalendar2 implements Serializable, MessageConstants
     private LocalDateTime startDateTime;
     private String startTimeUtc;
     private String startMoment;
+    private String timeZone;
 
     public FullCalendar2()
     {
@@ -120,7 +121,6 @@ public class FullCalendar2 implements Serializable, MessageConstants
         timeToSend = "";
         messageId = 0;
         eventChange = false;
-        startTimeUtc = "";
 
     }
 
@@ -142,6 +142,16 @@ public class FullCalendar2 implements Serializable, MessageConstants
     public void setStartTimeUtc(String startTimeUtc)
     {
         this.startTimeUtc = startTimeUtc;
+    }
+
+    public String getTimeZone()
+    {
+        return timeZone;
+    }
+
+    public void setTimeZone(String timeZone)
+    {
+        this.timeZone = timeZone;
     }
 
     public Client getClient()

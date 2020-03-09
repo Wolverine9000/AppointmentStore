@@ -912,9 +912,9 @@ public class CalendarDB
                 + "endTime, "
                 + "associate_id, "
                 + "notes, "
-                + "customer_id, month, day, date, year, monthEnd, dayEnd, dateEnd, yearEnd,"
-                + "calendar_date, calendar_endDate, start_time_hour, start_time_min, end_time_hour, end_time_min, service_status) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                + "customer_id, month, day, date, year, monthEnd, dayEnd, dateEnd, yearEnd, "
+                + "calendar_date, calendar_endDate, start_time_hour, start_time_min, end_time_hour, end_time_min, service_status, time_zone) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try
         {
             ps = connection.prepareStatement(query);
@@ -953,6 +953,7 @@ public class CalendarDB
             ps.setInt(33, fc.getEndTimeHour());
             ps.setInt(34, fc.getEndTimeMin());
             ps.setInt(35, fc.getServices().getServiceStatus().getStatusId());
+            ps.setString(36, fc.getTimeZone());
 
             ps.executeUpdate();
             //Get the event ID from the last INSERT statement.

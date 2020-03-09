@@ -103,7 +103,7 @@ $(document).ready(function () {
             $(this).css('background-color', 'dfeffc');
         },
         eventClick: function (calEvent, jsEvent) {
-            evtClick(calEvent, jsEvent);
+            evtClick(new EventObj(calEvent), jsEvent);
         }, // end eventClick function
         select: function (start, end, jsEvent, view) {
             $("#accordion-4 table.last-visits-table tbody").empty(); // clear contents of last five visits table tbody
@@ -165,6 +165,8 @@ $(document).ready(function () {
             event.actionType = "RESIZE";
             event.eventChange = true;
             event.startTimeUtc = moment.utc();
+            var ltz = moment.tz.guess(true);
+            event.startLocalTime = moment.tz(event.start, ltz);
             var hasConflict = eventConflictCk(event); // check for time conflict
             if (hasConflict.length > 0)
             {
@@ -799,7 +801,8 @@ function openPastMsg(start, end, jsEvent, view) {
 } // end pastDateMsg function
 
 function evtClick(calEvent, jsEvent) {
-//    var lastFiveEvents = serviceList.getCalendarEvents(calEvent.customerId, 5);
+//    var lastFiveEvents = serviceList.getCalendarEvents(event.customerId, 5);
+//    var calEvent = new EventObj(event);
     var isAllDay = "No",
             calEvtElem = $(".calEvent");
     var isEvtClientObj = calEvent.client instanceof Object;
@@ -817,7 +820,7 @@ function evtClick(calEvent, jsEvent) {
     var clientImgId = 0;
     if (isEvtClientObj === true && calEvent.client.imgUpl === true) // check if client is an Object type
     {
-        clientImgId = calEvent.customerId;
+        clientImgId = calEvent.client.id;
     }
     if (calEvent.userType === "associate")
     {
@@ -828,8 +831,8 @@ function evtClick(calEvent, jsEvent) {
                 + "<tr>" + "<td title='associate email address'>" + "email:" + "</td>" + "<td>" + "<a href='mailto:" + calEvent.associate2.email + " '>" + calEvent.associate2.email + "</a>" + "</td>" + "</tr>"
                 + "<tr>" + "<td title='mobile phone'>" + "mobile&#35;" + "</td>" + "<td>" + formatPhone(calEvent.associate2.mobilePhone) + "</td>" + "</tr>"
                 + "<tr>" + "<td title='available date'>" + "date:" + "</td>" + "<td>" + jsDate.formatDate(calEvent.start) + "</td>" + "</tr>"
-                + "<tr>" + "<td title='available start time'>" + "start:" + "</td>" + "<td>" + jsTime.formatTime(calEvent.start) + "</td>" + "</tr>"
-                + "<tr>" + "<td title='available end time'>" + "end:" + "</td>" + "<td>" + jsTime.formatTime(calEvent.end) + "</td>" + "</tr>"
+                + "<tr>" + "<td title='available start time'>" + "start:" + "</td>" + "<td>" + calEvent.getStartTime() + "</td>" + "</tr>" //jsTime.formatTime(calEvent.start)
+                + "<tr>" + "<td title='available end time'>" + "end:" + "</td>" + "<td>" + calEvent.getEndTime() + "</td>" + "</tr>"
                 + "<tr>" + "<td title='associate available time id number'>" + "id&#35;" + "</td>" + "<td>" + calEvent.eventId + "</td>" + "</tr>";
         openEvent(calEvent, eventInfo, jsEvent);
         calEvtElem.dialog("option", "title", "Available Time Info");
@@ -854,10 +857,10 @@ function evtClick(calEvent, jsEvent) {
                 + "<tr>" + "<td title='mobile phone'>" + "mobile:" + "</td>" + "<td>" + "<a href='tel:" + formatPhone(calEvent.client.mobilePhone) + " '>" + formatPhone(calEvent.client.mobilePhone) + "</a>" + "</td>" + "</tr>"
                 + "<tr>" + "<td title='service to perform'>" + "service:" + "</td>" + "<td>" + stripName(calEvent.title) + "</td>" + "</tr>"
                 + "<tr>" + "<td title='date of service'>" + "date:" + "</td>" + "<td>" + jsDate.formatDate(calEvent.start) + "</td>" + "</tr>"
-                + "<tr>" + "<td title='service start time'>" + "start:" + "</td>" + "<td>" + jsTime.formatTime(calEvent.start) + "</td>" + "</tr>"
-                + "<tr>" + "<td title='service end time'>" + "end:" + "</td>" + "<td>" + jsTime.formatTime(calEvent.end) + "</td>" + "</tr>"
+                + "<tr>" + "<td title='service start time'>" + "start:" + "</td>" + "<td>" + calEvent.getStartTime() + "</td>" + "</tr>"
+                + "<tr>" + "<td title='service end time'>" + "end:" + "</td>" + "<td>" + calEvent.getEndTime() + "</td>" + "</tr>"
                 + "<tr>" + "<td title='event id number'>" + "event:" + "</td>" + "<td>" + calEvent.eventId + "</td>" + "</tr>"
-                + "<tr>" + "<td title='estimated time of service'>" + "eta:" + "</td>" + "<td>" + minutesFormat(calEvent.serviceTime) + "</td>" + "</tr>"
+                + "<tr>" + "<td title='estimated time of service'>" + "eta:" + "</td>" + "<td>" + calEvent.getServiceTimeFormat() + "</td>" + "</tr>"
                 + "<tr>" + "<td title='is event scheduled all day'>" + "all day:" + "</td>" + "<td>" + isAllDay + "</td>" + "</tr>"
                 + "<tr>" + "<td title='client notes'>" + "notes:" + "</td>" + "<td>" + calEvent.notes + "</td>" + "</tr>"
                 + "<tr>" + "<td title='associate first name'>" + "associate:" + "</td>" + "<td>" + calEvent.associate2.firstName

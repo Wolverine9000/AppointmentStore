@@ -910,6 +910,7 @@ var associateClass = {
 // new Event Object function
 var EventObj = function (event) {
     this.startMoment = event.start.toJSON();
+    this.timeZone = moment.tz.guess(true);
     this.start = jsDate.convToJsDate(event.start);
     this.startTimeUtc = event.startTimeUtc;
     if (event.allDay)
@@ -960,6 +961,7 @@ var EventObj = function (event) {
     this.eventChange = event.eventChange;
 }; // end EventObj function
 
+// ****** EventObj prototypes ******
 // remove client name from title
 EventObj.prototype.title = function () {
     if (typeof this.title !== "undefined")
@@ -975,6 +977,42 @@ EventObj.prototype.title = function () {
 EventObj.prototype.toJson = function () {
     return this.startMoment.toJSON();
 };
+EventObj.prototype.getStartTime = function () {
+//    var ltz = moment.tz.guess(true);
+    var st = moment(moment.tz(this.start, this.timeZone)).format("h:mm a");
+    return st;
+};
+EventObj.prototype.getEndTime = function () {
+//    var ltz = moment.tz.guess(true);
+    var et = moment(moment.tz(this.end, this.timeZone)).format("h:mm a");
+    return et;
+};
+EventObj.prototype.getServiceTimeFormat = function () {
+    var minutes = this.serviceTime % 60;
+    var hours = Math.floor(this.serviceTime / 60);
+    var hourFmt = " hour ";
+    var minFmt = " minutes";
+    minutes = (minutes < 10 ? '0' : '') + minutes;
+    //hours = (hours < 10 ? '0' : '') + hours;
+    if (hours === 0)
+    {
+        return minutes + minFmt;
+    }
+    else
+    {
+        if (hours > 1)
+        {
+            hourFmt = " hours ";
+        }
+        if (minutes === "00")
+        {
+            return hours + hourFmt;
+        }
+        return hours + hourFmt + minutes + minFmt;
+    }
+};
+
+// ****** END EventObj prototypes ******
 
 var Client = function (firstName, lastName, email, homePhone, workPhone, company,
         address, city, state, zip, id, imgUpl, memberLevel, memberLevels) {
