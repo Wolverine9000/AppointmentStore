@@ -12,7 +12,6 @@ import static java.lang.Integer.parseInt;
 import java.lang.reflect.Type;
 import java.sql.SQLException;
 import java.text.DateFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -149,6 +148,7 @@ public class CalendarData
             fc.setStartSql(cc.getStartSql());
             fc.setEndSql(cc.getEndSql());
             fc.setEventId(cc.getEventId());
+            fc.setNotifyClient(cc.isNewClient());
             return fc;
         }).forEachOrdered((fc) ->
         {
@@ -450,8 +450,8 @@ public class CalendarData
         for (FullCalendar2 fc : fcArray)
         {
             String t = fc.getTitle();
-            LocalDateTime startDateTime = DateUtil.convertDateTimeString(fc.getStart());
-            LocalDateTime endDateTime = DateUtil.convertDateTimeString(fc.getEnd());
+//            LocalDateTime startDateTime = DateUtil.convertDateTimeString(fc.getStart());
+//            LocalDateTime endDateTime = DateUtil.convertDateTimeString(fc.getEnd());
             // strip client name from calendar title; stripName function
             // client-side javascript should have already done this
             fc.setTitle(fc.stripName(t));
@@ -492,6 +492,11 @@ public class CalendarData
             fc.setStartSql(DateUtil.convertDate(fc.getStart())); // convert start time to sql timestamp
             fc.setEndSql(DateUtil.convertDate(fc.getEnd())); // convert end time to sql timestamp
 
+            String startStr = fc.convertStartTimestamp();
+            int y = fc.runTest();
+            int dom = fc.dayOfMonth();
+            int dom2 = fc.dayofMonth2();
+
             // prepare SMS message
             Date start = calStart.getTime();
             String dateStr = DateUtil.formatDate(start);
@@ -504,8 +509,6 @@ public class CalendarData
 
             int regCode = RandomCode();
 
-            String regCodeStr = String.valueOf(regCode);
-
             Associate2 a = fc.getAssociate2();
             Services s = ProductDB.selectService(fc.getServices().getServiceId());
 
@@ -517,12 +520,8 @@ public class CalendarData
             m.setMessageTypeID("1");
             m.setStampToSend(nowTimeUnix);
 
-            boolean sendEmailApptAlert;
-            boolean sendSmsApptAlert;
-            boolean notifyClient;
-
-            // boolean appointment notification settings for client and associate
-            notifyClient = fc.getNotifyClient();
+//            boolean sendEmailApptAlert;
+//            boolean sendSmsApptAlert;
             String smsEventChangeMsg = " has been scheduled on ";
 
             if (fc.isEventChange())
@@ -535,9 +534,6 @@ public class CalendarData
                 smsEventChangeMsg = " has been CANCELLED for ";
                 m.setSubject("CANCELLED");
             }
-
-            boolean emailApptAsso = fc.getAssociate2().isEmailApptAlerts();
-            boolean smsApptAsso = fc.getAssociate2().isSmsApptAlerts();
 
             switch (fc.getAction())
             {
@@ -565,7 +561,7 @@ public class CalendarData
                                     + fc.getAssociate2().getFirstName() + smsEventChangeMsg + dateStr + " at " + timeString + "."
                                     + " Event:# " + fc.eventIdStr());
 
-                            if (notifyClient)
+                            if (fc.isNotifyClient())
                             {
                                 if (fc.getClient().isSmsApptAlerts())
                                 {
@@ -586,29 +582,31 @@ public class CalendarData
                                     }
                                 }
                             }
-                            if (fc.getAssociate2().isSmsAdAlerts())
+                            if (fc.isNotifyAssociate())
                             {
-                                m.setMessage(fc.getAssociate2().getFirstName() + ", the service " + fc.getTitle() + " with "
-                                        + fc.getClient().getFirstName() + smsEventChangeMsg + dateStr + " at " + timeString + "."
-                                        + " Event:# " + fc.eventIdStr());
-                                // send associate sms message
-                                smsSent = sendSMS(m, fc);
-                                if (smsSent == false)
+                                if (fc.getAssociate2().isSmsAdAlerts())
                                 {
-                                    errorFlag = true;
+                                    m.setMessage(fc.getAssociate2().getFirstName() + ", the service " + fc.getTitle() + " with "
+                                            + fc.getClient().getFirstName() + smsEventChangeMsg + dateStr + " at " + timeString + "."
+                                            + " Event:# " + fc.eventIdStr());
+                                    // send associate sms message
+                                    smsSent = sendSMS(m, fc);
+                                    if (smsSent == false)
+                                    {
+                                        errorFlag = true;
+                                    }
+                                }
+                                if (fc.getAssociate2().isEmailApptAlerts())
+                                {
+                                    // email associate
+                                    boolean sendConfirmation;
+                                    sendConfirmation = MailUtil.sendAssociateConfirm("Appointment RE-SCHEDULED " + smsEventChangeMsg, dateStr, timeString, fc, a, s, regCode);
+                                    if (sendConfirmation == false)
+                                    {
+                                        errorFlag = true;
+                                    }
                                 }
                             }
-                            if (fc.getAssociate2().isEmailApptAlerts())
-                            {
-                                // email associate
-                                boolean sendConfirmation;
-                                sendConfirmation = MailUtil.sendAssociateConfirm("Appointment RE-SCHEDULED " + smsEventChangeMsg, dateStr, timeString, fc, a, s, regCode);
-                                if (sendConfirmation == false)
-                                {
-                                    errorFlag = true;
-                                }
-                            }
-
                         }
                         // are there any events in array to cancel
                         if (fc.getCancelEvts() != null)
@@ -651,17 +649,15 @@ public class CalendarData
                             // remove associate available date and time
                             AssociateDB.deleteAvailability(fc.getAssociate2().getId(), fc.getStartSql(), fc.getEndSql());
 
-                            if (notifyClient)
+                            if (fc.isNotifyClient())
                             {
-                                sendEmailApptAlert = fc.getClient().isEmailApptAlerts();
-                                sendSmsApptAlert = fc.getClient().isSmsApptAlerts();
 
                                 // TODO code new appointment email/sms message
                                 m.setMessage(fc.getClient().getFirstName() + ", the service " + fc.getTitle() + " with " + fc.getAssociate2().getFirstName() + smsEventChangeMsg + dateStr + " at " + timeString + "."
                                         + " Event:# " + fc.eventIdStr() + " Code: " + regCode);
 //                                String message = fc.getFirstName() + " " + dateStr + " at " + timeString + "."
 //                                        + "http://71.8.84.224:8081/AppointmentStore/IncomingMessage?phone=" + mobileStr2 + "&reg=" + regCodeStr;
-                                if (sendSmsApptAlert)
+                                if (fc.getClient().isSmsApptAlerts())
                                 {
 
                                     try
@@ -682,7 +678,7 @@ public class CalendarData
                                     }
 
                                 }
-                                if (sendEmailApptAlert)
+                                if (fc.getClient().isEmailApptAlerts())
                                 {
                                     boolean sendConfirmation = MailUtil.sendConfirmation("Appointment Confirmation", dateStr, timeString, fc, a, s, regCode);
                                     if (sendConfirmation == false)
@@ -691,7 +687,7 @@ public class CalendarData
                                     }
                                 }
                             }
-                            if (emailApptAsso)
+                            if (fc.getAssociate2().isEmailApptAlerts())
                             {
                                 boolean sendConfirmation = MailUtil.sendAssociateConfirm("Appointment Confirmation", dateStr, timeString, fc, a, s, regCode);
                                 if (sendConfirmation == false)
@@ -699,7 +695,7 @@ public class CalendarData
                                     errorFlag = true;
                                 }
                             }
-                            if (smsApptAsso)
+                            if (fc.getAssociate2().isSmsApptAlerts())
                             {
                                 m.setMessage("Your client " + fc.getClient().getFirstName() + smsEventChangeMsg + fc.getTitle() + " on " + dateStr + " at " + timeString + "."
                                         + " Event# " + fc.eventIdStr());
@@ -731,7 +727,7 @@ public class CalendarData
                 case "delete":
                     boolean eventDeleted;
                     eventDeleted = CalendarDB.deleteAppointment(fc.getEventId());
-                    if (eventDeleted && fc.getNotifyClient())
+                    if (eventDeleted && fc.isNotifyClient())
                     {
                         LogFile.generalLog(fc.getEventId() + " event successfully deleted ", " event ID" + fc.eventIdStr() + " client " + fc.getClient().getFirstName());
                         if (fc.getClient().isSmsApptAlerts())

@@ -9,7 +9,9 @@ import java.io.Serializable;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.NumberFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,6 +40,7 @@ public class FullCalendar2 implements Serializable, MessageConstants
     private String action;
     private String actionType;
     private boolean notifyClient;
+    private boolean notifyAssociate;
     private boolean eventChange;
     private boolean restoreTime;
     private boolean newClient;
@@ -84,6 +87,9 @@ public class FullCalendar2 implements Serializable, MessageConstants
     private String timeToSend;
     private int messageId;
     private final Map<String, Object> otherProperties = new HashMap<>();
+    private LocalDateTime startDateTime;
+    private String startTimeUtc;
+    private String startMoment;
 
     public FullCalendar2()
     {
@@ -97,6 +103,7 @@ public class FullCalendar2 implements Serializable, MessageConstants
         end = null;
         title = null;
         notifyClient = false;
+        notifyAssociate = false;
         restoreTime = false;
         newClient = false;
         action = "";
@@ -113,7 +120,28 @@ public class FullCalendar2 implements Serializable, MessageConstants
         timeToSend = "";
         messageId = 0;
         eventChange = false;
+        startTimeUtc = "";
 
+    }
+
+    public String getStartMoment()
+    {
+        return startMoment;
+    }
+
+    public void setStartMoment(String startMoment)
+    {
+        this.startMoment = startMoment;
+    }
+
+    public String getStartTimeUtc()
+    {
+        return startTimeUtc;
+    }
+
+    public void setStartTimeUtc(String startTimeUtc)
+    {
+        this.startTimeUtc = startTimeUtc;
     }
 
     public Client getClient()
@@ -312,6 +340,16 @@ public class FullCalendar2 implements Serializable, MessageConstants
         this.notifyClient = notifyClient;
     }
 
+    public boolean isNotifyAssociate()
+    {
+        return notifyAssociate;
+    }
+
+    public void setNotifyAssociate(boolean notifyAssociate)
+    {
+        this.notifyAssociate = notifyAssociate;
+    }
+
     public boolean isRestoreTime()
     {
         return restoreTime;
@@ -330,16 +368,6 @@ public class FullCalendar2 implements Serializable, MessageConstants
     public void setNewClient(boolean newClient)
     {
         this.newClient = newClient;
-    }
-
-    public Boolean getNotifyClient()
-    {
-        return notifyClient;
-    }
-
-    public void setNotifyClient(Boolean notifyClient)
-    {
-        this.notifyClient = notifyClient;
     }
 
     public Boolean getRestoreTime()
@@ -852,4 +880,21 @@ public class FullCalendar2 implements Serializable, MessageConstants
         this.endTime = endTime;
     }
 
+    public int runTest()
+    {
+        return this.endDayOfMonth + this.startMonth;
+    }
+
+    public int dayOfMonth()
+    {
+        Calendar calEnd = Calendar.getInstance();
+        calEnd.setTime(this.sqlEndTime);
+        return calEnd.get(Calendar.DAY_OF_MONTH);
+    }
+
+    public int dayofMonth2()
+    {
+        this.startDateTime = DateUtil.convertDateTimeString(this.start);
+        return this.startDateTime.getDayOfMonth();
+    }
 }

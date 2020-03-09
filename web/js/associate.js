@@ -909,7 +909,9 @@ var associateClass = {
 
 // new Event Object function
 var EventObj = function (event) {
+    this.startMoment = event.start.toJSON();
     this.start = jsDate.convToJsDate(event.start);
+    this.startTimeUtc = event.startTimeUtc;
     if (event.allDay)
     {
         this.end = new Date(this.start);
@@ -929,9 +931,21 @@ var EventObj = function (event) {
     this.eventId = event.eventId;
     this.services = event.services;
     this.associateName = event.associateName;
-    this.notes = event.notes;
+    this.notes = event.notes.replace(/\'/g, "\"");
     this.statusId = event.statusId;
-    this.notifyClient = event.notifyClient;
+    // do not notify client or associate if event date and time is in the past
+    var now = moment();
+    if (event.start.isAfter(now))
+    {
+        this.notifyClient = true;
+        this.notifyAssociate = true;
+
+    }
+    else
+    {
+        this.notifyClient = false;
+        this.notifyAssociate = false;
+    }
     this.restoreTime = event.restoreTime;
     this.newClient = event.newClient;
     this.action = event.action;
@@ -958,8 +972,8 @@ EventObj.prototype.title = function () {
     }
     return this.title;
 };
-EventObj.prototype.notes = function () {
-    return this.notes.replace(/\'/g, "\"");
+EventObj.prototype.toJson = function () {
+    return this.startMoment.toJSON();
 };
 
 var Client = function (firstName, lastName, email, homePhone, workPhone, company,

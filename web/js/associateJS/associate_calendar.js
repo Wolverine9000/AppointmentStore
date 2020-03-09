@@ -163,8 +163,8 @@ $(document).ready(function () {
             event.serviceTime = event.end.diff(event.start, 'minutes');
             event.action = "add";
             event.actionType = "RESIZE";
-            event.notifyClient = true;
             event.eventChange = true;
+            event.startTimeUtc = moment.utc();
             var hasConflict = eventConflictCk(event); // check for time conflict
             if (hasConflict.length > 0)
             {
@@ -246,6 +246,7 @@ function updateEvent(event) {
     addEventObj.serviceStatus.statusId = event.serviceStatus.statusId;
     addEventObj.eventChange = event.eventChange;
     addEventObj.restoreTime = event.restoreTime;
+    addEventObj.startTimeUtc = event.startTimeUtc;
 
     return addEventObj;
 
