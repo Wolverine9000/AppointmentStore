@@ -802,35 +802,19 @@ function openPastMsg(start, end, jsEvent, view) {
 
 function evtClick(calEvent, jsEvent) {
 //    var lastFiveEvents = serviceList.getCalendarEvents(event.customerId, 5);
-//    var calEvent = new EventObj(event);
-    var isAllDay = "No",
-            calEvtElem = $(".calEvent");
+//    var calEvent = new EventObj(calEvent);
+    var calEvtElem = $(".calEvent");
     var isEvtClientObj = calEvent.client instanceof Object;
 
-    if (calEvent.allDay === true)
-    {
-        isAllDay = "Yes";
-        //calEvent.serviceTime = "n/a";
-    }
-    var associateImgId = 0;
-    if (calEvent.associate2.imgUpl === true)
-    {
-        associateImgId = calEvent.associate2.id;
-    }
-    var clientImgId = 0;
-    if (isEvtClientObj === true && calEvent.client.imgUpl === true) // check if client is an Object type
-    {
-        clientImgId = calEvent.client.id;
-    }
     if (calEvent.userType === "associate")
     {
         $("#statusField").hide();
         var eventInfo =
                 "<tr>" + "<td title='client first and last name'>" + "associate:" + "</td>" + "<td>" + calEvent.associate2.firstName + " " + calEvent.associate2.lastName + "&nbsp;" + '<img src="../img/associates/'
-                + associateImgId + '.png" alt="associate img" alt="img">' + "</td>" + "</tr>"
+                + calEvent.imageUploadId(calEvent.associate2) + '.png" alt="associate img" alt="img">' + "</td>" + "</tr>"
                 + "<tr>" + "<td title='associate email address'>" + "email:" + "</td>" + "<td>" + "<a href='mailto:" + calEvent.associate2.email + " '>" + calEvent.associate2.email + "</a>" + "</td>" + "</tr>"
                 + "<tr>" + "<td title='mobile phone'>" + "mobile&#35;" + "</td>" + "<td>" + formatPhone(calEvent.associate2.mobilePhone) + "</td>" + "</tr>"
-                + "<tr>" + "<td title='available date'>" + "date:" + "</td>" + "<td>" + jsDate.formatDate(calEvent.start) + "</td>" + "</tr>"
+                + "<tr>" + "<td title='available date'>" + "date:" + "</td>" + "<td>" + calEvent.formatDate() + "</td>" + "</tr>"
                 + "<tr>" + "<td title='available start time'>" + "start:" + "</td>" + "<td>" + calEvent.getStartTime() + "</td>" + "</tr>" //jsTime.formatTime(calEvent.start)
                 + "<tr>" + "<td title='available end time'>" + "end:" + "</td>" + "<td>" + calEvent.getEndTime() + "</td>" + "</tr>"
                 + "<tr>" + "<td title='associate available time id number'>" + "id&#35;" + "</td>" + "<td>" + calEvent.eventId + "</td>" + "</tr>";
@@ -852,19 +836,19 @@ function evtClick(calEvent, jsEvent) {
         }
         var eventInfo =
                 "<tr>" + "<td title='client first and last name'>" + "client:" + "</td>" + "<td>" + calEvent.client.firstName + " " + calEvent.client.lastName + '  <img src="../img/clients/'
-                + clientImgId + '.png" alt="client img" alt="img">' + "</td>" + "</tr>"
+                + calEvent.imageUploadId(calEvent.client) + '.png" alt="client img" alt="img">' + "</td>" + "</tr>"
                 + "<tr>" + "<td title='client email address'>" + "email:" + "</td>" + "<td>" + "<a href='mailto:" + calEvent.client.email + " '>" + calEvent.client.email + "</a>" + "</td>" + "</tr>"
                 + "<tr>" + "<td title='mobile phone'>" + "mobile:" + "</td>" + "<td>" + "<a href='tel:" + formatPhone(calEvent.client.mobilePhone) + " '>" + formatPhone(calEvent.client.mobilePhone) + "</a>" + "</td>" + "</tr>"
-                + "<tr>" + "<td title='service to perform'>" + "service:" + "</td>" + "<td>" + stripName(calEvent.title) + "</td>" + "</tr>"
-                + "<tr>" + "<td title='date of service'>" + "date:" + "</td>" + "<td>" + jsDate.formatDate(calEvent.start) + "</td>" + "</tr>"
+                + "<tr>" + "<td title='service to perform'>" + "service:" + "</td>" + "<td>" + calEvent.getTitle() + "</td>" + "</tr>"
+                + "<tr>" + "<td title='date of service'>" + "date:" + "</td>" + "<td>" + calEvent.formatDate() + "</td>" + "</tr>"
                 + "<tr>" + "<td title='service start time'>" + "start:" + "</td>" + "<td>" + calEvent.getStartTime() + "</td>" + "</tr>"
                 + "<tr>" + "<td title='service end time'>" + "end:" + "</td>" + "<td>" + calEvent.getEndTime() + "</td>" + "</tr>"
                 + "<tr>" + "<td title='event id number'>" + "event:" + "</td>" + "<td>" + calEvent.eventId + "</td>" + "</tr>"
                 + "<tr>" + "<td title='estimated time of service'>" + "eta:" + "</td>" + "<td>" + calEvent.getServiceTimeFormat() + "</td>" + "</tr>"
-                + "<tr>" + "<td title='is event scheduled all day'>" + "all day:" + "</td>" + "<td>" + isAllDay + "</td>" + "</tr>"
+                + "<tr>" + "<td title='is event scheduled all day'>" + "all day:" + "</td>" + "<td>" + calEvent.isAllDay() + "</td>" + "</tr>"
                 + "<tr>" + "<td title='client notes'>" + "notes:" + "</td>" + "<td>" + calEvent.notes + "</td>" + "</tr>"
                 + "<tr>" + "<td title='associate first name'>" + "associate:" + "</td>" + "<td>" + calEvent.associate2.firstName
-                + '  <img src="../img/associates/' + associateImgId + '.png" alt="associate img" alt="img">' + "</td>" + "</tr>"
+                + '  <img src="../img/associates/' + calEvent.imageUploadId(calEvent.associate2) + '.png" alt="associate img" alt="img">' + "</td>" + "</tr>"
                 + "<tr>" + "<td>" + "status:" + "</td>" + '<td style="color:' + calEvent.services.serviceStatus.statusColor + '">' + calEvent.services.serviceStatus.statusName + "</td>" + "</tr>";
         openEvent(calEvent);
         calEvtElem.dialog("option", "title", "Appointment Info");
@@ -902,9 +886,9 @@ function openEvent(event) {
                     notifyField.hide();
                     var eventInfo =
                             "<tr>" + "<td title='client first and last name'>" + "associate:" + "</td>" + "<td>" + event.associate2.firstName + " " + event.associate2.lastName + "</td>" + "</tr>"
-                            + "<tr>" + "<td title='available date'>" + "date:" + "</td>" + "<td>" + jsDate.formatDate(event.start) + "</td>" + "</tr>"
-                            + "<tr>" + "<td title='available start time'>" + "start:" + "</td>" + "<td>" + jsTime.formatTime(event.start) + "</td>" + "</tr>"
-                            + "<tr>" + "<td title='available end time'>" + "end:" + "</td>" + "<td>" + jsTime.formatTime(event.end) + "</td>" + "</tr>"
+                            + "<tr>" + "<td title='available date'>" + "date:" + "</td>" + "<td>" + event.formatDate() + "</td>" + "</tr>"
+                            + "<tr>" + "<td title='available start time'>" + "start:" + "</td>" + "<td>" + event.getStartTime() + "</td>" + "</tr>"
+                            + "<tr>" + "<td title='available end time'>" + "end:" + "</td>" + "<td>" + event.eventId + "</td>" + "</tr>"
                             + "<tr>" + "<td title='associate available time id number'>" + "id&#35;" + "</td>" + "<td>" + event.eventId + "</td>" + "</tr>";
                     removeEvent(event);
                     remove.dialog("option", "title", "Confirm Request");
@@ -943,9 +927,9 @@ function openEvent(event) {
                     var eventInfo =
                             "<tr>" + "<td title='client first and last name'>" + "client:" + "</td>" + "<td>" + event.client.firstName + " " + event.client.lastName + "</td>" + "</tr>"
                             + "<tr>" + "<td title='service to perform'>" + "service:" + "</td>" + "<td>" + stripName(event.title) + "</td>" + "</tr>"
-                            + "<tr>" + "<td title='date of service'>" + "date:" + "</td>" + "<td>" + jsDate.formatDate(event.start) + "</td>" + "</tr>"
-                            + "<tr>" + "<td title='service start time'>" + "start:" + "</td>" + "<td>" + jsTime.formatTime(event.start) + "</td>" + "</tr>"
-                            + "<tr>" + "<td title='service end time'>" + "end:" + "</td>" + "<td>" + jsTime.formatTime(event.end) + "</td>" + "</tr>"
+                            + "<tr>" + "<td title='date of service'>" + "date:" + "</td>" + "<td>" + event.formatDate() + "</td>" + "</tr>"
+                            + "<tr>" + "<td title='service start time'>" + "start:" + "</td>" + "<td>" + event.getStartTime() + "</td>" + "</tr>"
+                            + "<tr>" + "<td title='service end time'>" + "end:" + "</td>" + "<td>" + event.getEndTime() + "</td>" + "</tr>"
                             + "<tr>" + "<td title='associate first name'>" + "associate:" + "</td>" + "<td>" + event.associate2.firstName + "</td>" + "</tr>"
                             + "<tr>" + "<td title='event id number'>" + "event:" + "</td>" + "<td>" + event.eventId + "</td>" + "</tr>";
                     removeEvent(event);

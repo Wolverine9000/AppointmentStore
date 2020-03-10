@@ -963,7 +963,7 @@ var EventObj = function (event) {
 
 // ****** EventObj prototypes ******
 // remove client name from title
-EventObj.prototype.title = function () {
+EventObj.prototype.getTitle = function () {
     if (typeof this.title !== "undefined")
     {
         var i = this.title.indexOf(":", 0);
@@ -1011,7 +1011,31 @@ EventObj.prototype.getServiceTimeFormat = function () {
         return hours + hourFmt + minutes + minFmt;
     }
 };
-
+EventObj.prototype.formatDate = function () {
+    var momObj = moment(this.start, dateFmts),
+            momFormat = momObj.format("ddd MMM D, YYYY");
+    return momFormat;
+};
+EventObj.prototype.isAllDay = function () {
+    if (this.allDay === true)
+    {
+        return "Yes";
+    }
+    else
+    {
+        return "No";
+    }
+};
+EventObj.prototype.imageUploadId = function (i) {
+    if (i.imgUpl === true)
+    {
+        return i.id;
+    }
+    else
+    {
+        return 0;
+    }
+};
 // ****** END EventObj prototypes ******
 
 var Client = function (firstName, lastName, email, homePhone, workPhone, company,
