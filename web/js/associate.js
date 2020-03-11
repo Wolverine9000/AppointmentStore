@@ -911,17 +911,12 @@ var associateClass = {
 var EventObj = function (event) {
     this.startMoment = event.start.toJSON();
     this.timeZone = moment.tz.guess(true);
-    this.start = jsDate.convToJsDate(event.start);
-    this.startTimeUtc = event.startTimeUtc;
-    this.endTimeUtc = "";
-    if (event.allDay)
-    {
-        this.end = new Date(this.start);
-    }
-    else
-    {
-        this.end = jsDate.convToJsDate(event.end);
-    }
+    this.start = event.start;
+    this.startTimestamp = event.start.format("YYYY-MM-DD HH:mm:ss");
+    this.endTimestamp = event.end.format("YYYY-MM-DD HH:mm:ss");
+    this.startTimeUtc = event.start;
+    this.endTimeUtc = event.end;
+    this.end = event.end; // jsDate.convToJsDate(event.end)
     this.title = event.title;
     this.serviceTime = event.serviceTime;
     this.allDay = event.allDay;
@@ -933,21 +928,10 @@ var EventObj = function (event) {
     this.eventId = event.eventId;
     this.services = event.services;
     this.associateName = event.associateName;
-    this.notes = event.notes.replace(/\'/g, "\"");
+    this.notes = event.notes;
     this.statusId = event.statusId;
-    // do not notify client or associate if event date and time is in the past
-    var now = moment();
-    if (event.start.isAfter(now))
-    {
-        this.notifyClient = true;
-        this.notifyAssociate = true;
-
-    }
-    else
-    {
-        this.notifyClient = false;
-        this.notifyAssociate = false;
-    }
+    this.notifyClient = true;
+    this.notifyAssociate = true;
     this.restoreTime = event.restoreTime;
     this.newClient = event.newClient;
     this.action = event.action;
@@ -979,14 +963,10 @@ EventObj.prototype.toJson = function () {
     return this.startMoment.toJSON();
 };
 EventObj.prototype.getStartTime = function () {
-//    var ltz = moment.tz.guess(true);
-    var st = moment(moment.tz(this.start, this.timeZone)).format("h:mm a");
-    return st;
+    return moment(this.start).format("h:mm a z");
 };
 EventObj.prototype.getEndTime = function () {
-//    var ltz = moment.tz.guess(true);
-    var et = moment(moment.tz(this.end, this.timeZone)).format("h:mm a");
-    return et;
+    return moment(this.end).format("h:mm a z");
 };
 //EventObj.prototype.getServiceTimeFormat = function () {
 //    var minutes = this.serviceTime % 60;

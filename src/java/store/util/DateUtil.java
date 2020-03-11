@@ -267,11 +267,8 @@ public class DateUtil
 
     public static LocalDateTime convertDateTimeString(String dateTimeString)
     {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
-        int z = dateTimeString.indexOf(".", 0);// get index number for iso time
-        String s = dateTimeString.substring(0, z);
-        s = s + "Z";
-        LocalDateTime pdt = LocalDateTime.parse(s, formatter);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        LocalDateTime pdt = LocalDateTime.parse(dateTimeString, formatter);
         return pdt;
     }
 

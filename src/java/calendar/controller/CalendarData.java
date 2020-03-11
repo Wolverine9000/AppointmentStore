@@ -12,6 +12,8 @@ import static java.lang.Integer.parseInt;
 import java.lang.reflect.Type;
 import java.sql.SQLException;
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -431,7 +433,7 @@ public class CalendarData
         return errorFlag;
     }
 
-    public static boolean postCalendarData(String json, HttpServletRequest request, Associate2 associateSession)
+    public static boolean postCalendarData(String json, HttpServletRequest request, Associate2 associateSession) throws ParseException
     {
         boolean errorFlag = false;
         boolean dataInsert;
@@ -450,12 +452,17 @@ public class CalendarData
         for (FullCalendar2 fc : fcArray)
         {
             String t = fc.getTitle();
+//            fc.setStartDateTime(DateUtil.convertDateTimeString(fc.getStart()));
 //            LocalDateTime startDateTime = DateUtil.convertDateTimeString(fc.getStart());
 //            LocalDateTime endDateTime = DateUtil.convertDateTimeString(fc.getEnd());
             // strip client name from calendar title; stripName function
             // client-side javascript should have already done this
             fc.setTitle(fc.stripName(t));
+//            int stdt_min = fc.getStartDateTime().getHour();
             // convert start date-time strings to Date object
+            Date date;
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            date = format.parse(fc.getStartTimestamp());
             fc.setStartDate(DateUtil.convertDateSched(fc.getStart()));
             fc.setEndDate(DateUtil.convertDateSched(fc.getEnd()));
 
@@ -494,8 +501,8 @@ public class CalendarData
 
             String startStr = fc.convertStartTimestamp();
             int y = fc.runTest();
-            int dom = fc.dayOfMonth();
-            int dom2 = fc.dayofMonth2();
+//            int dom = fc.dayOfMonth();
+//            int dom2 = fc.dayofMonth2();
 
             // prepare SMS message
             Date start = calStart.getTime();

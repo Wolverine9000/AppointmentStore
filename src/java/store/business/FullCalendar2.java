@@ -36,6 +36,8 @@ public class FullCalendar2 implements Serializable, MessageConstants
     private Client client;
     private String start;
     private String end;
+    private String startTimestamp;
+    private String endTimestamp;
     private String title;
     private String action;
     private String actionType;
@@ -309,6 +311,26 @@ public class FullCalendar2 implements Serializable, MessageConstants
     public void setEnd(String end)
     {
         this.end = end;
+    }
+
+    public String getStartTimestamp()
+    {
+        return startTimestamp;
+    }
+
+    public void setStartTimestamp(String startTimestamp)
+    {
+        this.startTimestamp = startTimestamp;
+    }
+
+    public String getEndTimestamp()
+    {
+        return endTimestamp;
+    }
+
+    public void setEndTimestamp(String endTimestamp)
+    {
+        this.endTimestamp = endTimestamp;
     }
 
     public Date getStartDate()
