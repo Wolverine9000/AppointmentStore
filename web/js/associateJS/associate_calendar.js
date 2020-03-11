@@ -103,7 +103,7 @@ $(document).ready(function () {
             $(this).css('background-color', 'dfeffc');
         },
         eventClick: function (calEvent, jsEvent) {
-            evtClick(new EventObj(calEvent), jsEvent);
+            evtClick(calEvent, jsEvent);
         }, // end eventClick function
         select: function (start, end, jsEvent, view) {
             $("#accordion-4 table.last-visits-table tbody").empty(); // clear contents of last five visits table tbody
@@ -802,7 +802,9 @@ function openPastMsg(start, end, jsEvent, view) {
 
 function evtClick(calEvent, jsEvent) {
 //    var lastFiveEvents = serviceList.getCalendarEvents(event.customerId, 5);
-//    var calEvent = new EventObj(calEvent);
+    calEvent.serviceTime = calEvent.end.diff(calEvent.start, 'minutes');
+    var calEvent = new EventObj(calEvent);
+
     var calEvtElem = $(".calEvent");
     var isEvtClientObj = calEvent.client instanceof Object;
 
@@ -844,7 +846,7 @@ function evtClick(calEvent, jsEvent) {
                 + "<tr>" + "<td title='service start time'>" + "start:" + "</td>" + "<td>" + calEvent.getStartTime() + "</td>" + "</tr>"
                 + "<tr>" + "<td title='service end time'>" + "end:" + "</td>" + "<td>" + calEvent.getEndTime() + "</td>" + "</tr>"
                 + "<tr>" + "<td title='event id number'>" + "event:" + "</td>" + "<td>" + calEvent.eventId + "</td>" + "</tr>"
-                + "<tr>" + "<td title='estimated time of service'>" + "eta:" + "</td>" + "<td>" + calEvent.getServiceTimeFormat() + "</td>" + "</tr>"
+                + "<tr>" + "<td title='estimated time of service'>" + "eta:" + "</td>" + "<td>" + minutesFormat(calEvent.serviceTime) + "</td>" + "</tr>"
                 + "<tr>" + "<td title='is event scheduled all day'>" + "all day:" + "</td>" + "<td>" + calEvent.isAllDay() + "</td>" + "</tr>"
                 + "<tr>" + "<td title='client notes'>" + "notes:" + "</td>" + "<td>" + calEvent.notes + "</td>" + "</tr>"
                 + "<tr>" + "<td title='associate first name'>" + "associate:" + "</td>" + "<td>" + calEvent.associate2.firstName

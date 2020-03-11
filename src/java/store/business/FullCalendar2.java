@@ -89,6 +89,7 @@ public class FullCalendar2 implements Serializable, MessageConstants
     private final Map<String, Object> otherProperties = new HashMap<>();
     private LocalDateTime startDateTime;
     private String startTimeUtc;
+    private String endTimeUtc;
     private String startMoment;
     private String timeZone;
 
@@ -142,6 +143,26 @@ public class FullCalendar2 implements Serializable, MessageConstants
     public void setStartTimeUtc(String startTimeUtc)
     {
         this.startTimeUtc = startTimeUtc;
+    }
+
+    public LocalDateTime getStartDateTime()
+    {
+        return startDateTime;
+    }
+
+    public void setStartDateTime(LocalDateTime startDateTime)
+    {
+        this.startDateTime = startDateTime;
+    }
+
+    public String getEndTimeUtc()
+    {
+        return endTimeUtc;
+    }
+
+    public void setEndTimeUtc(String endTimeUtc)
+    {
+        this.endTimeUtc = endTimeUtc;
     }
 
     public String getTimeZone()

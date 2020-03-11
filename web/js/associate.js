@@ -913,6 +913,7 @@ var EventObj = function (event) {
     this.timeZone = moment.tz.guess(true);
     this.start = jsDate.convToJsDate(event.start);
     this.startTimeUtc = event.startTimeUtc;
+    this.endTimeUtc = "";
     if (event.allDay)
     {
         this.end = new Date(this.start);
@@ -987,30 +988,30 @@ EventObj.prototype.getEndTime = function () {
     var et = moment(moment.tz(this.end, this.timeZone)).format("h:mm a");
     return et;
 };
-EventObj.prototype.getServiceTimeFormat = function () {
-    var minutes = this.serviceTime % 60;
-    var hours = Math.floor(this.serviceTime / 60);
-    var hourFmt = " hour ";
-    var minFmt = " minutes";
-    minutes = (minutes < 10 ? '0' : '') + minutes;
-    //hours = (hours < 10 ? '0' : '') + hours;
-    if (hours === 0)
-    {
-        return minutes + minFmt;
-    }
-    else
-    {
-        if (hours > 1)
-        {
-            hourFmt = " hours ";
-        }
-        if (minutes === "00")
-        {
-            return hours + hourFmt;
-        }
-        return hours + hourFmt + minutes + minFmt;
-    }
-};
+//EventObj.prototype.getServiceTimeFormat = function () {
+//    var minutes = this.serviceTime % 60;
+//    var hours = Math.floor(this.serviceTime / 60);
+//    var hourFmt = " hour ";
+//    var minFmt = " minutes";
+//    minutes = (minutes < 10 ? '0' : '') + minutes;
+//    //hours = (hours < 10 ? '0' : '') + hours;
+//    if (hours === 0)
+//    {
+//        return minutes + minFmt;
+//    }
+//    else
+//    {
+//        if (hours > 1)
+//        {
+//            hourFmt = " hours ";
+//        }
+//        if (minutes === "00")
+//        {
+//            return hours + hourFmt;
+//        }
+//        return hours + hourFmt + minutes + minFmt;
+//    }
+//};
 EventObj.prototype.formatDate = function () {
     var momObj = moment(this.start, dateFmts),
             momFormat = momObj.format("ddd MMM D, YYYY");
