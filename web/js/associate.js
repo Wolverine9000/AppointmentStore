@@ -914,9 +914,11 @@ var EventObj = function (event) {
     this.start = event.start;
     this.startTimestamp = event.start.format("YYYY-MM-DD HH:mm:ss");
     this.endTimestamp = event.end.format("YYYY-MM-DD HH:mm:ss");
+    this.startOffset = event.start.format("YYYY-MM-DD HH:mm:ss Z");
+    this.endOffset = event.end.format("YYYY-MM-DD HH:mm:ss Z");
     this.startTimeUtc = event.start;
     this.endTimeUtc = event.end;
-    this.end = event.end; // jsDate.convToJsDate(event.end)
+    this.end = event.end;
     this.title = event.title;
     this.serviceTime = event.serviceTime;
     this.allDay = event.allDay;
@@ -963,10 +965,10 @@ EventObj.prototype.toJson = function () {
     return this.startMoment.toJSON();
 };
 EventObj.prototype.getStartTime = function () {
-    return moment(this.start).format("h:mm a z");
+    return moment(this.start).format("h:mm a");
 };
 EventObj.prototype.getEndTime = function () {
-    return moment(this.end).format("h:mm a z");
+    return moment(this.end).format("h:mm a");
 };
 //EventObj.prototype.getServiceTimeFormat = function () {
 //    var minutes = this.serviceTime % 60;

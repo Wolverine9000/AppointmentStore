@@ -80,6 +80,21 @@ public class DateUtil
         }
     }
 
+    public static Date timestampToDate(String timestamp)
+    {
+        Date d = null;
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try
+        {
+            d = format.parse(timestamp);
+        }
+        catch (ParseException ex)
+        {
+            LogFile.databaseError("DateUtil convertToTimestamp error ", ex.getMessage(), ex.toString());
+        }
+        return d;
+    }
+
     public static Timestamp convertTimeStamp(String timetamp)
     {
         Timestamp sqlTimestamp = null;
@@ -267,7 +282,7 @@ public class DateUtil
 
     public static LocalDateTime convertDateTimeString(String dateTimeString)
     {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime pdt = LocalDateTime.parse(dateTimeString, formatter);
         return pdt;
     }

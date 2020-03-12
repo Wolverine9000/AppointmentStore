@@ -38,6 +38,8 @@ public class FullCalendar2 implements Serializable, MessageConstants
     private String end;
     private String startTimestamp;
     private String endTimestamp;
+    private String startOffset;
+    private String endOffset;
     private String title;
     private String action;
     private String actionType;
@@ -331,6 +333,26 @@ public class FullCalendar2 implements Serializable, MessageConstants
     public void setEndTimestamp(String endTimestamp)
     {
         this.endTimestamp = endTimestamp;
+    }
+
+    public String getStartOffset()
+    {
+        return startOffset;
+    }
+
+    public void setStartOffset(String startOffset)
+    {
+        this.startOffset = startOffset;
+    }
+
+    public String getEndOffset()
+    {
+        return endOffset;
+    }
+
+    public void setEndOffset(String endOffset)
+    {
+        this.endOffset = endOffset;
     }
 
     public Date getStartDate()
@@ -845,17 +867,18 @@ public class FullCalendar2 implements Serializable, MessageConstants
     }
 
     // strip client first name from calendar title
-    public String stripName(String t)
+    public String stripName()
     {
-        if (t != null)
+        String s = null;
+//        if (t != null)
+//        {
+        int i = this.title.indexOf(":", 0);
+        if (i != -1) // if client first name part of service title, strip client name from title
         {
-            int i = t.indexOf(":", 0);
-            if (i != -1) // if client first name part of service title, strip client name from title
-            {
-                return t.substring(0, i);
-            }
+            this.title = this.title.substring(0, i);
         }
-        return t;
+//        }
+        return this.title;
     }
 
     public String addName()
@@ -933,21 +956,37 @@ public class FullCalendar2 implements Serializable, MessageConstants
         this.endTime = endTime;
     }
 
-    public int runTest()
+    public int startMonth()
     {
-        return this.endDayOfMonth + this.startMonth;
+        Calendar c = Calendar.getInstance();
+        c.setTime(sqlStartTime());
+        return c.get(Calendar.MONTH);
     }
 
-    public int dayOfMonth()
+    public int endMonth()
     {
-        Calendar calEnd = Calendar.getInstance();
-        calEnd.setTime(this.sqlEndTime);
-        return calEnd.get(Calendar.DAY_OF_MONTH);
+        Calendar c = Calendar.getInstance();
+        c.setTime(sqlEndTime());
+        return c.get(Calendar.MONTH);
     }
 
-    public int dayofMonth2()
+    public java.sql.Time sqlStartTime()
     {
-        this.startDateTime = DateUtil.convertDateTimeString(this.start);
-        return this.startDateTime.getDayOfMonth();
+        return new java.sql.Time(this.startDate.getTime());
+    }
+
+    public java.sql.Time sqlEndTime()
+    {
+        return new java.sql.Time(this.endDate.getTime());
+    }
+
+    public java.sql.Date sqlStartDate()
+    {
+        return new java.sql.Date(this.startDate.getTime());
+    }
+
+    public java.sql.Date sqlEndDate()
+    {
+        return new java.sql.Date(this.endDate.getTime());
     }
 }

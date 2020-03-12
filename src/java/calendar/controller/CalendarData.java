@@ -12,8 +12,7 @@ import static java.lang.Integer.parseInt;
 import java.lang.reflect.Type;
 import java.sql.SQLException;
 import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -433,7 +432,7 @@ public class CalendarData
         return errorFlag;
     }
 
-    public static boolean postCalendarData(String json, HttpServletRequest request, Associate2 associateSession) throws ParseException
+    public static boolean postCalendarData(String json, HttpServletRequest request, Associate2 associateSession)
     {
         boolean errorFlag = false;
         boolean dataInsert;
@@ -451,45 +450,34 @@ public class CalendarData
 
         for (FullCalendar2 fc : fcArray)
         {
-            String t = fc.getTitle();
-//            fc.setStartDateTime(DateUtil.convertDateTimeString(fc.getStart()));
-//            LocalDateTime startDateTime = DateUtil.convertDateTimeString(fc.getStart());
-//            LocalDateTime endDateTime = DateUtil.convertDateTimeString(fc.getEnd());
-            // strip client name from calendar title; stripName function
-            // client-side javascript should have already done this
-            fc.setTitle(fc.stripName(t));
-//            int stdt_min = fc.getStartDateTime().getHour();
-            // convert start date-time strings to Date object
-            Date date;
-            DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            date = format.parse(fc.getStartTimestamp());
-            fc.setStartDate(DateUtil.convertDateSched(fc.getStart()));
-            fc.setEndDate(DateUtil.convertDateSched(fc.getEnd()));
+            fc.setTitle(fc.stripName());
 
+            // convert timestamp strings to Date objects
+            fc.setStartDate(DateUtil.timestampToDate(fc.getStartTimestamp()));
+            fc.setEndDate(DateUtil.timestampToDate(fc.getEndTimestamp()));
+            LocalDateTime ldt = DateUtil.convertDateTimeString(fc.getStartTimestamp());
             // get sql start and end times
-            fc.setSqlStartTime(new java.sql.Time(fc.getStartDate().getTime()));
-            fc.setSqlEndTime(new java.sql.Time(fc.getEndDate().getTime()));
-
+//            fc.setSqlStartTime(new java.sql.Time(fc.getStartDate().getTime()));
+//            fc.setSqlEndTime(new java.sql.Time(fc.getEndDate().getTime()));
             // get sql start  and end dates
-            fc.setSqlStartDate(new java.sql.Date(fc.getStartDate().getTime()));
-            fc.setSqlEndDate(new java.sql.Date(fc.getEndDate().getTime()));
-
+//            fc.setSqlStartDate(new java.sql.Date(fc.getStartDate().getTime()));
+//            fc.setSqlEndDate(new java.sql.Date(fc.getEndDate().getTime()));
             // get Calendar object instances
             Calendar calStart = Calendar.getInstance();
             Calendar calEnd = Calendar.getInstance();
 
             // set Calendar objects from Date objects
-            calStart.setTime(fc.getSqlStartTime());
-            calEnd.setTime(fc.getSqlEndTime());
+            calStart.setTime(fc.sqlStartTime());
+            calEnd.setTime(fc.sqlEndTime());
             // get integers for start date and time calendar objects
-            fc.setStartMonth(calStart.get(Calendar.MONTH));
+//            fc.setStartMonth(calStart.get(Calendar.MONTH));
             fc.setStartDayOfWeek(calStart.get(Calendar.DAY_OF_WEEK));
             fc.setStartTimeHour(calStart.get(Calendar.HOUR_OF_DAY));
             fc.setStartTimeMin(calStart.get(Calendar.MINUTE));
             fc.setStartDayOfMonth(calStart.get(Calendar.DAY_OF_MONTH));
             fc.setStartYear(calStart.get(Calendar.YEAR));
             // get end date and time calendar object integers
-            fc.setEndMonth(calEnd.get(Calendar.MONTH));
+//            fc.setEndMonth(calEnd.get(Calendar.MONTH));
             fc.setEndDayOfWeek(calEnd.get(Calendar.DAY_OF_WEEK));
             fc.setEndTimeHour(calEnd.get(Calendar.HOUR_OF_DAY));
             fc.setEndTimeMin(calEnd.get(Calendar.MINUTE));
@@ -498,11 +486,6 @@ public class CalendarData
             // convert date-time strings to sql date-time objects
             fc.setStartSql(DateUtil.convertDate(fc.getStart())); // convert start time to sql timestamp
             fc.setEndSql(DateUtil.convertDate(fc.getEnd())); // convert end time to sql timestamp
-
-            String startStr = fc.convertStartTimestamp();
-            int y = fc.runTest();
-//            int dom = fc.dayOfMonth();
-//            int dom2 = fc.dayofMonth2();
 
             // prepare SMS message
             Date start = calStart.getTime();

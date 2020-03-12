@@ -342,6 +342,8 @@ public class CalendarDB
                 + "endTime = ?, "
                 + "calendar_date = ?, "
                 + "calendar_endDate = ?, "
+                + "month = ?, "
+                + "monthEnd = ?, "
                 + "allDayEvent = ?, "
                 + "service_time = ?, "
                 + "notes = ? "
@@ -362,14 +364,16 @@ public class CalendarDB
             ps.setTimestamp(11, fc.getStartSql());
             ps.setTimestamp(12, fc.getEndSql());
             ps.setBoolean(13, fc.isEditable());
-            ps.setTime(14, fc.getSqlStartTime());
-            ps.setTime(15, fc.getSqlEndTime());
-            ps.setDate(16, fc.getSqlStartDate());
-            ps.setDate(17, fc.getSqlEndDate());
-            ps.setBoolean(18, fc.isAllDay());
-            ps.setInt(19, fc.getServiceTime());
-            ps.setString(20, fc.getNotes());
-            ps.setInt(21, fc.getEventId());
+            ps.setTime(14, fc.sqlStartTime());
+            ps.setTime(15, fc.sqlEndTime());
+            ps.setDate(16, fc.sqlStartDate());
+            ps.setDate(17, fc.sqlEndDate());
+            ps.setInt(18, fc.startMonth());
+            ps.setInt(20, fc.endMonth());
+            ps.setBoolean(21, fc.isAllDay());
+            ps.setInt(22, fc.getServiceTime());
+            ps.setString(23, fc.getNotes());
+            ps.setInt(24, fc.getEventId());
 
             ps.executeUpdate();
             return 1;
@@ -913,8 +917,9 @@ public class CalendarDB
                 + "associate_id, "
                 + "notes, "
                 + "customer_id, month, day, date, year, monthEnd, dayEnd, dateEnd, yearEnd, "
-                + "calendar_date, calendar_endDate, start_time_hour, start_time_min, end_time_hour, end_time_min, service_status, time_zone, start_time_utc, end_time_utc) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                + "calendar_date, calendar_endDate, start_time_hour, start_time_min, end_time_hour, "
+                + "end_time_min, service_status, time_zone, start_time_utc, end_time_utc, start_time_offset, end_time_offset) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try
         {
             ps = connection.prepareStatement(query);
@@ -933,21 +938,21 @@ public class CalendarDB
             ps.setString(13, fc.getTextColor());
             ps.setBoolean(14, fc.isDurationEditable());
             ps.setBoolean(15, fc.isEditable());
-            ps.setTime(16, fc.getSqlStartTime());
-            ps.setTime(17, fc.getSqlEndTime());
+            ps.setTime(16, fc.sqlStartTime());
+            ps.setTime(17, fc.sqlEndTime());
             ps.setInt(18, fc.getAssociate2().getId());
             ps.setString(19, fc.getNotes());
             ps.setInt(20, fc.getClient().getId());
-            ps.setInt(21, fc.getStartMonth());
+            ps.setInt(21, fc.startMonth());
             ps.setInt(22, fc.getStartDayOfWeek());
             ps.setInt(23, fc.getStartDayOfMonth());
             ps.setInt(24, fc.getStartYear());
-            ps.setInt(25, fc.getEndMonth());
+            ps.setInt(25, fc.endMonth());
             ps.setInt(26, fc.getEndDayOfWeek());
             ps.setInt(27, fc.getEndDayOfMonth());
             ps.setInt(28, fc.getEndYear());
-            ps.setDate(29, fc.getSqlStartDate());
-            ps.setDate(30, fc.getSqlEndDate());
+            ps.setDate(29, fc.sqlStartDate());
+            ps.setDate(30, fc.sqlEndDate());
             ps.setInt(31, fc.getStartTimeHour());
             ps.setInt(32, fc.getStartTimeMin());
             ps.setInt(33, fc.getEndTimeHour());
@@ -956,6 +961,8 @@ public class CalendarDB
             ps.setString(36, fc.getTimeZone());
             ps.setString(37, fc.getStartTimeUtc());
             ps.setString(38, fc.getEndTimeUtc());
+            ps.setString(39, fc.getStartOffset());
+            ps.setString(40, fc.getEndOffset());
 
             ps.executeUpdate();
             //Get the event ID from the last INSERT statement.
