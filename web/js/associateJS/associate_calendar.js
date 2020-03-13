@@ -94,6 +94,7 @@ $(document).ready(function () {
         nowIndicator: true,
         slotDuration: '00:15:00',
         selectable: true,
+        timezone: 'local',
         selectHelper: true,
         longPressDelay: 500,
         eventLimitClick: "popover",
@@ -164,9 +165,10 @@ $(document).ready(function () {
             event.action = "add";
             event.actionType = "RESIZE";
             event.eventChange = true;
-            event.startTimeUtc = moment.utc();
-            var ltz = moment.tz.guess(true);
-            event.startLocalTime = moment.tz(event.start, ltz);
+            var local = moment.tz(event.end, timeZone.getTimeZone());
+            var chicago = local.clone().tz("America/Los_Angeles");
+            console.log("Local time " + local.format());
+            console.log("Chicago time " + chicago.format());
             var hasConflict = eventConflictCk(event); // check for time conflict
             if (hasConflict.length > 0)
             {

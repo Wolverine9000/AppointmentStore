@@ -92,6 +92,7 @@ public class FullCalendar2 implements Serializable, MessageConstants
     private int messageId;
     private final Map<String, Object> otherProperties = new HashMap<>();
     private LocalDateTime startDateTime;
+    private LocalDateTime endDateTime;
     private String startTimeUtc;
     private String endTimeUtc;
     private String startMoment;
@@ -157,6 +158,16 @@ public class FullCalendar2 implements Serializable, MessageConstants
     public void setStartDateTime(LocalDateTime startDateTime)
     {
         this.startDateTime = startDateTime;
+    }
+
+    public LocalDateTime getEndDateTime()
+    {
+        return endDateTime;
+    }
+
+    public void setEndDateTime(LocalDateTime endDateTime)
+    {
+        this.endDateTime = endDateTime;
     }
 
     public String getEndTimeUtc()
@@ -958,16 +969,13 @@ public class FullCalendar2 implements Serializable, MessageConstants
 
     public int startMonth()
     {
-        Calendar c = Calendar.getInstance();
-        c.setTime(sqlStartTime());
-        return c.get(Calendar.MONTH);
+//        this.calStart.setTime(sqlStartTime());
+        return calendarStart().get(Calendar.MONTH);
     }
 
     public int endMonth()
     {
-        Calendar c = Calendar.getInstance();
-        c.setTime(sqlEndTime());
-        return c.get(Calendar.MONTH);
+        return calendarEnd().get(Calendar.MONTH);
     }
 
     public java.sql.Time sqlStartTime()
@@ -989,4 +997,20 @@ public class FullCalendar2 implements Serializable, MessageConstants
     {
         return new java.sql.Date(this.endDate.getTime());
     }
+
+    private Calendar calendarStart()
+    {
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(sqlStartTime());
+        return c;
+    }
+
+    private Calendar calendarEnd()
+    {
+        Calendar c = Calendar.getInstance();
+        c.setTime(sqlEndTime());
+        return c;
+    }
+
 }

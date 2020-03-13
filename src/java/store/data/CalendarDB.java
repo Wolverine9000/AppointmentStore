@@ -325,55 +325,92 @@ public class CalendarDB
         //This method updates the record with a matching Associate ID.
         //It returns a value of 0 if the Associate can't be found.
         String query = "UPDATE calendar SET "
+                + "allDayEvent = ?, "
+                + "service_description = ?, "
+                + "service_id = ?, "
+                + "service_time = ?, "
+                + "start_timestamp = ?, "
+                + "end_timestamp = ?, "
+                + "backgroundColor = ?,"
+                + "associate_name = ?, "
                 + "customer_firstName = ?, "
                 + "customer_lastName = ?, "
                 + "customer_emailAddress = ?, "
-                + "service_description = ?, "
-                + "backgroundColor = ?, "
-                + "textColor = ?, "
                 + "color = ?, "
-                + "associate_name = ?, "
-                + "associate_id = ?, "
+                + "textColor = ?, "
                 + "durationEditable = ?, "
-                + "start_timestamp = ?, "
-                + "end_timestamp = ?, "
                 + "editable = ?, "
                 + "calendar_time = ?, "
                 + "endTime = ?, "
+                + "associate_id = ?, "
+                + "notes = ?, "
+                + "customer_id = ?, "
+                + "month = ?, "
+                + "day = ?, "
+                + "date = ?, "
+                + "year = ?, "
+                + "monthEnd = ?, "
+                + "dayEnd = ?, "
+                + "dateEnd = ?, "
+                + "yearEnd = ?, "
                 + "calendar_date = ?, "
                 + "calendar_endDate = ?, "
-                + "month = ?, "
-                + "monthEnd = ?, "
-                + "allDayEvent = ?, "
-                + "service_time = ?, "
-                + "notes = ? "
+                + "start_time_hour = ?, "
+                + "start_time_min = ?, "
+                + "end_time_hour = ?, "
+                + "end_time_min = ?, "
+                + "service_status = ?, "
+                + "time_zone = ?, "
+                + "start_time_utc = ?, "
+                + "end_time_utc = ?, "
+                + "start_time_offset = ?, "
+                + "end_time_offset = ? "
                 + "WHERE event_id = ?";
         try
         {
             ps = connection.prepareStatement(query);
-            ps.setString(1, fc.getClient().getFirstName());
-            ps.setString(2, fc.getClient().getLastName());
-            ps.setString(3, fc.getClient().getEmail());
-            ps.setString(4, fc.getTitle());
-            ps.setString(5, fc.getBackgroundColor());
-            ps.setString(6, fc.getTextColor());
-            ps.setString(7, fc.getColor());
+
+            ps.setBoolean(1, fc.isAllDay());
+            ps.setString(2, fc.getTitle());
+            ps.setInt(3, fc.getServices().getServiceId());
+            ps.setInt(4, fc.getServiceTime());
+            ps.setTimestamp(5, fc.getStartSql());
+            ps.setTimestamp(6, fc.getEndSql());
+            ps.setString(7, fc.getBackgroundColor());
             ps.setString(8, fc.getAssociate2().getFirstName());
-            ps.setInt(9, fc.getAssociate2().getId());
-            ps.setBoolean(10, fc.isDurationEditable());
-            ps.setTimestamp(11, fc.getStartSql());
-            ps.setTimestamp(12, fc.getEndSql());
-            ps.setBoolean(13, fc.isEditable());
-            ps.setTime(14, fc.sqlStartTime());
-            ps.setTime(15, fc.sqlEndTime());
-            ps.setDate(16, fc.sqlStartDate());
-            ps.setDate(17, fc.sqlEndDate());
-            ps.setInt(18, fc.startMonth());
-            ps.setInt(20, fc.endMonth());
-            ps.setBoolean(21, fc.isAllDay());
-            ps.setInt(22, fc.getServiceTime());
-            ps.setString(23, fc.getNotes());
-            ps.setInt(24, fc.getEventId());
+            ps.setString(9, fc.getClient().getFirstName());
+            ps.setString(10, fc.getClient().getLastName());
+            ps.setString(11, fc.getClient().getEmail());
+            ps.setString(12, fc.getColor());
+            ps.setString(13, fc.getTextColor());
+            ps.setBoolean(14, fc.isDurationEditable());
+            ps.setBoolean(15, fc.isEditable());
+            ps.setTime(16, fc.sqlStartTime());
+            ps.setTime(17, fc.sqlEndTime());
+            ps.setInt(18, fc.getAssociate2().getId());
+            ps.setString(19, fc.getNotes());
+            ps.setInt(20, fc.getClient().getId());
+            ps.setInt(21, fc.startMonth());
+            ps.setInt(22, fc.getStartDayOfWeek());
+            ps.setInt(23, fc.getStartDayOfMonth());
+            ps.setInt(24, fc.getStartYear());
+            ps.setInt(25, fc.endMonth());
+            ps.setInt(26, fc.getEndDayOfWeek());
+            ps.setInt(27, fc.getEndDayOfMonth());
+            ps.setInt(28, fc.getEndYear());
+            ps.setDate(29, fc.sqlStartDate());
+            ps.setDate(30, fc.sqlEndDate());
+            ps.setInt(31, fc.getStartTimeHour());
+            ps.setInt(32, fc.getStartTimeMin());
+            ps.setInt(33, fc.getEndTimeHour());
+            ps.setInt(34, fc.getEndTimeMin());
+            ps.setInt(35, fc.getServices().getServiceStatus().getStatusId());
+            ps.setString(36, fc.getTimeZone());
+            ps.setString(37, fc.getStartTimeUtc());
+            ps.setString(38, fc.getEndTimeUtc());
+            ps.setString(39, fc.getStartOffset());
+            ps.setString(40, fc.getEndOffset());
+            ps.setInt(41, fc.getEventId());
 
             ps.executeUpdate();
             return 1;
@@ -897,7 +934,8 @@ public class CalendarDB
         //This method adds a new record to the calendar table in the database
         //returns 0 if sql exception occurs adding record to database 
         String query
-                = "INSERT INTO calendar (allDayEvent, "
+                = "INSERT INTO calendar "
+                + "(allDayEvent, "
                 + "service_description, "
                 + "service_id, "
                 + "service_time, "
@@ -916,13 +954,32 @@ public class CalendarDB
                 + "endTime, "
                 + "associate_id, "
                 + "notes, "
-                + "customer_id, month, day, date, year, monthEnd, dayEnd, dateEnd, yearEnd, "
-                + "calendar_date, calendar_endDate, start_time_hour, start_time_min, end_time_hour, "
-                + "end_time_min, service_status, time_zone, start_time_utc, end_time_utc, start_time_offset, end_time_offset) "
+                + "customer_id, "
+                + "month, "
+                + "day, "
+                + "date, "
+                + "year, "
+                + "monthEnd, "
+                + "dayEnd, "
+                + "dateEnd, "
+                + "yearEnd, "
+                + "calendar_date, "
+                + "calendar_endDate, "
+                + "start_time_hour, "
+                + "start_time_min, "
+                + "end_time_hour, "
+                + "end_time_min, "
+                + "service_status, "
+                + "time_zone, "
+                + "start_time_utc, "
+                + "end_time_utc, "
+                + "start_time_offset, "
+                + "end_time_offset) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try
         {
             ps = connection.prepareStatement(query);
+
             ps.setBoolean(1, fc.isAllDay());
             ps.setString(2, fc.getTitle());
             ps.setInt(3, fc.getServices().getServiceId());

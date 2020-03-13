@@ -910,15 +910,15 @@ var associateClass = {
 // new Event Object function
 var EventObj = function (event) {
     this.startMoment = event.start.toJSON();
-    this.timeZone = moment.tz.guess(true);
+    this.timeZone = timeZone.getTimeZone();
     this.start = event.start;
+    this.end = event.end;
     this.startTimestamp = event.start.format("YYYY-MM-DD HH:mm:ss");
     this.endTimestamp = event.end.format("YYYY-MM-DD HH:mm:ss");
-    this.startOffset = event.start.format("YYYY-MM-DD HH:mm:ss Z");
-    this.endOffset = event.end.format("YYYY-MM-DD HH:mm:ss Z");
-    this.startTimeUtc = event.start;
-    this.endTimeUtc = event.end;
-    this.end = event.end;
+    this.startOffset = timeZone.getTimeOffset(event.start);
+    this.endOffset = timeZone.getTimeOffset(event.end);
+    this.startTimeUtc = event.start.utc().format();
+    this.endTimeUtc = event.end.utc().format();
     this.title = event.title;
     this.serviceTime = event.serviceTime;
     this.allDay = event.allDay;
@@ -1372,6 +1372,24 @@ var convert = {
         return text.toUpperCase();
     }
 }; // end convert class functions
+
+var timeZone = {
+    getTimeZone: function () {
+        return moment.tz.guess(true);
+    },
+    getUtcTime: function (momObj) {
+        var a = moment.tz(momObj, timeZone.getTimeZone());
+        return a.utc().format();
+    },
+    getTimeOffset: function (momObj) {
+        var a = moment.tz(momObj, timeZone.getTimeZone());
+        return a.format();
+    },
+    addTimeZone: function (momObj) {
+        return momObj.add(timeZone.getTimeZone());
+    }
+
+};
 
 // Date Object functions
 var jsDate = {

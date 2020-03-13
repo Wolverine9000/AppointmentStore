@@ -12,7 +12,6 @@ import static java.lang.Integer.parseInt;
 import java.lang.reflect.Type;
 import java.sql.SQLException;
 import java.text.DateFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -455,7 +454,8 @@ public class CalendarData
             // convert timestamp strings to Date objects
             fc.setStartDate(DateUtil.timestampToDate(fc.getStartTimestamp()));
             fc.setEndDate(DateUtil.timestampToDate(fc.getEndTimestamp()));
-            LocalDateTime ldt = DateUtil.convertDateTimeString(fc.getStartTimestamp());
+            fc.setStartDateTime(DateUtil.convertDateTimeString(fc.getStartTimestamp()));
+            fc.setEndDateTime(DateUtil.convertDateTimeString(fc.getEndTimestamp()));
             // get sql start and end times
 //            fc.setSqlStartTime(new java.sql.Time(fc.getStartDate().getTime()));
 //            fc.setSqlEndTime(new java.sql.Time(fc.getEndDate().getTime()));
@@ -623,7 +623,6 @@ public class CalendarData
                             int clientId = UserUtil.processUserId(fc); // process user
                             if (clientId > 0)
                             {
-                                fc.getClient().setId(clientId);
                                 fc.getClient().setId(clientId);
                             }
                             else
