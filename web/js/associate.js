@@ -971,30 +971,30 @@ EventObj.prototype.getStartTime = function () {
 EventObj.prototype.getEndTime = function () {
     return moment.tz(this.end, timeZone.getTimeZone()).format("h:mm a");
 };
-//EventObj.prototype.getServiceTimeFormat = function () {
-//    var minutes = this.serviceTime % 60;
-//    var hours = Math.floor(this.serviceTime / 60);
-//    var hourFmt = " hour ";
-//    var minFmt = " minutes";
-//    minutes = (minutes < 10 ? '0' : '') + minutes;
-//    //hours = (hours < 10 ? '0' : '') + hours;
-//    if (hours === 0)
-//    {
-//        return minutes + minFmt;
-//    }
-//    else
-//    {
-//        if (hours > 1)
-//        {
-//            hourFmt = " hours ";
-//        }
-//        if (minutes === "00")
-//        {
-//            return hours + hourFmt;
-//        }
-//        return hours + hourFmt + minutes + minFmt;
-//    }
-//};
+EventObj.prototype.getServiceTimeFormat = function () {
+    var minutes = this.serviceTime % 60;
+    var hours = Math.floor(this.serviceTime / 60);
+    var hourFmt = " hour ";
+    var minFmt = " minutes";
+    minutes = (minutes < 10 ? '0' : '') + minutes;
+    //hours = (hours < 10 ? '0' : '') + hours;
+    if (hours === 0)
+    {
+        return minutes + minFmt;
+    }
+    else
+    {
+        if (hours > 1)
+        {
+            hourFmt = " hours ";
+        }
+        if (minutes === "00")
+        {
+            return hours + hourFmt;
+        }
+        return hours + hourFmt + minutes + minFmt;
+    }
+};
 EventObj.prototype.formatDate = function () {
     var momObj = moment(this.start, dateFmts),
             momFormat = momObj.format("ddd MMM D, YYYY");
@@ -1722,6 +1722,7 @@ function postToServer(event) {
 function postEvents(evtsToPost, event) {
 //    $("#postDataSuccess").html(""); // clear postDataSuccess
     $("#postDataError").html(""); // clear postDataError
+//    $("#postDataSuccess").html(""); // clear postDataSuccess
     $.ajax({
         type: "post",
         url: '../FullCalPost',
@@ -1755,9 +1756,9 @@ function postEvents(evtsToPost, event) {
                 }
 //                $('#calendar').fullCalendar("refetchEvents");
             }
-            // append success message to messages element
             $('#calendar').fullCalendar("refetchEvents");
-            $("#postDataSuccess").append("Calendar Update Successful!");
+            // append success message to messages element
+//            $("#postDataSuccess").append("Calendar Update Successful!");
             fadeInOutMessage("#messages");
         }
     });

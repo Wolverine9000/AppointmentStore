@@ -245,7 +245,7 @@ var renderMsgInvites = function (msgArr) {
         msgInviteTable.append(
                 "<tr>"
                 + "<td>" + "<input type='hidden' name='messageObj' id='messageObj' value='" + JSON.stringify(msgArr[i]) + "'>" + msgArr[i].phoneNumber + "</td>"
-                + "<td style='color:" + msgArr[i].statusColor + "'>" + msgArr[i].status + "</td>"
+                + "<td style='color:" + msgArr[i].statusColor + "'>" + msgArr[i].getStatus() + "</td>"
                 + "<td>" + jsDate.formatDateTime2(msgArr[i].timeToSend) + "</td>"
                 + "</tr>");
     }
@@ -253,6 +253,7 @@ var renderMsgInvites = function (msgArr) {
 
 var messagesClass = {
     renderMsgInfo: function (msgObj) {
+        msgObj = new SMSMessage(msgObj);
         var msgInfoTable,
                 timeToSendTableRow,
                 statusTableRow;
@@ -262,12 +263,12 @@ var messagesClass = {
             {
                 var msgObjStr = convert.stringify(msgObj);
                 mir = messagesList.selectMsgInviteRequest(associateInfo, msgObjStr);
-                statusTableRow = "<tr>" + "<td>" + "response&#58;" + "</td>" + "<td style='color:" + mir.statusColor + "'>" + mir.status + "</td>" + "</tr>";
+                statusTableRow = "<tr>" + "<td>" + "response&#58;" + "</td>" + "<td style='color:" + mir.statusColor + "'>" + mir.getStatus() + "</td>" + "</tr>";
                 msgObj.client.id = "n/a";
             }
             else
             {
-                statusTableRow = "<tr>" + "<td>" + "status&#58;" + "</td>" + "<td style='color:" + msgObj.statusColor + "'>" + msgObj.status + "</td>" + "</tr>";
+                statusTableRow = "<tr>" + "<td>" + "status&#58;" + "</td>" + "<td style='color:" + msgObj.statusColor + "'>" + msgObj.getStatus() + "</td>" + "</tr>";
             }
         if (msgObj.status === "Scheduled")
         {

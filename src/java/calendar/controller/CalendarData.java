@@ -454,8 +454,8 @@ public class CalendarData
             // convert timestamp strings to Date objects
             fc.setStartDate(DateUtil.timestampToDate(fc.getStartTimestamp()));
             fc.setEndDate(DateUtil.timestampToDate(fc.getEndTimestamp()));
-            fc.setStartDateTime(DateUtil.convertDateTimeString(fc.getStartTimestamp()));
-            fc.setEndDateTime(DateUtil.convertDateTimeString(fc.getEndTimestamp()));
+//            fc.setStartDateTime(DateUtil.convertDateTimeString(fc.getStartTimestamp()));
+//            fc.setEndDateTime(DateUtil.convertDateTimeString(fc.getEndTimestamp()));
 
             // get Calendar object instances
             Calendar calStart = Calendar.getInstance();
@@ -475,8 +475,7 @@ public class CalendarData
             // convert current date and time to long string of numbers
             String nowTimeUnix = DateUtil.dateNowLong();
 
-            int regCode = RandomCode();
-
+//            int regCode = RandomCode();
             Associate2 a = fc.getAssociate2();
             Services s = ProductDB.selectService(fc.getServices().getServiceId());
 
@@ -543,7 +542,7 @@ public class CalendarData
                                 if (fc.getClient().isEmailApptAlerts())
                                 {
                                     // email client
-                                    boolean sendConfirmation = MailUtil.sendConfirmation("Your Appointment " + smsEventChangeMsg, dateStr, timeString, fc, a, s, regCode);
+                                    boolean sendConfirmation = MailUtil.sendConfirmation("Your Appointment " + smsEventChangeMsg, dateStr, timeString, fc, a, s, fc.RandomCode());
                                     if (sendConfirmation == false)
                                     {
                                         errorFlag = true;
@@ -568,7 +567,7 @@ public class CalendarData
                                 {
                                     // email associate
                                     boolean sendConfirmation;
-                                    sendConfirmation = MailUtil.sendAssociateConfirm("Appointment RE-SCHEDULED " + smsEventChangeMsg, dateStr, timeString, fc, a, s, regCode);
+                                    sendConfirmation = MailUtil.sendAssociateConfirm("Appointment RE-SCHEDULED " + smsEventChangeMsg, dateStr, timeString, fc, a, s, fc.RandomCode());
                                     if (sendConfirmation == false)
                                     {
                                         errorFlag = true;
@@ -621,9 +620,9 @@ public class CalendarData
 
                                 // TODO code new appointment email/sms message
                                 m.setMessage(fc.getClient().getFirstName() + ", the service " + fc.getTitle() + " with " + fc.getAssociate2().getFirstName() + smsEventChangeMsg + dateStr + " at " + timeString + "."
-                                        + " Event:# " + fc.eventIdStr() + " Code: " + regCode);
+                                        + " Event:# " + fc.eventIdStr() + " Code: " + fc.RandomCode());
 //                                String message = fc.getFirstName() + " " + dateStr + " at " + timeString + "."
-//                                        + "http://71.8.84.224:8081/AppointmentStore/IncomingMessage?phone=" + mobileStr2 + "&reg=" + regCodeStr;
+//                                        + "http://71.8.84.224:8081/AppointmentStore/IncomingMessage?phone=" + mobileStr2 + "&reg=" + RandomCode();
                                 if (fc.getClient().isSmsApptAlerts())
                                 {
 
@@ -647,7 +646,7 @@ public class CalendarData
                                 }
                                 if (fc.getClient().isEmailApptAlerts())
                                 {
-                                    boolean sendConfirmation = MailUtil.sendConfirmation("Appointment Confirmation", dateStr, timeString, fc, a, s, regCode);
+                                    boolean sendConfirmation = MailUtil.sendConfirmation("Appointment Confirmation", dateStr, timeString, fc, a, s, fc.RandomCode());
                                     if (sendConfirmation == false)
                                     {
                                         errorFlag = true;
@@ -656,7 +655,7 @@ public class CalendarData
                             }
                             if (fc.getAssociate2().isEmailApptAlerts())
                             {
-                                boolean sendConfirmation = MailUtil.sendAssociateConfirm("Appointment Confirmation", dateStr, timeString, fc, a, s, regCode);
+                                boolean sendConfirmation = MailUtil.sendAssociateConfirm("Appointment Confirmation", dateStr, timeString, fc, a, s, fc.RandomCode());
                                 if (sendConfirmation == false)
                                 {
                                     errorFlag = true;
@@ -700,7 +699,7 @@ public class CalendarData
                         if (fc.getClient().isSmsApptAlerts())
                         {
                             m.setMessage(fc.getClient().getFirstName() + ", the service " + fc.getTitle() + " with " + fc.getAssociate2().getFirstName() + smsEventChangeMsg + dateStr + " at " + timeString + "."
-                                    + " Event:# " + fc.eventIdStr() + " Code: " + regCode);
+                                    + " Event:# " + fc.eventIdStr() + " Code: " + fc.RandomCode());
 
                             smsSent = sendSMS(m, fc);
                             if (smsSent == false)

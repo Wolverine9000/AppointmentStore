@@ -846,7 +846,7 @@ function evtClick(calEvent, jsEvent) {
                 + "<tr>" + "<td title='service start time'>" + "start:" + "</td>" + "<td>" + calEvent.getStartTime() + "</td>" + "</tr>"
                 + "<tr>" + "<td title='service end time'>" + "end:" + "</td>" + "<td>" + calEvent.getEndTime() + "</td>" + "</tr>"
                 + "<tr>" + "<td title='event id number'>" + "event:" + "</td>" + "<td>" + calEvent.eventId + "</td>" + "</tr>"
-                + "<tr>" + "<td title='estimated time of service'>" + "eta:" + "</td>" + "<td>" + minutesFormat(calEvent.serviceTime) + "</td>" + "</tr>"
+                + "<tr>" + "<td title='estimated time of service'>" + "eta:" + "</td>" + "<td>" + calEvent.getServiceTimeFormat() + "</td>" + "</tr>"
                 + "<tr>" + "<td title='is event scheduled all day'>" + "all day:" + "</td>" + "<td>" + calEvent.isAllDay() + "</td>" + "</tr>"
                 + "<tr>" + "<td title='client notes'>" + "notes:" + "</td>" + "<td>" + calEvent.notes + "</td>" + "</tr>"
                 + "<tr>" + "<td title='associate first name'>" + "associate:" + "</td>" + "<td>" + calEvent.associate2.firstName

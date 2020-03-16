@@ -15,6 +15,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import store.data.CustomerDB;
 import store.util.DateUtil;
 
@@ -98,6 +99,7 @@ public class FullCalendar2 implements Serializable, MessageConstants
     private String startMoment;
     private String timeZone;
     private final Calendar c = Calendar.getInstance();
+    private Random randomCode;
 
     public FullCalendar2()
     {
@@ -128,6 +130,7 @@ public class FullCalendar2 implements Serializable, MessageConstants
         timeToSend = "";
         messageId = 0;
         eventChange = false;
+        randomCode = null;
 
     }
 
@@ -1059,6 +1062,22 @@ public class FullCalendar2 implements Serializable, MessageConstants
     public int endYear()
     {
         return calendarEnd().get(Calendar.YEAR);
+    }
+
+    public Random getRandomCode()
+    {
+        return randomCode;
+    }
+
+    public void setRandomCode(Random randomCode)
+    {
+        this.randomCode = randomCode;
+    }
+
+    public int RandomCode()
+    {
+        Random random = new Random();
+        return random.nextInt(999999);
     }
 
 }
