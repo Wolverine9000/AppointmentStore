@@ -186,10 +186,10 @@ var renderMessages = function (msgArr, sortBy) {
     var timeToSendMom;
     for (var i = 0; i < msgArr.length; i++)
     {
-        if (msgArr[i].status === "Success")
-        {
-            msgArr[i].status = "Sent";
-        }
+//        if (msgArr[i].status === "Success")
+//        {
+//            msgArr[i].status = "Sent";
+//        }
         var timeToSend;
         timeToSendMom = moment(msgArr[i].timeToSend, dateTimeFmts);
         if (msgArr[i].timeToSend === undefined)
@@ -215,7 +215,7 @@ var renderMessages = function (msgArr, sortBy) {
                 + "<td>" + msgArr[i].message + "</td>"
                 + "<td>" + msgArr[i].idMessageResponse + "</td>"
                 + "<td>" + timeToSend + "</td>"
-                + "<td style='color:" + msgArr[i].statusColor + "'>" + msgArr[i].status + "</td>"
+                + "<td style='color:" + msgArr[i].statusColor + "'>" + msgArr[i].getStatus() + "</td>"
                 + "</tr>");
     }
     if (scheduledArray.length === 0)
@@ -230,7 +230,7 @@ var renderMessages = function (msgArr, sortBy) {
                 + "<td>" + "<input type='hidden' name='messageObj' id='messageObj' value='" + JSON.stringify(scheduledArray[i]) + "'>" + scheduledArray[i].messageId + "</td>"
                 + "<td>" + scheduledArray[i].client.firstName + " " + scheduledArray[i].client.lastName + "</td>"
                 + "<td>" + scheduledArray[i].message + "</td>"
-                + "<td>" + timeToSend + "</td>"
+                + "<td>" + msgArr[i].formatTimeToSend() + "</td>"
                 + "<td style='color:#ff9900'>" + scheduledArray[i].status + "</td>"
                 + "</tr>");
     }

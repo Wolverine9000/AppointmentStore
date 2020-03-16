@@ -20,8 +20,7 @@ public class SMScommunicator extends Communicator implements SystemAccounts
     private String recipientsCount;
     private String credits;
     private String code;
-    private String status;
-    private String statusColor;
+
     private int statusNumber;
     private String trimmedSubject;
     private String trimmedMessage;
@@ -45,8 +44,7 @@ public class SMScommunicator extends Communicator implements SystemAccounts
         recipientsCount = "";
         credits = "";
         code = "";
-        status = null;
-        statusColor = "";
+
         statusNumber = 0;
         trimmedSubject = "";
         trimmedMessage = "";
@@ -70,26 +68,6 @@ public class SMScommunicator extends Communicator implements SystemAccounts
     public String getCode()
     {
         return code;
-    }
-
-    public void setStatus(String status)
-    {
-        this.status = status;
-    }
-
-    public String getStatus()
-    {
-        return status;
-    }
-
-    public String getStatusColor()
-    {
-        return statusColor;
-    }
-
-    public void setStatusColor(String statusColor)
-    {
-        this.statusColor = statusColor;
     }
 
     public int getStatusNumber()

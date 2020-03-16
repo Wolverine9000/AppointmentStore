@@ -911,8 +911,8 @@ var associateClass = {
 var EventObj = function (event) {
     this.startMoment = event.start.toJSON();
     this.timeZone = timeZone.getTimeZone();
-    this.start = event.start;
-    this.end = event.end;
+    this.start = event.start.set("second", 00);
+    this.end = event.end.set("second", 00);
     this.startTimestamp = event.start.format("YYYY-MM-DD HH:mm:ss");
     this.endTimestamp = event.end.format("YYYY-MM-DD HH:mm:ss");
     this.startOffset = timeZone.getTimeOffset(event.start);
@@ -932,8 +932,8 @@ var EventObj = function (event) {
     this.associateName = event.associateName;
     this.notes = event.notes;
     this.statusId = event.statusId;
-    this.notifyClient = true;
-    this.notifyAssociate = true;
+    this.notifyClient = this.start.isSameOrAfter(moment());
+    this.notifyAssociate = this.start.isSameOrAfter(moment());
     this.restoreTime = event.restoreTime;
     this.newClient = event.newClient;
     this.action = event.action;
@@ -961,14 +961,15 @@ EventObj.prototype.getTitle = function () {
     }
     return this.title;
 };
+
 EventObj.prototype.toJson = function () {
     return this.startMoment.toJSON();
 };
 EventObj.prototype.getStartTime = function () {
-    return moment(this.start).format("h:mm a");
+    return moment.tz(this.start, timeZone.getTimeZone()).format("h:mm a");
 };
 EventObj.prototype.getEndTime = function () {
-    return moment(this.end).format("h:mm a");
+    return moment.tz(this.end, timeZone.getTimeZone()).format("h:mm a");
 };
 //EventObj.prototype.getServiceTimeFormat = function () {
 //    var minutes = this.serviceTime % 60;
@@ -1129,9 +1130,23 @@ var SMSMessage = function (obj) {
     this.clientMessage = obj.clientMessage;
     this.associate2 = obj.associate2;
 };
+
+SMSMessage.prototype.getStatus = function () {
+    if (this.status === "Success")
+    {
+        this.status = "Sent";
+        return this.status;
+    }
+    else
+    {
+        return this.status;
+    }
+};
+
 Message.prototype.name = function () {
     return this.clientId + " " + this.status;
 };
+
 
 var stripQuotes = function (msg) {
     if (msg === undefined)
@@ -1316,6 +1331,9 @@ function fadeInOutMessage(element) {
 function fadeInMessage(element) {
     $(element).fadeIn(100).fadeOut(100).fadeIn(100);
 }
+function fadeInCalendar(element) {
+    $(element).fadeOut(100).fadeIn(1000);
+}
 
 
 var convert = {
@@ -1388,7 +1406,6 @@ var timeZone = {
     addTimeZone: function (momObj) {
         return momObj.add(timeZone.getTimeZone());
     }
-
 };
 
 // Date Object functions
@@ -1736,11 +1753,12 @@ function postEvents(evtsToPost, event) {
                 {
                     $('#calendar').fullCalendar('removeEvents', event.id);
                 }
-                $('#calendar').fullCalendar("refetchEvents");
+//                $('#calendar').fullCalendar("refetchEvents");
             }
             // append success message to messages element
-//            $("#postDataSuccess").append("Calendar Update Successful!");
-//            fadeInOutMessage("#messages");
+            $('#calendar').fullCalendar("refetchEvents");
+            $("#postDataSuccess").append("Calendar Update Successful!");
+            fadeInOutMessage("#messages");
         }
     });
 } // end postEvents function

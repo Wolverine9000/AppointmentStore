@@ -20,6 +20,7 @@
 //     setTimeout(refresh, 10000); // set refresh page
 //
 $(function () {
+
     associateInfo = associateClass.getCurrentAssociateInfo(); // get current associate information
     defaultView = associateInfo.defaultCalendarView; // set associate default view
 
@@ -88,6 +89,7 @@ $(document).ready(function () {
                 $('#loading').data('spinner').stop(); // Stop the spinner
                 $("#loading h4").html("Done!");
                 $("#loading").dialog("close"); // close loading element
+                fadeInCalendar("#calendar");
             }
         },
         defaultView: defaultView,
@@ -119,9 +121,9 @@ $(document).ready(function () {
 //        },
         eventDrop: function (event, revertFunc) {
             event.action = "add";
-            event.actionType = "eventDrop";
-            event.notifyClient = true;
+            event.actionType = "EVENT_MOVE";
             event.eventChange = true;
+
             var hasConflict = eventConflictCk(event); // check for time conflict
             if (hasConflict.length > 0)
             {
@@ -165,10 +167,7 @@ $(document).ready(function () {
             event.action = "add";
             event.actionType = "RESIZE";
             event.eventChange = true;
-            var local = moment.tz(event.end, timeZone.getTimeZone());
-            var chicago = local.clone().tz("America/Los_Angeles");
-            console.log("Local time " + local.format());
-            console.log("Chicago time " + chicago.format());
+
             var hasConflict = eventConflictCk(event); // check for time conflict
             if (hasConflict.length > 0)
             {
@@ -332,14 +331,13 @@ function eventConflictCk(event) {
 } // end event conflick check function
 
 // create new event from select full calendar select fucntion
-function newEvent(start, end, jsEvent, view) {
+var newEvent = function (start, end, jsEvent, view) {
 
     var pastDateMsg = $("#pastDateMsg"),
             now = moment(),
             minWidth = 250,
             alertIcon = "ui-icon ui-icon-alert";
     now.seconds(0).milliseconds(0);
-
     start.local();  // switch start time from UTC to local time
 
     if (start.diff(end) === -86400000 && start.isBefore(now, 'day'))
@@ -355,7 +353,7 @@ function newEvent(start, end, jsEvent, view) {
     }
     else if (start.isBefore(now))
     {
-        openPastMsg(start, end, jsEvent, jsEvent, view);
+        openPastMsg(start, end, jsEvent, view);
         pastDateMsg.dialog("open");
         pastDateMsg.dialog("option", "minWidth", minWidth);
         $("#pastDateMsg span").addClass(alertIcon);
@@ -373,7 +371,7 @@ function newEvent(start, end, jsEvent, view) {
         $(".notifyTable #associate").html(assoOpt);
         newEvt(start, end, jsEvent, view);
     }
-} // end newEvent fucntion
+};   // end newEvent fucntion
 
 function newEvt(start, end, jsEvent, view) {
     createEvent(start, end, jsEvent, view);

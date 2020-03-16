@@ -30,6 +30,10 @@ public abstract class Communicator
     private Timestamp timestamp;
     private java.sql.Timestamp sqlTimestamp;
     private int messageId;
+    private int status_id;
+    private String statusMsg;
+    private String status;
+    private String statusColor;
 
     public Communicator()
     {
@@ -44,6 +48,9 @@ public abstract class Communicator
         timestamp = null;
         sqlTimestamp = null;
         messageId = 0;
+        status = null;
+        statusColor = "";
+        status_id = 0;
     }
 
     public void setSubject(String subject)
@@ -186,6 +193,50 @@ public abstract class Communicator
     public void setMessageId(int messageId)
     {
         this.messageId = messageId;
+    }
+
+    public int getStatus_id()
+    {
+        return status_id;
+    }
+
+    public void setStatus_id(int status_id)
+    {
+        this.status_id = status_id;
+    }
+
+    public String getStatusMsg()
+    {
+        if (this.status_id == 1)
+        {
+            this.statusMsg = "Sent";
+        }
+        return statusMsg;
+    }
+
+    public void setStatusMsg(String statusMsg)
+    {
+        this.statusMsg = statusMsg;
+    }
+
+    public void setStatus(String status)
+    {
+        this.status = status;
+    }
+
+    public String getStatus()
+    {
+        return status;
+    }
+
+    public String getStatusColor()
+    {
+        return statusColor;
+    }
+
+    public void setStatusColor(String statusColor)
+    {
+        this.statusColor = statusColor;
     }
 
 }

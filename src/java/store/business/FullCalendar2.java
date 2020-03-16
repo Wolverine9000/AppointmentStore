@@ -97,6 +97,7 @@ public class FullCalendar2 implements Serializable, MessageConstants
     private String endTimeUtc;
     private String startMoment;
     private String timeZone;
+    private final Calendar c = Calendar.getInstance();
 
     public FullCalendar2()
     {
@@ -967,17 +968,6 @@ public class FullCalendar2 implements Serializable, MessageConstants
         this.endTime = endTime;
     }
 
-    public int startMonth()
-    {
-//        this.calStart.setTime(sqlStartTime());
-        return calendarStart().get(Calendar.MONTH);
-    }
-
-    public int endMonth()
-    {
-        return calendarEnd().get(Calendar.MONTH);
-    }
-
     public java.sql.Time sqlStartTime()
     {
         return new java.sql.Time(this.startDate.getTime());
@@ -1001,16 +991,74 @@ public class FullCalendar2 implements Serializable, MessageConstants
     private Calendar calendarStart()
     {
 
-        Calendar c = Calendar.getInstance();
-        c.setTime(sqlStartTime());
+        this.c.setTime(sqlStartTime());
         return c;
     }
 
     private Calendar calendarEnd()
     {
-        Calendar c = Calendar.getInstance();
-        c.setTime(sqlEndTime());
+        this.c.setTime(sqlEndTime());
         return c;
+    }
+
+    public int startMonth()
+    {
+        return calendarStart().get(Calendar.MONTH);
+    }
+
+    public int endMonth()
+    {
+        return calendarEnd().get(Calendar.MONTH);
+    }
+
+    public int startDayOfWeek()
+    {
+        return calendarStart().get(Calendar.DAY_OF_WEEK);
+    }
+
+    public int endDayOfWeek()
+    {
+        return calendarEnd().get(Calendar.DAY_OF_WEEK);
+    }
+
+    public int startTimeHour()
+    {
+        return calendarStart().get(Calendar.HOUR_OF_DAY);
+    }
+
+    public int endTimeHour()
+    {
+        return calendarEnd().get(Calendar.HOUR_OF_DAY);
+    }
+
+    public int startTimeMin()
+    {
+        return calendarStart().get(Calendar.MINUTE);
+    }
+
+    public int endTimeMin()
+    {
+        return calendarEnd().get(Calendar.MINUTE);
+    }
+
+    public int startDayOfMonth()
+    {
+        return calendarStart().get(Calendar.DAY_OF_MONTH);
+    }
+
+    public int endDayOfMonth()
+    {
+        return calendarEnd().get(Calendar.DAY_OF_MONTH);
+    }
+
+    public int startYear()
+    {
+        return calendarStart().get(Calendar.YEAR);
+    }
+
+    public int endYear()
+    {
+        return calendarEnd().get(Calendar.YEAR);
     }
 
 }

@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 import messages.LogFile;
 import store.business.Associate2;
+import store.business.FullCalendar2;
 import store.business.Services;
 import store.util.PasswordUtil;
 
@@ -652,7 +653,7 @@ public class AssociateDB
         }
     }
 
-    public static void deleteAvailability(int associateId, Timestamp startTstamp, Timestamp endTstamp)
+    public static void deleteAvailability(FullCalendar2 fc)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
@@ -665,9 +666,9 @@ public class AssociateDB
         try
         {
             ps = connection.prepareStatement(query);
-            ps.setInt(1, associateId);
-            ps.setTimestamp(2, startTstamp);
-            ps.setTimestamp(3, endTstamp);
+            ps.setInt(1, fc.getAssociate2().getId());
+            ps.setTimestamp(2, fc.getStartSql());
+            ps.setTimestamp(3, fc.getEndSql());
 
             ps.executeUpdate();
         }
