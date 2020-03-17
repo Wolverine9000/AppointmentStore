@@ -174,13 +174,13 @@
                         <tbody>
                             <tr>
                                 <td><label for="firstNm" title="client first name">first name&#58;</label></td>
-                                <td><input type="text" name="firstNm" id="firstNm" maxlength="45" placeholder="name, email, id" class="text ui-widget-content ui-corner-all"
+                                <td><input type="text" name="firstNm" id="firstNm" maxlength="45" placeholder="search by name, email, id" class="text ui-widget-content ui-corner-all"
                                            title="Enter a first name"></td>
                             </tr>
                             <tr>
                                 <td><label for="lastNm" title="client last name">last name&#58;</label></td>
                                 <td><input type="text" name="lastNm" id="lastNm" maxlength="45" class="text ui-widget-content ui-corner-all"
-                                           title="Enter a last name"></td>
+                                           placeholder="last name"  title="Enter a last name"></td>
                             </tr>
                             <tr>
                                 <td><label for="mobilePhone" title="client moblie phone">mobile&#58;</label></td>
@@ -191,7 +191,7 @@
                             <tr>
                                 <td><label for="email" title="client email address">email&#58;</label></td>
                                 <td><input type="text" name="email" id="email" maxlength="45" value="" class="text ui-widget-content ui-corner-all"
-                                           title="Enter a valid email address"></td>
+                                           placeholder="email address" title="Enter a valid email address"></td>
                             </tr>
                             <tr>
                                 <td><label for="customerId" title="client id or account number">ID&#58;</label></td>
