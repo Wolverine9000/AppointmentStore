@@ -128,7 +128,7 @@ public class MessagesDB
                     {
                         phoneClient = s.getClient().getId();
                     }
-                    insertRespnsePhone(s.getMessageId(), i, phoneClient);
+                    insertResponsePhone(s.getMessageId(), i, phoneClient);
                 }
             }
             if (entry.has("Groups"));
@@ -178,7 +178,7 @@ public class MessagesDB
         }
     }
 
-    public static void insertRespnsePhone(int msgId, String phoneNumber, int clientId)
+    public static void insertResponsePhone(int msgId, String phoneNumber, int clientId)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
@@ -361,6 +361,7 @@ public class MessagesDB
                 + "message_responses_event_id, "
                 + "ismessage_invite, "
                 + "msg_error, "
+                + "status_id, "
                 + "is_group_msg "
                 + "FROM (SELECT * FROM appointment.message_responses mr "
                 + "LEFT JOIN message_smsSentErrors me "
@@ -388,7 +389,6 @@ public class MessagesDB
                 m.setMessageId(rs.getInt("message_id"));
                 m.setSubject(rs.getString("subject"));
                 m.setGroupMessage(rs.getBoolean("is_group_msg"));
-
                 m.setPhoneNumber(rs.getString("msg_phoneNumber"));
                 m.setClient(CustomerDB.selectClient(rs.getInt("msgSent_client_id")));
                 if ("Failure".equals(m.getStatus()))
@@ -405,6 +405,7 @@ public class MessagesDB
                 m.setTimeToSend(rs.getString("time_to_send"));
                 m.setPhoneNumber(rs.getString("msg_phoneNumber"));
                 m.setCode(rs.getString("message_code"));
+                m.setStatus_id(rs.getInt("status_id"));
                 m.setTimestamp(rs.getTimestamp("message_timestamp"));
                 m.setTimeToSendInteger(rs.getInt("unix_timestamp"));
                 m.setSentById(rs.getInt("msg_sentBy_id"));

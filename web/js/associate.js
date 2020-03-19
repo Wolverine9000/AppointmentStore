@@ -1119,6 +1119,7 @@ var SMSMessage = function (obj) {
     this.subject = stripQuotes(obj.subject);
     this.phoneNumber = formatPhone(obj.phoneNumber);
     this.status = obj.status;
+    this.status_id = obj.status_id;
     this.statusColor = obj.statusColor;
     this.messageTypeId = obj.messageTypeId;
     this.code = obj.code;

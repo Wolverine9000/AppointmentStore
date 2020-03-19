@@ -20,7 +20,6 @@ public class SMScommunicator extends Communicator implements SystemAccounts
     private String recipientsCount;
     private String credits;
     private String code;
-
     private int statusNumber;
     private String trimmedSubject;
     private String trimmedMessage;
