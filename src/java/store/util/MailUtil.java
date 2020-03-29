@@ -15,22 +15,23 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import messages.LogFile;
-import store.business.Associate2;
+import store.business.EmailCommunicator;
 import store.business.Emailer;
 import store.business.FullCalendar2;
-import store.business.Services;
 
 public class MailUtil implements Emailer
 {
 
     private static final String HOMEURL = "http://ontimeappointmensystem.com";
     private static final String REGISTRATIONURL = "http://174.80.101.20/AppointmentStore/registrationConfirm";
-    private static final String WILLIAMDOBBS = "support@ontimeappointmentsystem.com";
+    private static final String SUPPORT_URL = "support@ontimeappointmentsystem.com";
     private static final String WHDTECHNOLOGIESEMAIL = "donotreply@whdtechnologies.com";
+    private static final String CLIENT_EMAIL_FOOTER_INFO = "Manage your account at " + HOMEURL + "<br><br>"
+            + "Thank You!<br>" + "The Salon Store Development Team";
 
-    public static void sendMail(String to, String from, String subject, String body, String bcc, boolean bodyIsHTML)
+    public static boolean sendMail(String to, String from, String subject, String body, String bcc, boolean bodyIsHTML)
     {
-
+        boolean emailSent = false;
         try
         {
             // 1 - get a mail session
@@ -91,15 +92,19 @@ public class MailUtil implements Emailer
             Transport transport = session.getTransport();
             transport.connect(Emailer.emailUsername(), Emailer.emialPassword());
             transport.sendMessage(message, message.getAllRecipients());
+            emailSent = true;
         }
         catch (MessagingException ex)
         {
+            emailSent = false;
             LogFile.emailLog("MailUtil sendMail ", to, ex.getMessage() + " " + ex.toString());
         }
         catch (IOException ex)
         {
+            emailSent = false;
             Logger.getLogger(MailUtil.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return emailSent;
     }
 
     public static boolean sendConfirmation(String email, String firstName,
@@ -115,7 +120,7 @@ public class MailUtil implements Emailer
                     + "Your confirmation number is <strong>" + confirmNumber + "</strong>"
                     + "<br><br>Have a great day and thanks again!<br><br>"
                     + "William Dobbs<br>"
-                    + "WHD Productions", WILLIAMDOBBS, true);
+                    + "WHD Productions", SUPPORT_URL, true);
 
             return true;
         }
@@ -129,7 +134,7 @@ public class MailUtil implements Emailer
                     + REGISTRATIONURL + "<br><br>"
                     + "Please contact us if you have any questions.<br><br>"
                     + "Have a great day and thanks again!<br>"
-                    + "The Salon Store Development Team", WILLIAMDOBBS, true);
+                    + "The Salon Store Development Team", SUPPORT_URL, true);
             return true;
         }
         else if (subject.equalsIgnoreCase("Registration Complete"))
@@ -141,7 +146,7 @@ public class MailUtil implements Emailer
                     + "your account.<br><br>"
                     + "Please contact us if you have any questions.<br>"
                     + "Have a great day and thanks again!<br><br>"
-                    + "The Salon Store Development Team", WILLIAMDOBBS, true);
+                    + "The Salon Store Development Team", SUPPORT_URL, true);
             return true;
         }
         else if (subject.equalsIgnoreCase("Appointment Confirmation"))
@@ -153,177 +158,28 @@ public class MailUtil implements Emailer
                     + "your account.<br>"
                     + "Please contact us if you have any questions.<br>"
                     + "Have a great day and thanks again!<br><br>"
-                    + "The Salon Store Development Team", WILLIAMDOBBS, true);
+                    + "The Salon Store Development Team", SUPPORT_URL, true);
             return true;
         }
         return false;
     }
 
-    public static boolean sendConfirmation(String subject, String dateString, String startTime, FullCalendar2 fc,
-            Associate2 associate, Services service, int confirmNumber)
+    public static boolean sendClientConfirmation(EmailCommunicator ec)
     {
-        String firstName = fc.getClient().getFirstName();
-        String lastName = fc.getClient().getLastName();
-        String email = fc.getClient().getEmail();
-        int eventId = fc.getEventId();
-        int id = fc.getClient().getId();
-        String notes = fc.getNotes();
+        // send appointment confirmtion email to the Client
+        ec.setMessageSent(sendMail(ec.getClient().getEmail(), WHDTECHNOLOGIESEMAIL, ec.getSubject(),
+                ec.getMessage()
+                + CLIENT_EMAIL_FOOTER_INFO, SUPPORT_URL, true));
+        return ec.isMessageSent();
 
-        if (subject.equalsIgnoreCase("Appointment Confirmation") || subject.contains("Your Appointment"))
-        {
-
-            // send appointment confirmtion email to the Client
-            sendMail(email, WHDTECHNOLOGIESEMAIL, subject + " event ID " + eventId,
-                    "Hello " + firstName + ",<br><br>"
-                    + "Thank you for scheduling an appointment with The Salon Store on " + dateString + " at " + startTime + ".<br><br>"
-                    + "<table style=\"height: 206px; float: left;\" width=\"547\">" + " <tbody>"
-                    + "<tr>"
-                    + "<td style=\"text-align: right; color: #f68b09;\">" + "Appointment " + "</td>" + "<td style=\"color: #f68b09;\">" + " Summary" + "</td>"
-                    + "</tr>"
-                    + "<tr>"
-                    + "<td style=\"text-align: right; color: #808080;\">" + "Appointment ID&#35; " + "</td>" + "<td style=\"color: #333333;\">" + "<strong>" + eventId + "</strong> " + "</td>"
-                    + "</tr>"
-                    + "<tr>"
-                    + "<td style=\"text-align: right; color: #808080;\">" + "Client Name: " + "</td>" + "<td style=\"color: #333333;\">" + "<strong>" + firstName + " " + lastName + "</strong> " + "</td>"
-                    + "</tr>"
-                    + "<tr>"
-                    + "<td style=\"text-align: right; color: #808080;\">" + "Stylist Name:" + "</td>" + "<td style=\"color: #333333;\">" + "<strong>" + associate.getFirstName() + "</strong>" + "</td>"
-                    + "</tr>"
-                    + "<tr>"
-                    + "<td style=\"text-align: right; color: #808080;\">" + "Service Name: " + "</td>" + "<td style=\"color: #333333;\">" + "<strong>" + service.getName() + "</strong>" + "</td>"
-                    + "</tr>"
-                    + "<tr>"
-                    + "<td style=\"text-align: right; color: #808080;\">" + "Service Description:" + "</td>" + "<td style=\"color: #333333;\">" + " <strong>" + service.getDescription() + "</strong>" + "</td>"
-                    + "</tr>"
-                    + "<tr>"
-                    + "<td style=\"text-align: right; color: #808080;\">" + "Appointment Date: " + "</td>" + "<td style=\"color: #333333;\">" + " <strong>" + dateString + "</strong>" + "</td>"
-                    + "</tr>"
-                    + "<tr>"
-                    + "<td style=\"text-align: right; color: #808080;\">" + "Appointment Time: " + "</td>" + "<td style=\"color: #333333;\">" + " <strong>" + startTime + "</strong>" + "</td>"
-                    + "</tr>"
-                    + "<tr>"
-                    + "<td style=\"text-align: right; color: #808080;\">" + "Notes: " + "</td>" + "<td style=\"color: #333333;\">" + notes + "</td>"
-                    + "</tr>"
-                    + "<tr>"
-                    + "<td style=\"text-align: right; color: #808080;\">" + "Your Account ID:" + "</td style=\"color: #333333;\">" + "<td>" + " <strong>" + id + "</strong>" + "</td>"
-                    + "</tr>"
-                    + "</tbody>" + "</table>"
-                    + "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>"
-                    + "Manage your account at " + HOMEURL + "<br><br>"
-                    + "Thank You!<br>"
-                    + "The Salon Store Development Team", WILLIAMDOBBS, true);
-            return true;
-        }
-        if (subject.contains("re-schedule"))
-        {
-
-            // send appointment confirmtion email to the Client
-            sendMail(email, WHDTECHNOLOGIESEMAIL, subject + " " + eventId,
-                    "Hello " + firstName + ",<br><br>"
-                    + "Your appointment has been RE-SCHEDULED to " + dateString + " at " + startTime + ".<br><br>"
-                    + "<table style=\"height: 206px; float: left;\" width=\"547\">" + " <tbody>"
-                    + "<tr>"
-                    + "<td style=\"text-align: right; color: #f68b09;\">" + "Appointment " + "</td>" + "<td style=\"color: #f68b09;\">" + " Summary" + "</td>"
-                    + "</tr>"
-                    + "<tr>"
-                    + "<td style=\"text-align: right; color: #808080;\">" + "Appointment ID&#35; " + "</td>" + "<td style=\"color: #333333;\">" + "<strong>" + eventId + "</strong> " + "</td>"
-                    + "</tr>"
-                    + "<tr>"
-                    + "<td style=\"text-align: right; color: #808080;\">" + "Client Name: " + "</td>" + "<td style=\"color: #333333;\">" + "<strong>" + firstName + " " + lastName + "</strong> " + "</td>"
-                    + "</tr>"
-                    + "<tr>"
-                    + "<td style=\"text-align: right; color: #808080;\">" + "Stylist Name:" + "</td>" + "<td style=\"color: #333333;\">" + "<strong>" + associate.getFirstName() + "</strong>" + "</td>"
-                    + "</tr>"
-                    + "<tr>"
-                    + "<td style=\"text-align: right; color: #808080;\">" + "Service Name: " + "</td>" + "<td style=\"color: #333333;\">" + "<strong>" + service.getName() + "</strong>" + "</td>"
-                    + "</tr>"
-                    + "<tr>"
-                    + "<td style=\"text-align: right; color: #808080;\">" + "Service Description:" + "</td>" + "<td style=\"color: #333333;\">" + " <strong>" + service.getDescription() + "</strong>" + "</td>"
-                    + "</tr>"
-                    + "<tr>"
-                    + "<td style=\"text-align: right; color: #808080;\">" + "Appointment Date: " + "</td>" + "<td style=\"color: #333333;\">" + " <strong>" + dateString + "</strong>" + "</td>"
-                    + "</tr>"
-                    + "<tr>"
-                    + "<td style=\"text-align: right; color: #808080;\">" + "Appointment Time: " + "</td>" + "<td style=\"color: #333333;\">" + " <strong>" + startTime + "</strong>" + "</td>"
-                    + "</tr>"
-                    + "<tr>"
-                    + "<td style=\"text-align: right; color: #808080;\">" + "Notes: " + "</td>" + "<td style=\"color: #333333;\">" + notes + "</td>"
-                    + "</tr>"
-                    + "<tr>"
-                    + "<td style=\"text-align: right; color: #808080;\">" + "Your Account ID:" + "</td style=\"color: #333333;\">" + "<td>" + " <strong>" + id + "</strong>" + "</td>"
-                    + "</tr>"
-                    + "</tbody>" + "</table>"
-                    + "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>"
-                    + "Manage your account at " + HOMEURL + "<br><br>"
-                    + "Thank You!<br>"
-                    + "The Salon Store Development Team", WILLIAMDOBBS, true);
-            return true;
-        }
-        return false;
     }
 
-    public static boolean sendAssociateConfirm(String subject, String dateString, String startTime, FullCalendar2 fc,
-            Associate2 associate, Services service, int confirmNumber)
+    public static boolean sendAssociateConfirm(EmailCommunicator ec)
     {
-
-        String firstName = fc.getClient().getFirstName();
-        String lastName = fc.getClient().getLastName();
-        String email = fc.getClient().getEmail();
-        int eventId = fc.getEventId();
-        int id = fc.getClient().getId();
-        String notes = fc.getNotes();
-        String associateEmail = associate.getEmail();
-        int associateId = associate.getId();
         // send an appointment email to the Associate Stylist
-        sendMail(associateEmail, WHDTECHNOLOGIESEMAIL, "Your client " + firstName
-                + " " + lastName + " has scheduled an appointment to perform the service, "
-                + service.getDescription() + " on the date of " + dateString + " at " + startTime + " confirmation# " + confirmNumber,
-                "Hello " + associate.getFirstName() + ",<br><br>"
-                + "Your client, <strong> " + firstName + " " + lastName + "</strong>," + " has scheduled an appointment "
-                + "with The Salon Store on " + dateString + ".<br><br>"
-                + "<table style=\"height: 206px; float: left;\" width=\"547\">" + " <tbody>"
-                + "<tr>"
-                + "<td style=\"text-align: right; color: #f68b09;\">" + "Appointment" + "</td>" + "<td style=\"color: #f68b09;\">" + " Summary" + "</td>"
-                + "</tr>"
-                + "<tr>"
-                + "<td style=\"text-align: right; color: #808080;\">" + "Appointment ID&#35;" + "</td>" + "<td style=\"color: #333333;\">" + "<strong>" + eventId + "</strong>" + "</td>"
-                + "</tr>"
-                + "<tr>"
-                + "<td style=\"text-align: right; color: #808080;\">" + "Confirmation#: " + "</td>" + "<td style=\"color: #333333;\">" + "<strong>" + confirmNumber + "</strong>" + "</td>"
-                + "</tr>"
-                + "<tr>"
-                + "<td style=\"text-align: right; color: #808080;\">" + "Client Name:" + "</td>" + "<td style=\"color: #333333;\">" + "<strong>" + firstName + " " + lastName + "</strong>" + "</td>"
-                + "</tr>"
-                + "<tr>"
-                + "<td style=\"text-align: right; color: #808080;\">" + "Client Email Address: " + "</td>" + "<td style=\"color: #333333;\">" + email + "</td>"
-                + "</tr>"
-                + "<tr>"
-                + "<td style=\"text-align: right; color: #808080;\">" + "Client ID&#35; " + "</td>" + "<td style=\"color: #333333;\">" + "<strong>" + id + "</strong>" + "</td>"
-                + "</tr>"
-                + "<tr>"
-                + "<td style=\"text-align: right; color: #808080;\">" + "Service Name: " + "</td>" + "<td style=\"color: #333333;\">" + "<strong>" + service.getName() + "</strong>" + "</td>"
-                + "</tr>"
-                + "<tr>"
-                + "<td style=\"text-align: right; color: #808080;\">" + "Service Description:" + "</td>" + "<td style=\"color: #333333;\">" + "<strong>" + service.getDescription() + "</strong>" + "</td>"
-                + "</tr>"
-                + "<tr>"
-                + "<td style=\"text-align: right; color: #808080;\">" + "Appointment Date: " + "</td>" + "<td style=\"color: #333333;\">" + "<strong>" + dateString + "</strong>" + "</td>"
-                + "</tr>"
-                + "<tr>"
-                + "<td style=\"text-align: right; color: #808080;\">" + "Appointment Time: " + "</td>" + "<td style=\"color: #333333;\">" + "<strong>" + startTime + "</strong>" + "</td>"
-                + "</tr>"
-                + "<tr>"
-                + "<td style=\"text-align: right; color: #808080;\">" + "Notes: " + "</td>" + "<td style=\"color: #333333;\">" + notes + "</td>"
-                + "</tr>"
-                + "<tr>"
-                + "<td style=\"text-align: right; color: #808080;\">" + "Your Account ID: " + "</td>" + "<td style=\"color: #333333;\">" + "<strong>" + associateId + "</strong>" + "</td>"
-                + "</tr>"
-                + "</tbody>" + "</table>"
-                + "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>"
-                + "Manage your account at " + HOMEURL + "<br><br>"
-                + "Thank You!<br>"
-                + "The Salon Store Development Team", WILLIAMDOBBS, true);
-        return true;
+        ec.setMessageSent(sendMail(ec.getAssociate2().getEmail(), WHDTECHNOLOGIESEMAIL, ec.getSubject(), ec.getMessage()
+                + CLIENT_EMAIL_FOOTER_INFO, SUPPORT_URL, true));
+        return ec.isMessageSent();
     }
 
     public static void sendShortMsg(FullCalendar2 fcAsso, String subject,
@@ -346,7 +202,7 @@ public class MailUtil implements Emailer
             // TODO optimize sendTechEmail information --- some of which is not correct
             sendMail(emailTech, WHDTECHNOLOGIESEMAIL, subject + " " + email + " " + confirmNumber,
                     "A Registration email error has occured "
-                    + "sending to " + email, WILLIAMDOBBS, true);
+                    + "sending to " + email, SUPPORT_URL, true);
             LogFile.generalLog("Registration email failed" + subject + " " + email + " " + confirmNumber, "sendTechEmail");
             return true;
         }
@@ -354,7 +210,7 @@ public class MailUtil implements Emailer
         {
             sendMail(emailTech, WHDTECHNOLOGIESEMAIL, subject + " " + email + " " + confirmNumber,
                     "An Appointment Associate email error has occured "
-                    + "sending to " + email, WILLIAMDOBBS, true);
+                    + "sending to " + email, SUPPORT_URL, true);
             LogFile.generalLog("Appointment Associate email failed " + subject + " " + email + " " + confirmNumber, "sendTechEmail");
             return true;
         }

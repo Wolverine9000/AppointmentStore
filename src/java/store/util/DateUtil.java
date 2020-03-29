@@ -287,12 +287,26 @@ public class DateUtil
         return pdt;
     }
 
+    public static String formatTime(LocalDateTime ldt)
+    {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mma");
+        String fmtTime = ldt.format(formatter);
+        return fmtTime;
+    }
+
+    public static String formatDate(LocalDateTime ldt)
+    {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE, MMM d, yyyy");
+        String fmtTime = ldt.format(formatter);
+        return fmtTime;
+    }
+
     public static Date convertCalendar(Calendar calendar)
     {
         return calendar.getTime();
     }
 
-    public static Date convertCal(Calendar calDate, Calendar calTime)
+    public static Date convertCalendar(Calendar calDate, Calendar calTime)
     {
         int yr = calDate.get(Calendar.YEAR);
         int mo = calDate.get(Calendar.MONTH);

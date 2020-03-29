@@ -121,7 +121,7 @@ $(document).ready(function () {
 //        },
         eventDrop: function (event, revertFunc) {
             event.action = "add";
-            event.actionType = "EVENT_MOVE";
+            event.actionType = "MOVE";
             event.eventChange = true;
 
             var hasConflict = eventConflictCk(event); // check for time conflict
@@ -165,7 +165,7 @@ $(document).ready(function () {
         eventResize: function (event, revertFunc) {
             event.serviceTime = event.end.diff(event.start, 'minutes');
             event.action = "add";
-            event.actionType = "RESIZE";
+            event.actionType = "resize";
             event.eventChange = true;
 
             var hasConflict = eventConflictCk(event); // check for time conflict
@@ -713,6 +713,7 @@ function createEvent(start, end, jsEvent, view) {
                     eventObj.notifyClient = notifyClient;
                     eventObj.newClient = newClient;
                     eventObj.action = "add";
+                    eventObj.actionType = "new";
                     // in case client info has changed, add client data to client object
                     eventObj.client.firstName = firstName;
                     eventObj.client.lastName = lastName;

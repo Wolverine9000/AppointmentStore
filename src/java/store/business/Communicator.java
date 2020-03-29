@@ -13,7 +13,7 @@ import store.util.DateUtil;
  *
  * @author williamdobbs
  */
-public abstract class Communicator
+public abstract class Communicator extends ProcessStatus
 {
 
     Associate2 associate2;
@@ -34,9 +34,11 @@ public abstract class Communicator
     private String statusMsg;
     private String status;
     private String statusColor;
+    private boolean messageSent;
 
     public Communicator()
     {
+        super();
         subject = "";
         sentById = 0;
         client = new Client();
@@ -237,6 +239,16 @@ public abstract class Communicator
     public void setStatusColor(String statusColor)
     {
         this.statusColor = statusColor;
+    }
+
+    public boolean isMessageSent()
+    {
+        return messageSent;
+    }
+
+    public void setMessageSent(boolean messageSent)
+    {
+        this.messageSent = messageSent;
     }
 
 }

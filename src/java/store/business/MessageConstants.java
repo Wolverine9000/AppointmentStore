@@ -12,8 +12,9 @@ package store.business;
 public interface MessageConstants
 {
 
-    int SMS_MESSAGE = 1;
-    String RESIZE = " the ETA of your appointment has changed ";
-    String MOVE = "your appoinment has been RE-SCHECULED";
+    int ADD = 1;
+    int RESIZE = 2;
+    int MOVE = 3;
+    int DELETE = 4;
 
 }
