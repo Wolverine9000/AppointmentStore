@@ -301,6 +301,13 @@ public class DateUtil
         return fmtTime;
     }
 
+    public static String formatDate2(LocalDateTime ldt)
+    {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE, MMM d");
+        String fmtTime = ldt.format(formatter);
+        return fmtTime;
+    }
+
     public static Date convertCalendar(Calendar calendar)
     {
         return calendar.getTime();

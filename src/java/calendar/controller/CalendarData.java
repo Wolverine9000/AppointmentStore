@@ -431,8 +431,6 @@ public class CalendarData
     public static boolean postCalendarData(String json, HttpServletRequest request, Associate2 associateSession)
     {
         boolean errorFlag = false;
-        boolean dataInsert;
-
         Gson gson = new Gson();
 
         // Convert JSON File to Java Object
@@ -477,6 +475,8 @@ public class CalendarData
                     {
                         // if event exists, update the calendar event in the database
                         fc.setProcessClientCalendar(processSuccessful(CalendarDB.updateCalendar(fc)));
+                        LogFile.calendarLog(fc.getEventId() + " " + fc.isProcessClientCalendar(), fc.getAction().toUpperCase() + " client " + fc.getClient().getFirstName()
+                                + " associateSession " + associateSession.getFirstName());
                         // are there any events in array to cancel
                         if (fc.getCancelEvts() != null)
                         {
@@ -509,6 +509,8 @@ public class CalendarData
 
                         if (fc.getEventId() != 0)
                         {
+                            LogFile.calendarLog("eventID " + fc.getEventId() + " event successfully INSERTED", " event ID " + fc.getAction().toUpperCase() + " client " + fc.getClient().getFirstName()
+                                    + " associateSession " + associateSession.getFirstName());
                             fc.setProcessClientCalendar(true);
                             // remove associate available date and time
                             AssociateDB.deleteAvailability(fc);
@@ -521,7 +523,8 @@ public class CalendarData
                     if (fc.isProcessAssociateCalendar())
                     {
                         fc.setProcessClientCalendar(true);
-                        LogFile.generalLog(fc.getEventId() + " event successfully deleted ", " event ID" + fc.eventIdStr() + " client " + fc.getClient().getFirstName());
+                        LogFile.calendarLog("eventID " + fc.getEventId() + " event successfully DELETED", "event ID " + fc.getAction().toUpperCase() + " client " + fc.getClient().getFirstName()
+                                + " associateSession " + associateSession.getFirstName());
 
                     }
                     if (fc.isProcessAssociateCalendar() && fc.getRestoreTime() && !fc.isAllDay())
@@ -576,8 +579,7 @@ public class CalendarData
                         // log event
                         boolean logAction = LogFile.associateLog("FullCalPostServlet postCalendarData SUCCESS", "associateFirstName:"
                                 + associateFirstName + " associateLastName:"
-                                + associateLastName + " AssociateID:" + associateId
-                                + " Event ID: " + fc.getEventId()
+                                + associateLastName + " AssociateID:" + associateId + " Event ID: " + fc.getEventId()
                                 + " Start Time slot deleted: " + fc.getStartDate() + " End Time slot deleted:" + fc.getEndDate(), " action:" + action);
                     }
                     if (delAssoicateTimeSlot == 0)
@@ -586,13 +588,22 @@ public class CalendarData
                     }
                     break;
                 case "updateStatus":
-                    int updateStatus = CalendarDB.updateStatus(fc);
-                    if (updateStatus == 0)
+                    fc.setProcessClientCalendar(CalendarDB.updateStatus(fc));
+                    if (fc.isProcessClientCalendar())
                     {
-                        //errorFlag = true;
+                        LogFile.calendarLog("eventID " + fc.getEventId() + " " + fc.isProcessClientCalendar(), fc.getAction().toUpperCase() + " client " + fc.getClient().getFirstName()
+                                + " associateSession " + associateSession.getFirstName());
+                    }
+
+                    if (!fc.isProcessClientCalendar())
+                    {
+                        LogFile.calendarLog("eventID " + fc.getEventId() + " FAILED " + fc.isProcessClientCalendar(), fc.getAction().toUpperCase() + " client " + fc.getClient().getFirstName()
+                                + " associateSession " + associateSession.getFirstName());
+                        errorFlag = true;
                     }
                     break;
             }
+            // prepare sms SMSAppointmentCommunicator object
             SMSAppointmentCommunicator m = new SMSAppointmentCommunicator();
             m.setAssociate2(fc.getAssociate2());
             m.setSentById(associateSession.getId());

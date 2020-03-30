@@ -914,19 +914,31 @@ public class FullCalendar2 extends ProcessStatus implements Serializable, Messag
         if ("add".equalsIgnoreCase(this.action) && "new".equalsIgnoreCase(this.actionType))
         {
             return "Your client " + this.client.getFirstName() + " " + this.client.getLastName() + " has scheduled a "
-                    + this.title.toUpperCase() + " on " + this.startDateString() + " at " + this.startTimeString() + ". Event# " + this.eventIdStr();
+                    + this.title.toUpperCase() + " on " + this.startDateString2() + " at " + this.startTimeString() + ". Event# " + this.eventIdStr();
         }
         else if ("add".equalsIgnoreCase(this.action) && "resize".equalsIgnoreCase(this.actionType) || "move".equalsIgnoreCase(this.actionType))
         {
             return "Service time CHANGE for your client " + this.client.getFirstName() + " " + this.client.getLastName() + "."
-                    + " The service " + this.title.toUpperCase() + " on " + this.startDateString() + " will start at " + this.startTimeString()
+                    + " The service " + this.title.toUpperCase() + " on " + this.startDateString2() + " will start at " + this.startTimeString()
                     + " and end at " + this.endTimeString() + ". Event# " + this.eventIdStr();
         }
-        else if ("delete".equalsIgnoreCase(this.actionType))
+        else if ("delete".equalsIgnoreCase(this.action))
         {
-            return "Appointment  DELETED - your appointment with " + this.client.getFirstName() + " " + this.client.getLastName() + " "
-                    + " for the service " + this.title.toUpperCase() + " on " + this.startDateString() + " at " + this.startTimeString()
+            return "Your appointment with " + this.client.getFirstName() + " " + this.client.getLastName() + " "
+                    + " for the service " + this.title.toUpperCase() + " on " + this.startDateString2() + " at " + this.startTimeString()
                     + " has been DELETED" + ". Event# " + this.eventIdStr();
+        }
+        else if ("updateStatus".equalsIgnoreCase(this.action) && !"Cancelled".equalsIgnoreCase(this.serviceStatus.getStatusName()))
+        {
+            return "Your appointment " + this.title.toUpperCase() + " with client " + this.client.getFirstName() + " " + this.client.getLastName()
+                    + " has changed to " + this.serviceStatus.getStatusName().toUpperCase() + " - " + this.startDateString2() + " at " + this.startTimeString()
+                    + ". Event# " + this.eventIdStr();
+        }
+        else if ("updateStatus".equalsIgnoreCase(this.action) && "Cancelled".equalsIgnoreCase(this.serviceStatus.getStatusName()))
+        {
+            return "Your appointment " + this.title.toUpperCase() + " with client " + this.client.getFirstName() + " " + this.client.getLastName()
+                    + " has been " + this.serviceStatus.getStatusName().toUpperCase() + " - " + this.startDateString2() + " at " + this.startTimeString()
+                    + ". Event# " + this.eventIdStr();
         }
         return defaultMessage;
     }
@@ -937,18 +949,24 @@ public class FullCalendar2 extends ProcessStatus implements Serializable, Messag
         if ("add".equalsIgnoreCase(this.action) && "new".equalsIgnoreCase(this.actionType))
         {
             return this.client.getFirstName() + ", " + "Thank you for scheduling a "
-                    + this.title.toUpperCase() + " on " + this.startDateString() + " at " + this.startTimeString() + " to be perfomed by " + this.getAssociate2().getFirstName() + ". Event# " + this.eventIdStr();
+                    + this.title.toUpperCase() + " on " + this.startDateString2() + " at " + this.startTimeString() + " to be perfomed by " + this.getAssociate2().getFirstName() + ". Event# " + this.eventIdStr();
         }
         else if ("add".equalsIgnoreCase(this.action) && "resize".equalsIgnoreCase(this.actionType) || "move".equalsIgnoreCase(this.actionType))
         {
-            return "Your scheduled appointment for a " + this.title.toUpperCase() + " on "
-                    + this.startDateString() + " performed by " + this.getAssociate2().getFirstName() + " will be from "
+            return this.client.getFirstName() + ", " + "your scheduled appointment for a " + this.title.toUpperCase() + " on "
+                    + this.startDateString2() + " performed by " + this.getAssociate2().getFirstName() + " will be from "
                     + this.startTimeString() + " to " + this.endTimeString() + ". Event# " + this.eventIdStr();
         }
-        else if ("delete".equalsIgnoreCase(this.actionType))
+        else if ("delete".equalsIgnoreCase(this.action) || "Cancelled".equalsIgnoreCase(this.serviceStatus.getStatusName()))
         {
-            return "Your appointment for a " + this.title.toUpperCase() + " on " + this.startDateString()
+            return this.client.getFirstName() + ", " + "your appointment for a " + this.title.toUpperCase() + " on " + this.startDateString2()
                     + " at " + this.startTimeString() + " has been CANCELLED";
+        }
+        else if ("updateStatus".equalsIgnoreCase(this.action) && !"Cancelled".equalsIgnoreCase(this.serviceStatus.getStatusName()))
+        {
+            return this.client.getFirstName() + ", " + "the status of your appointment " + this.title.toUpperCase() + " with " + this.getAssociate2().getFirstName()
+                    + " has changed to " + this.serviceStatus.getStatusName().toUpperCase() + " - " + this.startDateString2() + " at " + this.startTimeString()
+                    + ". Event# " + this.eventIdStr();
         }
         return defaultMessage;
     }
@@ -968,10 +986,17 @@ public class FullCalendar2 extends ProcessStatus implements Serializable, Messag
         {
             return "TIME CHANGE";
         }
-
-        else if ("delete".equalsIgnoreCase(this.actionType))
+        else if ("delete".equalsIgnoreCase(this.action))
         {
             return "CANCELLED";
+        }
+        else if ("updateStatus".equalsIgnoreCase(this.action) && "Cancelled".equalsIgnoreCase(this.serviceStatus.getStatusName()))
+        {
+            return "CANCELLED";
+        }
+        else if ("updateStatus".equalsIgnoreCase(this.action) && !"Cancelled".equalsIgnoreCase(this.serviceStatus.getStatusName()))
+        {
+            return "STATUS CHANGE";
         }
         return "On-Time";
     }
@@ -980,7 +1005,7 @@ public class FullCalendar2 extends ProcessStatus implements Serializable, Messag
     public String emailAssociateMessage()
     {
         if ("add".equalsIgnoreCase(this.action) && "new".equalsIgnoreCase(this.actionType) || "resize".equalsIgnoreCase(this.actionType)
-                || "move".equalsIgnoreCase(this.actionType))
+                || "move".equalsIgnoreCase(this.actionType) || ("updateStatus".equalsIgnoreCase(this.action)) && !"Cancelled".equalsIgnoreCase(this.serviceStatus.getStatusName()))
         {
             return "Hello " + this.associate2.getFirstName() + ",<br><br>"
                     + "Your client <strong> " + this.client.getFirstName() + " " + this.client.getLastName() + "</strong>" + " has scheduled an appointment "
@@ -990,19 +1015,22 @@ public class FullCalendar2 extends ProcessStatus implements Serializable, Messag
                     + "<td style=\"text-align: right; color: #f68b09;\">" + "Appointment" + "</td>" + "<td style=\"color: #f68b09;\">" + " Summary" + "</td>"
                     + "</tr>"
                     + "<tr>"
-                    + "<td style=\"text-align: right; color: #808080;\">" + "Appointment ID&#35;" + "</td>" + "<td style=\"color: #333333;\">" + "<strong>" + this.eventId + "</strong>" + "</td>"
+                    + "<td style=\"text-align: right; color: #808080;\">" + "Client Name:" + "</td>" + "<td style=\"color: #333333;\">" + "<strong>" + this.client.getFirstName() + " " + this.client.getLastName() + "</strong>" + "</td>"
                     + "</tr>"
                     + "<tr>"
-                    + "<td style=\"text-align: right; color: #808080;\">" + "Client Name:" + "</td>" + "<td style=\"color: #333333;\">" + "<strong>" + this.client.getFirstName() + " " + this.client.getLastName() + "</strong>" + "</td>"
+                    + "<td style=\"text-align: right; color: #808080;\">" + "Service Description:  " + "</td>" + "<td style=\"color: #333333;\">" + "<strong>" + this.title + "</strong>" + "</td>"
+                    + "</tr>"
+                    + "<tr>"
+                    + "<td style=\"text-align: right; color: #808080;\">" + "Status:" + "</td>" + "<td style='color:" + this.serviceStatus.getStatusColor() + " ;'>" + "<strong>" + this.serviceStatus.getStatusName() + "</strong>" + "</td>"
+                    + "</tr>"
+                    + "<tr>"
+                    + "<td style=\"text-align: right; color: #808080;\">" + "Appointment ID&#35;" + "</td>" + "<td style=\"color: #333333;\">" + "<strong>" + this.eventId + "</strong>" + "</td>"
                     + "</tr>"
                     + "<tr>"
                     + "<td style=\"text-align: right; color: #808080;\">" + "Client Email Address: " + "</td>" + "<td style=\"color: #333333;\">" + this.client.getEmail() + "</td>"
                     + "</tr>"
                     + "<tr>"
                     + "<td style=\"text-align: right; color: #808080;\">" + "Client ID&#35; " + "</td>" + "<td style=\"color: #333333;\">" + "<strong>" + this.client.getId() + "</strong>" + "</td>"
-                    + "</tr>"
-                    + "<tr>"
-                    + "<td style=\"text-align: right; color: #808080;\">" + "Service Description:  " + "</td>" + "<td style=\"color: #333333;\">" + "<strong>" + this.title + "</strong>" + "</td>"
                     + "</tr>"
                     + "<tr>"
                     + "<td style=\"text-align: right; color: #808080;\">" + "Appointment Date: " + "</td>" + "<td style=\"color: #333333;\">" + "<strong>" + this.startDateString() + "</strong>" + "</td>"
@@ -1017,33 +1045,36 @@ public class FullCalendar2 extends ProcessStatus implements Serializable, Messag
                     + "<td style=\"text-align: right; color: #808080;\">" + "Notes: " + "</td>" + "<td style=\"color: #333333;\">" + this.notes + "</td>"
                     + "</tr>"
                     + "<tr>"
-                    + "<td style=\"text-align: right; color: #808080;\">" + "Your Account ID: " + "</td>" + "<td style=\"color: #333333;\">" + "<strong>" + this.associate2.getId() + "</strong>" + "</td>"
+                    + "<td style=\"text-align: right; color: #808080;\">" + "Your Account ID&#35; " + "</td>" + "<td style=\"color: #333333;\">" + "<strong>" + this.associate2.getId() + "</strong>" + "</td>"
                     + "</tr>"
                     + "</tbody>" + "</table>"
                     + "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>";
         }
-        else if ("delete".equalsIgnoreCase(this.action))
+        else if ("delete".equalsIgnoreCase(this.action) || "Cancelled".equalsIgnoreCase(this.serviceStatus.getStatusName()))
         {
             return "Hello " + this.associate2.getFirstName() + ",<br><br>"
-                    + "Your appointment at " + this.startTimeString() + " on " + this.startDateString() + " was successfully " + "<font style=\"color: #ff0000;\">" + "DELETED" + "</font>" + ".<br><br>"
+                    + "Your appointment at " + this.startTimeString() + " on " + this.startDateString() + " was successfully " + "<font style=\"color: #ff0000;\">" + "CANCELLED" + "</font>" + ".<br><br>"
                     + "<table style=\"height: 206px; float: left;\" width=\"547\">" + " <tbody>"
                     + "<tr>"
                     + "<td style=\"text-align: right; color: #f68b09;\">" + "Appointment" + "</td>" + "<td style=\"color: #f68b09;\">" + " Summary" + "</td>"
                     + "</tr>"
                     + "<tr>"
-                    + "<td style=\"text-align: right; color: #808080;\">" + "Appointment ID&#35;" + "</td>" + "<td style=\"color: #333333;\">" + "<strong>" + this.eventId + "</strong>" + "</td>"
+                    + "<td style=\"text-align: right; color: #808080;\">" + "Client Name:" + "</td>" + "<td style=\"color: #333333;\">" + "<strong>" + this.client.getFirstName() + " " + this.client.getLastName() + "</strong>" + "</td>"
                     + "</tr>"
                     + "<tr>"
-                    + "<td style=\"text-align: right; color: #808080;\">" + "Client Name:" + "</td>" + "<td style=\"color: #333333;\">" + "<strong>" + this.client.getFirstName() + " " + this.client.getLastName() + "</strong>" + "</td>"
+                    + "<td style=\"text-align: right; color: #808080;\">" + "Service Description:  " + "</td>" + "<td style=\"color: #333333;\">" + "<strong>" + this.title + "</strong>" + "</td>"
+                    + "</tr>"
+                    + "<tr>"
+                    + "<td style=\"text-align: right; color: #808080;\">" + "Status:" + "</td>" + "<td style='color:" + this.serviceStatus.getStatusColor() + " ;'>" + "<strong>" + this.serviceStatus.getStatusName() + "</strong>" + "</td>"
+                    + "</tr>"
+                    + "<tr>"
+                    + "<td style=\"text-align: right; color: #808080;\">" + "Appointment ID&#35;" + "</td>" + "<td style=\"color: #333333;\">" + "<strong>" + this.eventId + "</strong>" + "</td>"
                     + "</tr>"
                     + "<tr>"
                     + "<td style=\"text-align: right; color: #808080;\">" + "Client Email Address: " + "</td>" + "<td style=\"color: #333333;\">" + this.client.getEmail() + "</td>"
                     + "</tr>"
                     + "<tr>"
                     + "<td style=\"text-align: right; color: #808080;\">" + "Client ID&#35; " + "</td>" + "<td style=\"color: #333333;\">" + "<strong>" + this.client.getId() + "</strong>" + "</td>"
-                    + "</tr>"
-                    + "<tr>"
-                    + "<td style=\"text-align: right; color: #808080;\">" + "Service Description:  " + "</td>" + "<td style=\"color: #333333;\">" + "<strong>" + this.title + "</strong>" + "</td>"
                     + "</tr>"
                     + "<tr>"
                     + "<td style=\"text-align: right; color: #808080;\">" + "Appointment Date: " + "</td>" + "<td style=\"color: #333333; text-decoration-line: line-through; text-decoration-color: red;\">"
@@ -1083,6 +1114,13 @@ public class FullCalendar2 extends ProcessStatus implements Serializable, Messag
             eventStatus = "ESTIMATED APPOINTMENT END TIME CHANGED";
             return eventStatus + eventSubject;
         }
+        else if ("updateStatus".equalsIgnoreCase(this.action))
+        {
+            eventStatus = "Appointment status CHANGE";
+            eventSubject = " - the appointment " + this.title + " with " + this.client.getFirstName() + " " + this.client.getLastName()
+                    + " status has changed to " + this.serviceStatus.getStatusName().toUpperCase() + " - " + this.startDateString() + " at " + this.startTimeString();
+            return eventStatus + eventSubject;
+        }
         else if ("delete".equalsIgnoreCase(this.action))
         {
             eventStatus = "Appointment DELETED";
@@ -1097,7 +1135,7 @@ public class FullCalendar2 extends ProcessStatus implements Serializable, Messag
     public String emailClientMessage()
     {
         if ("add".equalsIgnoreCase(this.action) && "new".equalsIgnoreCase(this.actionType) || "resize".equalsIgnoreCase(this.actionType)
-                || "move".equalsIgnoreCase(this.actionType))
+                || "move".equalsIgnoreCase(this.actionType) || ("updateStatus".equalsIgnoreCase(this.action)) && !"Cancelled".equalsIgnoreCase(this.serviceStatus.getStatusName()))
         {
             return "Hello " + this.client.getFirstName() + ",<br><br>"
                     + "Thank you for scheduling an appointment with The Salon Store on " + this.startDateString() + " at " + this.startTimeString() + ".<br><br>"
@@ -1106,13 +1144,16 @@ public class FullCalendar2 extends ProcessStatus implements Serializable, Messag
                     + "<td style=\"text-align: right; color: #f68b09;\">" + "Appointment " + "</td>" + "<td style=\"color: #f68b09;\">" + " Summary" + "</td>"
                     + "</tr>"
                     + "<tr>"
-                    + "<td style=\"text-align: right; color: #808080;\">" + "Appointment ID&#35; " + "</td>" + "<td style=\"color: #333333;\">" + "<strong>" + eventId + "</strong> " + "</td>"
+                    + "<td style=\"text-align: right; color: #808080;\">" + "Service Description:" + "</td>" + "<td style=\"color: #333333;\">" + " <strong>" + this.title + "</strong>" + "</td>"
                     + "</tr>"
                     + "<tr>"
                     + "<td style=\"text-align: right; color: #808080;\">" + "Stylist Name:" + "</td>" + "<td style=\"color: #333333;\">" + "<strong>" + this.associate2.getFirstName() + " " + this.associate2.getLastName() + "</strong>" + "</td>"
                     + "</tr>"
                     + "<tr>"
-                    + "<td style=\"text-align: right; color: #808080;\">" + "Service Description:" + "</td>" + "<td style=\"color: #333333;\">" + " <strong>" + this.title + "</strong>" + "</td>"
+                    + "<td style=\"text-align: right; color: #808080;\">" + "Status:" + "</td>" + "<td style='color:" + this.serviceStatus.getStatusColor() + " ;'>" + "<strong>" + this.serviceStatus.getStatusName() + "</strong>" + "</td>"
+                    + "</tr>"
+                    + "<tr>"
+                    + "<td style=\"text-align: right; color: #808080;\">" + "Appointment ID&#35; " + "</td>" + "<td style=\"color: #333333;\">" + "<strong>" + eventId + "</strong> " + "</td>"
                     + "</tr>"
                     + "<tr>"
                     + "<td style=\"text-align: right; color: #808080;\">" + "Appointment Date: " + "</td>" + "<td style=\"color: #333333;\">" + " <strong>" + this.startDateString() + "</strong>" + "</td>"
@@ -1127,12 +1168,12 @@ public class FullCalendar2 extends ProcessStatus implements Serializable, Messag
                     + "<td style=\"text-align: right; color: #808080;\">" + "Notes: " + "</td>" + "<td style=\"color: #333333;\">" + this.notes + "</td>"
                     + "</tr>"
                     + "<tr>"
-                    + "<td style=\"text-align: right; color: #808080;\">" + "Your Account ID:" + "</td style=\"color: #333333;\">" + "<td>" + " <strong>" + this.client.getId() + "</strong>" + "</td>"
+                    + "<td style=\"text-align: right; color: #808080;\">" + "Your Account ID&#35;" + "</td style=\"color: #333333;\">" + "<td>" + " <strong>" + this.client.getId() + "</strong>" + "</td>"
                     + "</tr>"
                     + "</tbody>" + "</table>"
                     + "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>";
         }
-        else if ("delete".equalsIgnoreCase(this.action))
+        else if ("delete".equalsIgnoreCase(this.action) || "Cancelled".equalsIgnoreCase(this.serviceStatus.getStatusName()))
         {
             return "Hello " + this.client.getFirstName() + ",<br><br>"
                     + "Your appointment at " + this.startTimeString() + " on " + this.startDateString() + " has been " + "<font style='color: #ff0000;'>" + "CANCELLED" + "</font>" + ".<br><br>"
@@ -1141,13 +1182,16 @@ public class FullCalendar2 extends ProcessStatus implements Serializable, Messag
                     + "<td style=\"text-align: right; color: #f68b09;\">" + "Appointment " + "</td>" + "<td style=\"color: #f68b09;\">" + " Summary" + "</td>"
                     + "</tr>"
                     + "<tr>"
-                    + "<td style=\"text-align: right; color: #808080;\">" + "Appointment ID&#35; " + "</td>" + "<td style=\"color: #333333;\">" + "<strong>" + eventId + "</strong> " + "</td>"
+                    + "<td style=\"text-align: right; color: #808080;\">" + "Service Description:" + "</td>" + "<td style=\"color: #333333;\">" + " <strong>" + this.title + "</strong>" + "</td>"
                     + "</tr>"
                     + "<tr>"
                     + "<td style=\"text-align: right; color: #808080;\">" + "Stylist Name:" + "</td>" + "<td style=\"color: #333333;\">" + "<strong>" + this.associate2.getFirstName() + " " + this.associate2.getLastName() + "</strong>" + "</td>"
                     + "</tr>"
                     + "<tr>"
-                    + "<td style=\"text-align: right; color: #808080;\">" + "Service Description:" + "</td>" + "<td style=\"color: #333333;\">" + " <strong>" + this.title + "</strong>" + "</td>"
+                    + "<td style=\"text-align: right; color: #808080;\">" + "Status:" + "</td>" + "<td style='color:" + this.serviceStatus.getStatusColor() + " ;'>" + "<strong>" + this.serviceStatus.getStatusName() + "</strong>" + "</td>"
+                    + "</tr>"
+                    + "<tr>"
+                    + "<td style=\"text-align: right; color: #808080;\">" + "Appointment ID&#35; " + "</td>" + "<td style=\"color: #333333;\">" + "<strong>" + eventId + "</strong> " + "</td>"
                     + "</tr>"
                     + "<tr>"
                     + "<td style=\"text-align: right; color: #808080;\">" + "Appointment Date: " + "</td>" + "<td style='color: #333333; text-decoration-line: line-through; text-decoration-color: red;'>"
@@ -1158,7 +1202,7 @@ public class FullCalendar2 extends ProcessStatus implements Serializable, Messag
                     + " <strong>" + this.startTimeString() + "</strong>" + "</td>"
                     + "</tr>"
                     + "<tr>"
-                    + "<td style=\"text-align: right; color: #808080;\">" + "Your Account ID:" + "</td style=\"color: #333333;\">" + "<td>" + " <strong>" + this.client.getId() + "</strong>" + "</td>"
+                    + "<td style=\"text-align: right; color: #808080;\">" + "Your Account ID&#35;" + "</td style=\"color: #333333;\">" + "<td>" + " <strong>" + this.client.getId() + "</strong>" + "</td>"
                     + "</tr>"
                     + "</tbody>" + "</table>"
                     + "<br><br><br><br><br><br><br><br><br><br><br><br>";
@@ -1188,7 +1232,14 @@ public class FullCalendar2 extends ProcessStatus implements Serializable, Messag
             eventStatus = "Your Appointment Estimated END TIME has CHANGED";
             return eventStatus + eventSubject;
         }
-        else if ("delete".equalsIgnoreCase(this.action))
+        else if ("updateStatus".equalsIgnoreCase(this.action) && !"Cancelled".equalsIgnoreCase(this.serviceStatus.getStatusName()))
+        {
+            eventStatus = "Appointment status CHANGE";
+            eventSubject = " - the status of your appointment for a " + this.title.toUpperCase() + " has been changed to "
+                    + this.serviceStatus.getStatusName().toUpperCase();
+            return eventStatus + eventSubject;
+        }
+        else if ("delete".equalsIgnoreCase(this.action) || "Cancelled".equalsIgnoreCase(this.serviceStatus.getStatusName()))
         {
             eventStatus = "Appointment CANCELLED";
             eventSubject = " - your appointment for a " + this.title.toUpperCase() + " on " + this.startDateString()
@@ -1359,6 +1410,11 @@ public class FullCalendar2 extends ProcessStatus implements Serializable, Messag
     public String startDateString()
     {
         return DateUtil.formatDate(getStartDateTime());
+    }
+
+    private String startDateString2()
+    {
+        return DateUtil.formatDate2(getStartDateTime());
     }
 
     @Override

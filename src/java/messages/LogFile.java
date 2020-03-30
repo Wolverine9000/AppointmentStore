@@ -189,6 +189,34 @@ public class LogFile
         }
     }
 
+    public static void calendarLog(String failPoint, String message)
+    {
+        String today = DateUtil.todaysDate();
+        String currentDate = DateUtil.formatDate();
+        String generalMessage;
+
+        generalMessage = today + " " + failPoint + " " + message;
+
+        String dirString = FILELOGPATH + "/calendar logs/";
+        String filesString = currentDate + "_calendarLogs.txt";
+        filePath(dirString, filesString);
+
+        Path filePath = Paths.get(dirString, filesString);
+        File filesPath = filePath.toFile();
+
+        try (PrintWriter out
+                = new PrintWriter(
+                        new BufferedWriter(
+                                new FileWriter(filesPath, true)), true))
+        {
+            out.println(generalMessage);
+        }
+        catch (IOException ioe)
+        {
+            Logger.getLogger(LogFile.class.getName()).log(Level.SEVERE, null, ioe);
+        }
+    }
+
     public static void smsResError(Object errorObj[])
     {
         String today = DateUtil.todaysDate();
