@@ -111,7 +111,7 @@ public class FullCalPostServlet extends HttpServlet
         response.setHeader("Cache-Control", "no-cache");
 // Get the printwriter object from response to write the required json object to the output stream
         PrintWriter out = response.getWriter();
-// Assuming your json object is **jsonObject**, perform the following, it will return your json object
+// perform return  json object
         out.print(jsonCalendarStatus);
         out.flush();
 

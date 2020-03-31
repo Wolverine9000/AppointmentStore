@@ -34,6 +34,11 @@ $(document).ready(function () {
     todaysDate = $.datepicker.formatDate("mm/dd/yy", new Date());
     $('input#dateToSendMsg.hasDatepicker').prop("value", todaysDate);
 
+
+
+    var v = memberLevels();
+    $("#memberLevels").append(v);
+    listClients("ci", "../FullCalendar", false, "clientInfo", 'firstName');
     serviceListing = serviceList.getServiceList();
     serviceCategories = serviceList.getServiceCategories();
     associateListArr = getAssociates();
@@ -44,10 +49,6 @@ $(document).ready(function () {
             heightStyle: "content"
         });
     });
-
-    var v = memberLevels();
-    $("#memberLevels").append(v);
-    listClients("ci", "../FullCalendar", false, "clientInfo", 'firstName');
 
 //   add client
     $("#add-client").on("click", function () {
@@ -90,6 +91,7 @@ function  listClients(key, url, async, title) {
     clientSet = [];
     $("#client-list-table tbody").html("");
     doAjaxRequest(key, url, async, title, function (results) {
+//        fadeIn("#client-list-table tbody");
         $.each(results, function (index, value) {
             var o = new UserObj(
                     value.client.firstName,
@@ -102,12 +104,14 @@ function  listClients(key, url, async, title) {
                     value.memberLevels,
                     value.client);
             clientSet.push(o);
+
         });
-    });
+    }, "#client-list-table tbody");
     doAjaxRequest("ml", "../FullCalendar", false, "mLevels", function (results) {
         $.each(results, function (index, value) {
             memberLevels.push(value);
         });
+//        fadeIn("#client-list-table tbody");
     });
     renderClients(clientSet);
     $(document).on("click", "#client-list-table tr td:nth-child(-n+6)", function (evt) {

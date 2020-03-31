@@ -67,6 +67,7 @@ $(document).ready(function () {
 
 // full calendar shortcut
     $('#calendar').fullCalendar({
+
         header: {
             left: 'prev,today,next',
             center: 'title',
@@ -77,19 +78,21 @@ $(document).ready(function () {
             '': .5
         }, // end dragOpacity
         loading: function (bool) {
+            fadeOut("#calendar");
             if (bool)
             {
                 openLoading();
                 $("#loading").dialog("open"); // open loading element
                 $("#loading h4").html("Loading data.  Please wait...");
                 spinner('loading', 'auto');
+
             }
             else
             {
                 $('#loading').data('spinner').stop(); // Stop the spinner
                 $("#loading h4").html("Done!");
                 $("#loading").dialog("close"); // close loading element
-                fadeInCalendar("#calendar");
+                fadeIn("#calendar");
             }
         },
         defaultView: defaultView,

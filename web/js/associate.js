@@ -146,12 +146,13 @@ var doAjaxMsgRequest2 = function (key1, key2, key3, userId, url, async, response
     });
 
 };
-function doAjaxRequest(key, url, async, title, response) {
+function doAjaxRequest(key, url, async, title, response, element) {
     $.ajax({
         url: url,
         beforeSend: function () {
             $("#postDataError").html("");
             openLoading();
+            fadeOut(element);
             $("#loading").dialog("open"); // open loading element
             $("#loading h4").html("Loading data.  Please wait...");
             spinner('loading', 'auto');
@@ -168,13 +169,16 @@ function doAjaxRequest(key, url, async, title, response) {
         },
         success: function (data) {
             response(data);
-            //$("#loading h4").html("Done!");
-            //$("#loading").dialog("close"); // close loading element
+            $("#loading h4").html("Done!");
+            $("#loading").dialog("close"); // close loading element
         },
         complete: function (xhr, status) {
             $("#loading").dialog("close"); // close loading element
+
         }
+
     });
+    fadeIn(element);
 } // end doAjaxRequest function
 
 function doAjaxRequestNoElements(key, url, async, title, response) {
@@ -444,7 +448,7 @@ var options = {
 var serviceList = {
     getServiceList: function () {
         var s = [];
-        doAjaxRequest("svc", "../FullCalendar", false, "services", function (servicesArr) {
+        doAjaxRequestNoElements("svc", "../FullCalendar", false, "services", function (servicesArr) {
             $.each(servicesArr, function (svc_index, service) {
                 s.push(service);
             });
@@ -453,7 +457,7 @@ var serviceList = {
     },
     getServiceCategories: function () {
         var c = [];
-        doAjaxRequest("cat", "../FullCalendar", false, "category", function (categoriesArr) {
+        doAjaxRequestNoElements("cat", "../FullCalendar", false, "category", function (categoriesArr) {
             $.each(categoriesArr, function (cat_index, category) {
                 c.push(category);
             });
@@ -717,7 +721,7 @@ var associateClass = {
     },
     getCurrentAssociateInfo: function () {
         var a;
-        doAjaxRequest("assoProfile", "../FullCalendar", false, "currentAssoc", function (result) {
+        doAjaxRequestNoElements("assoProfile", "../FullCalendar", false, "currentAssoc", function (result) {
             a = new Associate(result);
         });
         return a;
@@ -1346,8 +1350,14 @@ function fadeInOutMessage(element) {
 function fadeInMessage(element) {
     $(element).fadeIn(100).fadeOut(100).fadeIn(100);
 }
-function fadeInCalendar(element) {
+function fadeOutIn(element) {
     $(element).fadeOut(100).fadeIn(1000);
+}
+function fadeOut(element) {
+    $(element).fadeOut(100);
+}
+function fadeIn(element) {
+    $(element).fadeIn(1000);
 }
 
 
