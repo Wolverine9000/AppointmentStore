@@ -1099,6 +1099,10 @@ var Message = function (obj) {
     this.timestamp = obj.timestamp;
 };
 
+Message.prototype.name = function () {
+    return this.clientId + " " + this.status;
+};
+
 var SMSMessage = function (obj) {
     this.isMessageInvite = obj.isMessageInvite;
     this.msgError = obj.msgError;
@@ -1144,10 +1148,20 @@ SMSMessage.prototype.getStatus = function () {
     }
 };
 
-Message.prototype.name = function () {
-    return this.clientId + " " + this.status;
+var ProcessStatus = function (proObj) {
+    this.processClientCalendar = proObj.processClientCalendar;
+    this.processAssociateCalendar = proObj.processAssociateCalendar;
+    this.processClientSms = proObj.processClientSms;
+    this.processAssociateSms = proObj.processAssociateSms;
+    this.processClientEmail = proObj.processClientEmail;
+    this.processAssociateEmail = proObj.processAssociateEmail;
+    this.processAdminSms = proObj.processAdminSms;
+    this.processAdminEmail = proObj.processAdminEmail;
+    this.processSuperAdminSms = proObj.processSuperAdminSms;
+    this.processSuperAdminEmail = proObj.processSuperAdminEmail;
+    this.validateNewUser = proObj.validateNewUser;
+    this.processUserId = proObj.processUserId;
 };
-
 
 var stripQuotes = function (msg) {
     if (msg === undefined)
@@ -1737,6 +1751,7 @@ function postEvents(evtsToPost, event) {
         data: {calEvents: evtsToPost},
         // timeout: 10000,
         error: function (xhr, status, error) {
+
             $('#loading').data('spinner').stop(); // Stop the spinner
             $("#loading h4").html("ERROR!");
             $("#loading").dialog("close"); // close loading element
@@ -1745,7 +1760,8 @@ function postEvents(evtsToPost, event) {
             alert("Error Posting Data: " + xhr.status + " - " + error);
 //            fadeInOutMessage("#messages");
         },
-        success: function () {
+        success: function (data, textStatus, jqXHR) {
+            var p = new ProcessStatus(data);
             $('#loading').data('spinner').stop(); // Stop the spinner
             $("#loading h4").html("Done!");
             $("#loading").dialog("close"); // close loading element
@@ -1760,7 +1776,7 @@ function postEvents(evtsToPost, event) {
             $('#calendar').fullCalendar("refetchEvents");
             // append success message to messages element
 //            $("#postDataSuccess").append("Calendar Update Successful!");
-            fadeInOutMessage("#messages");
+//            fadeInOutMessage("#messages");
         }
     });
 } // end postEvents function

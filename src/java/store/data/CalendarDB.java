@@ -315,7 +315,7 @@ public class CalendarDB
         }
     }
 
-    public static int updateCalendar(FullCalendar2 fc)
+    public static boolean updateCalendar(FullCalendar2 fc)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
@@ -413,12 +413,12 @@ public class CalendarDB
             ps.setInt(41, fc.getEventId());
 
             ps.executeUpdate();
-            return 1;
+            return true;
         }
         catch (SQLException e)
         {
             LogFile.databaseError("CalendarDB - updateCalendar ", e.toString(), e.getMessage());
-            return 0;
+            return false;
         }
         finally
         {
@@ -1073,7 +1073,7 @@ public class CalendarDB
         }
     }
 
-    public static int updateStatus(FullCalendar2 fc)
+    public static boolean updateStatus(FullCalendar2 fc)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
@@ -1091,12 +1091,13 @@ public class CalendarDB
             ps.setInt(1, fc.getServiceStatus().getStatusId());
             ps.setInt(2, fc.getEventId());
 
-            return ps.executeUpdate();
+            ps.executeUpdate();
+            return true;
         }
         catch (SQLException e)
         {
             LogFile.databaseError("CalendarDB - updateStatus ", e.toString(), e.getMessage());
-            return 0;
+            return false;
         }
         finally
         {

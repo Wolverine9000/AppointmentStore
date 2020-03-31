@@ -38,8 +38,6 @@ public class FullCalendarServlet extends HttpServlet
     {
         HttpSession session = request.getSession();
 
-        Associate2 associate = null;
-
         ArrayList<FullCalendar2> fc2 = null;
         FullCalendar2 fc2Info = null;
         ArrayList<Services> svcs = null;
@@ -57,6 +55,8 @@ public class FullCalendarServlet extends HttpServlet
         String key = request.getParameter("key");
         String altKey = request.getParameter("altKey");
         String jsonAppointment;
+
+        Associate2 associate = (Associate2) session.getAttribute("associateRecord");
 
         if (title == null)
         {
@@ -124,13 +124,13 @@ public class FullCalendarServlet extends HttpServlet
                     break;
                 case "assoInfo":
                     // get calendar record - if null, could mean all cookies are being blocked
-                    associate = (Associate2) session.getAttribute("associateRecord");
+//                    associate = (Associate2) session.getAttribute("associateRecord");
                     int assoId = associate.getId();
                     associate = AssociateDB.selectAssociateInfo(assoId);
                     break;
                 case "assoProfile":
                     // get calendar record - if null, could mean all cookies are being blocked
-                    associate = (Associate2) session.getAttribute("associateRecord");
+//                    associate = (Associate2) session.getAttribute("associateRecord");
                     int assoId2 = associate.getId();
                     associate = CalendarData.associateProfile(assoId2);
                     break;

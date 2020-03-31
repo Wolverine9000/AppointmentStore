@@ -12,6 +12,25 @@ package store.business;
 public interface Messenger
 {
 
-    String getCommunication();
+    String smsAssociateMessage();
 
+    String smsClientMessage();
+
+    String startTimeString();
+
+    String startDateString();
+
+    String endTimeString();
+
+    String endDateString();
+
+    String subjectClient();
+
+    String emailAssociateMessage();
+
+    String emailAssociateSubject();
+
+    String emailClientMessage();
+
+    String emailClientSubject();
 }

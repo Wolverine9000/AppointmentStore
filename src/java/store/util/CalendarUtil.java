@@ -310,13 +310,13 @@ public class CalendarUtil
                     {
                         Date newTime = calStartTime.getTime();
                         java.sql.Time sqlTime = new java.sql.Time(newTime.getTime());
-                        Date c = DateUtil.convertCal(cal, calStartTime);
+                        Date c = DateUtil.convertCalendar(cal, calStartTime);
                         Timestamp sqlTimestamp = new java.sql.Timestamp(c.getTime());
 
                         // sql end timestamp conversion
                         Calendar et = (Calendar) calStartTime.clone();
                         et.add(Calendar.MINUTE, frequency);
-                        Date end = DateUtil.convertCal(cal, et);
+                        Date end = DateUtil.convertCalendar(cal, et);
                         Timestamp sqlEndTime = new java.sql.Timestamp(end.getTime());
 
                         // insert new scheduled date, time, and associate id into database
@@ -413,13 +413,13 @@ public class CalendarUtil
                     Date newTime = calStartTime.getTime();
                     java.sql.Time sqlTime = new java.sql.Time(newTime.getTime());
 
-                    Date c = DateUtil.convertCal(cal, calStartTime);
+                    Date c = DateUtil.convertCalendar(cal, calStartTime);
                     Timestamp sqlTimestamp = new java.sql.Timestamp(c.getTime());
 
                     // sql end timestamp conversion
                     Calendar et = (Calendar) calStartTime.clone();
                     et.add(Calendar.MINUTE, frequency);
-                    Date end = DateUtil.convertCal(cal, et);
+                    Date end = DateUtil.convertCalendar(cal, et);
                     Timestamp sqlEndTime = new java.sql.Timestamp(end.getTime());
 
                     // insert new scheduled date, time, and associate id into database
@@ -480,13 +480,13 @@ public class CalendarUtil
                                 Date newTime = calStartTime.getTime();
                                 java.sql.Time sqlTime = new java.sql.Time(newTime.getTime());
                                 // sql timestamp conversion
-                                Date c = DateUtil.convertCal(cal, calStartTime);
+                                Date c = DateUtil.convertCalendar(cal, calStartTime);
                                 Timestamp sqlTimestamp = new java.sql.Timestamp(c.getTime());
 
                                 // sql end timestamp conversion
                                 Calendar et = (Calendar) calStartTime.clone();
                                 et.add(Calendar.MINUTE, frequency);
-                                Date end = DateUtil.convertCal(cal, et);
+                                Date end = DateUtil.convertCalendar(cal, et);
                                 Timestamp sqlEndTime = new java.sql.Timestamp(end.getTime());
 
                                 // insert new scheduled date, time, and associate id into database

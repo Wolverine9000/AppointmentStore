@@ -154,7 +154,7 @@ public class CustomerDB
         }
     }
 
-    public static int insertNewClient(FullCalendar2 fc)
+    public static boolean insertNewClient(FullCalendar2 fc)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
@@ -209,12 +209,12 @@ public class CustomerDB
                 clientID = identityResultSet.getInt("IDENTITY");
             }
             insertCustAlerts(fc.getClient(), clientID); // insert customer alert preferences
-            return clientID;
+            return true;
         }
         catch (SQLException e)
         {
             LogFile.databaseError("CustomerDB insertNewClient ", e.getMessage(), e.toString());
-            return 0;
+            return false;
         }
         finally
         {
@@ -308,7 +308,7 @@ public class CustomerDB
         }
     }
 
-    public static int update(int clientId, Client c)
+    public static boolean update(int clientId, Client c)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
@@ -330,12 +330,13 @@ public class CustomerDB
             ps.setString(4, c.getMobilePhone());
             ps.setInt(5, clientId);
 
-            return ps.executeUpdate();
+            ps.executeUpdate();
+            return true;
         }
         catch (SQLException e)
         {
             LogFile.databaseError("CustomerDB update", e.getMessage(), e.toString());
-            return 0;
+            return false;
         }
         finally
         {

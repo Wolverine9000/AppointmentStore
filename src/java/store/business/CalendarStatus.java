@@ -9,12 +9,11 @@ package store.business;
  *
  * @author whdobbs
  */
-public interface MessageConstants
+public class CalendarStatus extends ProcessStatus
 {
 
-    int ADD = 1;
-    int RESIZE = 2;
-    int MOVE = 3;
-    int DELETE = 4;
-
+    public CalendarStatus()
+    {
+        super();
+    }
 }

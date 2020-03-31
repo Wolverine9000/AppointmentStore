@@ -31,8 +31,8 @@ public class UserUtil
         clientExists = CustomerDB.clientExists(fc); // check if client exists
         if (!clientExists)
         {
-            clientId = (CustomerDB.insertNewClient(fc)); // if client does not exist, create in database
-            if (clientId == 0)
+            fc.setProcessUserId(CustomerDB.insertNewClient(fc)); // if client does not exist, create in database
+            if (!fc.isProcessUserId())
             {
                 LogFile.generalLog("UserUtil processUserId", "add client FAILED clientName " + fc.getClient().getFirstName() + " " + fc.getClient().getLastName());
             }
@@ -44,15 +44,15 @@ public class UserUtil
         }
         else if (clientExists)
         {
-            int updateClient = CustomerDB.update(fc.getClient().getId(), fc.getClient());
+            fc.setProcessUserId(CustomerDB.update(fc.getClient().getId(), fc.getClient()));
             clientId = fc.getClient().getId();
-            if (updateClient == 0)
+            if (!fc.isProcessUserId())
             {
                 LogFile.generalLog("UserUtil processUserId", "UPDATE client FAILED clientName "
                         + fc.getClient().getFirstName() + " Client ID = " + fc.getClient().getId());
 
             }
-            else if (updateClient != 0)
+            else if (fc.isProcessUserId())
             {
                 LogFile.generalLog("UserUtil processUserId", "UPDATE client SUCCESS clientName "
                         + fc.getClient().getFirstName() + " Client ID = " + fc.getClient().getId());
