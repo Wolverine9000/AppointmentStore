@@ -1116,7 +1116,7 @@ public class FullCalendar2 extends ProcessStatus implements Serializable, Messag
         }
         else if ("updateStatus".equalsIgnoreCase(this.action))
         {
-            eventStatus = "Appointment status CHANGE";
+            eventStatus = "Appointment Status CHANGE";
             eventSubject = " - the appointment " + this.title + " with " + this.client.getFirstName() + " " + this.client.getLastName()
                     + " status has changed to " + this.serviceStatus.getStatusName().toUpperCase() + " - " + this.startDateString() + " at " + this.startTimeString();
             return eventStatus + eventSubject;
@@ -1213,7 +1213,7 @@ public class FullCalendar2 extends ProcessStatus implements Serializable, Messag
     @Override
     public String emailClientSubject()
     {
-        String eventStatus = "";
+        String eventStatus;
         String eventSubject = " - the service, " + this.title.toUpperCase()
                 + " on " + this.startDateString() + " at " + this.startTimeString();
 
@@ -1234,7 +1234,7 @@ public class FullCalendar2 extends ProcessStatus implements Serializable, Messag
         }
         else if ("updateStatus".equalsIgnoreCase(this.action) && !"Cancelled".equalsIgnoreCase(this.serviceStatus.getStatusName()))
         {
-            eventStatus = "Appointment status CHANGE";
+            eventStatus = "Appointment Status CHANGE";
             eventSubject = " - the status of your appointment for a " + this.title.toUpperCase() + " has been changed to "
                     + this.serviceStatus.getStatusName().toUpperCase();
             return eventStatus + eventSubject;

@@ -162,7 +162,7 @@ public class CalendarData
         ArrayList<Associate2> a;
         a = AssociateDB.selectAssociateAvailableTimes(associateId);
 
-        a.stream().map((aa) ->
+        a.stream().map((Associate2 aa) ->
         {
             FullCalendar2 fc = new FullCalendar2();
             fc.setTitle(aa.getFirstName());
@@ -577,7 +577,7 @@ public class CalendarData
                     if (delAssoicateTimeSlot != 0)
                     {
                         // log event
-                        boolean logAction = LogFile.associateLog("FullCalPostServlet postCalendarData SUCCESS", "associateFirstName:"
+                        LogFile.associateLog("FullCalPostServlet postCalendarData SUCCESS", "associateFirstName:"
                                 + associateFirstName + " associateLastName:"
                                 + associateLastName + " AssociateID:" + associateId + " Event ID: " + fc.getEventId()
                                 + " Start Time slot deleted: " + fc.getStartDate() + " End Time slot deleted:" + fc.getEndDate(), " action:" + action);
@@ -665,7 +665,7 @@ public class CalendarData
                     }
                 }
             }
-            boolean logAction = LogFile.associateLog("FullCalPostServlet postCalendarData", "client:" + fc.getClient().getFirstName() + " clientID:" + fc.getClient().getId() + " Event ID: " + fc.getEventId()
+            LogFile.associateLog("FullCalPostServlet postCalendarData", "client:" + fc.getClient().getFirstName() + " clientID:" + fc.getClient().getId() + " Event ID: " + fc.getEventId()
                     + " service:" + fc.getTitle() + " svcDate:" + fc.getStart(), " action:" + fc.getAction());
         }
         return errorFlag;
@@ -810,7 +810,7 @@ public class CalendarData
                         }
                         break;
                 }
-                boolean logAction = LogFile.associateLog("FullCalPostServlet postClientData", "client:" + fc.getAssociate2().getFirstName() + " clientID:" + fc.getCustomerId() + " Event ID: n/a"
+                LogFile.associateLog("FullCalPostServlet postClientData", "client:" + fc.getAssociate2().getFirstName() + " clientID:" + fc.getCustomerId() + " Event ID: n/a"
                         + " svcDate: n/a", " action:" + fc.getAction());
             }
         }

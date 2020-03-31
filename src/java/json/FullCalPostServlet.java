@@ -6,6 +6,9 @@
 package json;
 
 import calendar.controller.CalendarData;
+import com.google.gson.Gson;
+import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +17,7 @@ import static javax.servlet.http.HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 import javax.servlet.http.HttpSession;
 import service.data.ServicesData;
 import store.business.Associate2;
+import store.business.CalendarStatus;
 
 /**
  *
@@ -24,7 +28,7 @@ public class FullCalPostServlet extends HttpServlet
 
     @Override
     public void doPost(HttpServletRequest request,
-            HttpServletResponse response)
+            HttpServletResponse response) throws IOException
 
     {
         HttpSession session = request.getSession();
@@ -33,10 +37,10 @@ public class FullCalPostServlet extends HttpServlet
         String title = request.getParameter("title");
         String data = request.getParameter("data");
 
-        Associate2 associate;
-        associate = (Associate2) session.getAttribute("associateRecord");
+        Associate2 associate = (Associate2) session.getAttribute("associateRecord");
         boolean evtPostError = false;
         boolean isMessage = false;
+        CalendarStatus c = new CalendarStatus();
 
         if (title != null)
         {
@@ -101,5 +105,15 @@ public class FullCalPostServlet extends HttpServlet
                 response.setStatus(SC_INTERNAL_SERVER_ERROR);
             }
         }
+        Gson gson = new Gson();
+        String jsonCalendarStatus = gson.toJson(c);
+        response.setContentType("application/json");
+        response.setHeader("Cache-Control", "no-cache");
+// Get the printwriter object from response to write the required json object to the output stream
+        PrintWriter out = response.getWriter();
+// Assuming your json object is **jsonObject**, perform the following, it will return your json object
+        out.print(jsonCalendarStatus);
+        out.flush();
+
     }
 }

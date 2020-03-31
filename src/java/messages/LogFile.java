@@ -132,7 +132,7 @@ public class LogFile
         }
     }
 
-    public static boolean associateLog(String logPoint, String message, String result)
+    public static void associateLog(String logPoint, String message, String result)
     {
         String today = DateUtil.todaysDate();
         String currentDate = DateUtil.formatDate();
@@ -156,9 +156,7 @@ public class LogFile
         catch (IOException ioe)
         {
             generalLog("LogFile associateLog" + ioe.toString(), currentDate);
-            return false;
         }
-        return true;
     }
 
     public static void generalLog(String failPoint, String message)

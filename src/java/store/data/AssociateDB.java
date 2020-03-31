@@ -431,7 +431,7 @@ public class AssociateDB
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            LogFile.databaseError("AssociateDB isAssociateTimeAvailable error ", e.getMessage(), e.toString());
             return false;
         }
         finally
@@ -478,7 +478,7 @@ public class AssociateDB
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            LogFile.databaseError("AssociateDB selectAssociateServices error ", e.getMessage(), e.toString());
             return null;
         }
         finally
@@ -509,7 +509,7 @@ public class AssociateDB
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            LogFile.databaseError("AssociateDB isAssociateService error ", e.getMessage(), e.toString());
             return false;
         }
         finally
@@ -643,7 +643,7 @@ public class AssociateDB
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            LogFile.databaseError("AssociateDB selectAssociateSvcs error ", e.getMessage(), e.toString());
             return null;
         }
         finally
@@ -674,7 +674,7 @@ public class AssociateDB
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            LogFile.databaseError("AssociateDB deleteAvailability FC error ", e.getMessage(), e.toString());
         }
         finally
         {
@@ -701,7 +701,7 @@ public class AssociateDB
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            LogFile.databaseError("AssociateDB deleteAvailability int error ", e.getMessage(), e.toString());
             return 0;
         }
         finally
@@ -729,7 +729,7 @@ public class AssociateDB
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            LogFile.databaseError("AssociateDB deleteAsscSvc error ", e.getMessage(), e.toString());
             return 0;
         }
         finally
@@ -756,7 +756,7 @@ public class AssociateDB
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            LogFile.databaseError("AssociateDB deleteAllAssoSvcs error ", e.getMessage(), e.toString());
             return 0;
         }
         finally
@@ -800,7 +800,7 @@ public class AssociateDB
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            LogFile.databaseError("AssociateDB selecAllServices MAP error ", e.getMessage(), e.toString());
             return null;
         }
         finally
@@ -845,7 +845,7 @@ public class AssociateDB
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            LogFile.databaseError("AssociateDB selectService error ", e.getMessage(), e.toString());
             return null;
         }
         finally
@@ -882,7 +882,7 @@ public class AssociateDB
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            LogFile.databaseError("AssociateDB selectMsgsSent error ", e.getMessage(), e.toString());
             return -1;
         }
         finally
@@ -913,7 +913,7 @@ public class AssociateDB
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            LogFile.databaseError("AssociateDB deleteAvailability error ", e.getMessage(), e.toString());
             return 0;
         }
         finally
@@ -941,7 +941,7 @@ public class AssociateDB
         }
         catch (SQLException e)
         {
-            boolean logAssociateEvt = LogFile.associateLog("AssociateDB deleteAvailability FAILED " + "AssociateID:"
+            LogFile.associateLog("AssociateDB deleteAvailability FAILED " + "AssociateID:"
                     + associateId + " availDate:" + availDate, e.toString(), e.getMessage());
             return 0;
         }
@@ -996,7 +996,7 @@ public class AssociateDB
         }
         catch (SQLException e)
         {
-            boolean logAssociateEvt = LogFile.associateLog("AssociateDB deleteAvailabilityDate FAILED " + "AssociateID:"
+            LogFile.associateLog("AssociateDB deleteAvailabilityDate FAILED " + "AssociateID:"
                     + associateId, e.toString(), e.getMessage());
             return 0;
         }
@@ -1024,7 +1024,7 @@ public class AssociateDB
         }
         catch (SQLException e)
         {
-            boolean logAssociateEvt = LogFile.associateLog("AssociateDB deleteAvailabilityDate FAILED " + "EventID:" + evtId, e.toString(), e.getMessage());
+            LogFile.associateLog("AssociateDB delAssoicateTimeSlot FAILED " + "EventID:" + evtId, e.toString(), e.getMessage());
             return 0;
         }
         finally
@@ -1053,13 +1053,13 @@ public class AssociateDB
         }
         catch (SQLException e)
         {
-            boolean logAssociateEvt = LogFile.associateLog("AssociateDB deleteAvailabilityDate FAILED " + "AssociateID "
+            LogFile.associateLog("AssociateDB deleteAvailabilityDate FAILED " + "AssociateID "
                     + associateId + date.toString(), e.toString(), e.getMessage());
             return 0;
         }
         finally
         {
-            boolean logAssociateEvt = LogFile.associateLog("AssociateDB deleteAvailabilityDate SUCCESS " + "AssociateID "
+            LogFile.associateLog("AssociateDB deleteAvailabilityDate SUCCESS " + "AssociateID "
                     + associateId, date.toString(), date.toString());
             DBUtil.closePreparedStatement(ps);
             pool.freeConnection(connection);
@@ -1087,7 +1087,7 @@ public class AssociateDB
         }
         catch (SQLException e)
         {
-            boolean logAssociateEvt = LogFile.associateLog("AssociateDB deleteAvailabilityDate FAILED " + "AssociateID "
+            LogFile.associateLog("AssociateDB deleteAvailabilityDate FAILED " + "AssociateID "
                     + associateId + "associate_FROM_date:" + frDate + "associate_TO_date:" + toDate, e.toString(), e.getMessage());
             return 0;
         }

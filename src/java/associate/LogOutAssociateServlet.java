@@ -32,12 +32,12 @@ public class LogOutAssociateServlet extends HttpServlet
         String urlPath;
         urlPath = request.getServletPath();
         String requestURI = request.getRequestURI();
-        String url = "";
+        String url;
 
         Associate2 associate = (Associate2) session.getAttribute("associateRecord");
 
         if (associate != null)
-            {
+        {
             Date date = new Date();
             String out = "out";
 
@@ -45,22 +45,22 @@ public class LogOutAssociateServlet extends HttpServlet
             java.sql.Timestamp sqlDate = new java.sql.Timestamp(date.getTime());
             int logOut = UserLogDB.insertAssociate(associate.getId(), sqlDate, out);
             // record logout to log file
-            boolean logEvent = LogFile.associateLog("LogOutAssociateServlet", associate.getEmail() + " ", "successful LOGOUT");
+            LogFile.associateLog("LogOutAssociateServlet", associate.getEmail() + " ", "successful LOGOUT");
 
-            if (logOut == 0 || logEvent == false)
-                {
-                LogFile.loginMessage(associate.getEmail(), out);
-                }
+//            if (logOut == 0 || logEvent == false)
+//                {
+//                LogFile.loginMessage(associate.getEmail(), out);
+//                }
             session.invalidate();
-            }
+        }
         if ("/mobile/logoutAssociate".equals(urlPath))
-            {
+        {
             url = "/mobile/m_associateHome.jsp";
-            }
+        }
         else
-            {
+        {
             url = "/associate/associateLogin";
-            }
+        }
         RequestDispatcher dispatcher
                 = getServletContext().getRequestDispatcher(url);
         dispatcher.forward(request, response);
