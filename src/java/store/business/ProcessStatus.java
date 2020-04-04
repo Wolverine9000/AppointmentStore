@@ -5,25 +5,34 @@
  */
 package store.business;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  *
  * @author whdobbs
  */
-public abstract class ProcessStatus
+public class ProcessStatus
 {
 
-    boolean processClientCalendar;
-    boolean processAssociateCalendar;
-    boolean processClientSms;
-    boolean processAssociateSms;
-    boolean processClientEmail;
-    boolean processAssociateEmail;
-    boolean processAdminSms;
-    boolean processAdminEmail;
-    boolean processSuperAdminSms;
-    boolean processSuperAdminEmail;
-    boolean validateNewUser;
-    boolean processUserId;
+    private boolean processClientCalendar;
+    private boolean processAssociateCalendar;
+    private boolean processClientSms;
+    private boolean processAssociateSms;
+    private boolean processClientEmail;
+    private boolean processAssociateEmail;
+    private boolean processAdminSms;
+    private boolean processAdminEmail;
+    private boolean processSuperAdminSms;
+    private boolean processSuperAdminEmail;
+    private boolean validateNewUser;
+    private boolean processCurrentUserId;
+    private boolean processNewUserId;
+    private int processClientId;
+    public Map<String, Boolean> processErrorArray;
+
+    private static final String PROCESS_FAILED = "Process FAILED";
+    private static final String PROCESS_SUCCESSFUL = "Process UCCESSFUL";
 
     public ProcessStatus()
     {
@@ -38,7 +47,10 @@ public abstract class ProcessStatus
         processSuperAdminSms = false;
         processSuperAdminEmail = false;
         validateNewUser = false;
-        processUserId = false;
+        processCurrentUserId = false;
+        processNewUserId = false;
+        processClientId = 0;
+        processErrorArray = new HashMap<>();
     }
 
     public boolean isProcessClientCalendar()
@@ -151,14 +163,56 @@ public abstract class ProcessStatus
         this.validateNewUser = validateNewUser;
     }
 
-    public boolean isProcessUserId()
+    public boolean isProcessCurrentUserId()
     {
-        return processUserId;
+        return processCurrentUserId;
     }
 
-    public void setProcessUserId(boolean processUserId)
+    public void setProcessCurrentUserId(boolean processCurrentUserId)
     {
-        this.processUserId = processUserId;
+        this.processCurrentUserId = processCurrentUserId;
     }
 
+    public boolean isProcessNewUserId()
+    {
+        return processNewUserId;
+    }
+
+    public void setProcessNewUserId(boolean processNewUserId)
+    {
+        this.processNewUserId = processNewUserId;
+    }
+
+    public Map<String, Boolean> getProcessErrorArray()
+    {
+        return processErrorArray;
+    }
+
+    public void setProcessErrorArray(Map<String, Boolean> processErrorArray)
+    {
+        this.processErrorArray = processErrorArray;
+    }
+
+    public int getProcessClientId()
+    {
+        return processClientId;
+    }
+
+    public void setProcessClientId(int processClientId)
+    {
+        this.processClientId = processClientId;
+    }
+
+    public void processErrors(String process, boolean result)
+    {
+
+        if (result == false)
+        {
+            this.processErrorArray.put(process + " " + PROCESS_FAILED, result);
+        }
+        if (result == true)
+        {
+            this.processErrorArray.put(process + " " + PROCESS_SUCCESSFUL, result);
+        }
+    }
 }

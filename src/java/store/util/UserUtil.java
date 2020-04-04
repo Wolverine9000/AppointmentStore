@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import messages.LogFile;
 import store.business.FullCalendar2;
+import store.business.ProcessStatus;
 import store.data.CustomerDB;
 import static store.util.PhoneUtil.stripNonDigits2;
 
@@ -24,15 +25,16 @@ import static store.util.PhoneUtil.stripNonDigits2;
 public class UserUtil
 {
 
-    public static int processUserId(FullCalendar2 fc)
+    public static ProcessStatus processUserId(FullCalendar2 fc, ProcessStatus ps)
     {
         boolean clientExists;
         int clientId = 0;
         clientExists = CustomerDB.clientExists(fc); // check if client exists
         if (!clientExists)
         {
-            fc.setProcessUserId(CustomerDB.insertNewClient(fc)); // if client does not exist, create in database
-            if (!fc.isProcessUserId())
+            ps.setProcessCurrentUserId(CustomerDB.insertNewClient(fc)); // if client does not exist, create in database
+            ps.processErrors("Process Current Client ID", ps.isProcessCurrentUserId());
+            if (!ps.isProcessCurrentUserId())
             {
                 LogFile.generalLog("UserUtil processUserId", "add client FAILED clientName " + fc.getClient().getFirstName() + " " + fc.getClient().getLastName());
             }
@@ -44,21 +46,22 @@ public class UserUtil
         }
         else if (clientExists)
         {
-            fc.setProcessUserId(CustomerDB.update(fc.getClient().getId(), fc.getClient()));
-            clientId = fc.getClient().getId();
-            if (!fc.isProcessUserId())
+            ps.setProcessNewUserId(CustomerDB.update(fc.getClient().getId(), fc.getClient()));
+            ps.processErrors("Process New Client ID", ps.isProcessNewUserId());
+            ps.setProcessClientId(fc.getClient().getId());
+            if (!ps.isProcessNewUserId())
             {
                 LogFile.generalLog("UserUtil processUserId", "UPDATE client FAILED clientName "
                         + fc.getClient().getFirstName() + " Client ID = " + fc.getClient().getId());
 
             }
-            else if (fc.isProcessUserId())
+            else if (ps.isProcessNewUserId())
             {
                 LogFile.generalLog("UserUtil processUserId", "UPDATE client SUCCESS clientName "
                         + fc.getClient().getFirstName() + " Client ID = " + fc.getClient().getId());
             }
         }
-        return clientId;
+        return ps;
     }
 
     public static void processSmsUser(FullCalendar2 fc)

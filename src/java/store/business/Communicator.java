@@ -13,7 +13,7 @@ import store.util.DateUtil;
  *
  * @author williamdobbs
  */
-public abstract class Communicator extends ProcessStatus
+public abstract class Communicator
 {
 
     Associate2 associate2;

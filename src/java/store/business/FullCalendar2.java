@@ -23,7 +23,7 @@ import store.util.DateUtil;
  *
  * @author williamdobbs
  */
-public class FullCalendar2 extends ProcessStatus implements Serializable, MessageConstants, Messenger
+public class FullCalendar2 implements Serializable, MessageConstants, Messenger
 {
 
     private int customerId;
