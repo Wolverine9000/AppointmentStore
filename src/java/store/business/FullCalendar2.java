@@ -23,7 +23,7 @@ import store.util.DateUtil;
  *
  * @author williamdobbs
  */
-public class FullCalendar2 implements Serializable, MessageConstants, Messenger
+public class FullCalendar2 implements Serializable, MessageConstants, Messenger, Eventer
 {
 
     private int customerId;
@@ -216,11 +216,13 @@ public class FullCalendar2 implements Serializable, MessageConstants, Messenger
         this.serviceStatus = serviceStatus;
     }
 
+    @Override
     public int getEventId()
     {
         return eventId;
     }
 
+    @Override
     public void setEventId(int eventId)
     {
         this.eventId = eventId;

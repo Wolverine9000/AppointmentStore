@@ -11,6 +11,7 @@ import java.util.Calendar;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import messages.LogFile;
+import store.business.ProcessStatus;
 import store.data.AssociateDB;
 
 /**
@@ -235,6 +236,7 @@ public class CalendarUtil
 
     public static ArrayList<Integer> TotalWeeks(int iTotalweeks)
     {
+
         // create array for totalweeks
         ArrayList<Integer> totalWeeks = new ArrayList<>();
         for (int i = 0; i < iTotalweeks; i++)
@@ -256,6 +258,8 @@ public class CalendarUtil
             Date convDateTo = DateUtil.convertDateSched(dateTo);
             Date convStart = DateUtil.convertTime(startTime);
             Date convEnd = DateUtil.convertTime(endTime);
+
+            ProcessStatus ps = new ProcessStatus();
 
             // convert dayString to integer
             int day = DateUtil.convDay(dayString);
@@ -301,10 +305,12 @@ public class CalendarUtil
                         int delCurrentSchedule = AssociateDB.deleteAvailability(associateId, sqlDate);
                     }
                     // check and see if Associate is available on selected date
-                    boolean isAssociateAvailable = AssociateDB.isAssociateAvailability(associateId, sqlDate);
-                    if (isAssociateAvailable == false)
+                    ps.setProcessAssociateAvailabilty(AssociateDB.isAssociateAvailability(associateId, sqlDate));
+                    ps.processResults("Associate Availability in processScheduleN", ps.isInsertAssociateAvailability());
+                    if (ps.isInsertAssociateAvailability() == false)
                     { // TODO write message code if database insertAvailableDate fails to record
-                        int insertAvailDate = AssociateDB.insertAvailableDate(associateId, sqlDate);
+                        ps.setInsertAssociateAvailability(AssociateDB.insertAvailableDate(associateId, sqlDate));
+                        ps.processResults("Associate Available Date Process", ps.isInsertAssociateAvailability());
                     }
                     for (int i = 0; i < totalTime; i++)
                     {
@@ -363,6 +369,7 @@ public class CalendarUtil
 
         try
         {
+            ProcessStatus ps = new ProcessStatus();
             int delCurrentSchedule;
             int insertAvailDate;
             int insertSchedule = 0;
@@ -403,10 +410,11 @@ public class CalendarUtil
                 // delete all times on current scheduled date
                 delCurrentSchedule = AssociateDB.deleteAvailability(associateId, sqlDate);
                 // check and see if Associate is available on selected date
-                boolean isAssociateAvailable = AssociateDB.isAssociateAvailability(associateId, sqlDate);
-                if (isAssociateAvailable == false)
+                ps.setProcessAssociateAvailabilty(AssociateDB.isAssociateAvailability(associateId, sqlDate));
+                ps.processResults("Associate Availability Process", ps.isInsertAssociateAvailability());
+                if (ps.isProcessAssociateAvailabilty() == false)
                 {
-                    insertAvailDate = AssociateDB.insertAvailableDate(associateId, sqlDate);
+                    ps.setInsertAssociateAvailability(AssociateDB.insertAvailableDate(associateId, sqlDate));
                 }
                 for (int i = 0; i < totalTime; i++)
                 {
@@ -470,10 +478,12 @@ public class CalendarUtil
                             // delete all times on current scheduled date
                             delCurrentSchedule = AssociateDB.deleteAvailability(associateId, sqlDate);
                             // check and see if Associate is available on selected date
-                            boolean isAssociateAvailable = AssociateDB.isAssociateAvailability(associateId, sqlDate);
-                            if (isAssociateAvailable == false)
+                            ps.setProcessAssociateAvailabilty(AssociateDB.isAssociateAvailability(associateId, sqlDate));
+                            ps.processResults("Associate Availability Process", ps.isInsertAssociateAvailability());
+                            if (ps.isInsertAssociateAvailability() == false)
                             { // TODO write message code if database insertAvailableDate fails to record
-                                insertAvailDate = AssociateDB.insertAvailableDate(associateId, sqlDate);
+                                ps.setInsertAssociateAvailability(AssociateDB.insertAvailableDate(associateId, sqlDate));
+                                ps.processResults("Associate Available Date Insert", ps.isInsertAssociateAvailability());
                             }
                             for (int i = 0; i < totalTime; i++)
                             {

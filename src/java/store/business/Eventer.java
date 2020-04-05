@@ -7,13 +7,13 @@ package store.business;
 
 /**
  *
- * @author whdobbs
+ * @author williamdobbs
  */
-public class CalendarStatus extends ProcessStatus
+public interface Eventer
 {
 
-    public CalendarStatus()
-    {
-        super();
-    }
+    void setEventId(int e);
+
+    int getEventId();
+
 }

@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import messages.LogFile;
 import store.business.FullCalendar2;
+import store.business.ProcessStatus;
 import store.business.ServiceStatus;
 
 /**
@@ -925,7 +926,7 @@ public class CalendarDB
         }
     }
 
-    public static int insertAppointment(FullCalendar2 fc)
+    public static ProcessStatus insertAppointment(FullCalendar2 fc, ProcessStatus pstatus)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
@@ -1028,15 +1029,18 @@ public class CalendarDB
             ResultSet identityResultSet;
             identityResultSet = identityStatement.executeQuery(identityQuery);
             identityResultSet.next();
-            int evtId = identityResultSet.getInt("IDENTITY");
+            pstatus.setEventId(identityResultSet.getInt("IDENTITY"));
+            pstatus.processResults("Insert Appointment", true);
 
-            return evtId; // return event id number
+            return pstatus; // return process status object
         }
         catch (SQLException sql)
         {
             LogFile.databaseError("CalendarDB - Full Calendar insertAppointment ", sql.toString(), " Associate "
                     + fc.getAssociate2().getFirstName());
-            return 0;
+
+            pstatus.processResults("Insert Appointment", false);
+            return pstatus;
         }
         finally
         {

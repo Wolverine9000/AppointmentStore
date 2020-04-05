@@ -431,7 +431,6 @@ public class CalendarData
 
     public static ProcessStatus postCalendarData(String json, HttpServletRequest request, Associate2 associateSession)
     {
-        boolean errorFlag = false;
         Gson gson = new Gson();
         ProcessStatus ps = new ProcessStatus();
 
@@ -476,7 +475,8 @@ public class CalendarData
                     if (eventExists)
                     {
                         // if event exists, update the calendar event in the database
-                        ps.setProcessClientCalendar(processSuccessful(CalendarDB.updateCalendar(fc)));
+                        ps.setProcessClientCalendar(CalendarDB.updateCalendar(fc));
+                        ps.processResults("Client Calendar Exists", ps.isProcessClientCalendar());
                         LogFile.calendarLog(fc.getEventId() + " " + ps.isProcessClientCalendar(), fc.getAction().toUpperCase() + " client " + fc.getClient().getFirstName()
                                 + " associateSession " + associateSession.getFirstName());
                         // are there any events in array to cancel
@@ -495,19 +495,16 @@ public class CalendarData
                     {
                         if (fc.getNewClient() == true)
                         {
-                            ps.setValidateNewUser(Validator.validateFullCalUser(fc, request));
+                            ps.setValidateUser(Validator.validateFullCalUser(fc, request));
                             ps = UserUtil.processUserId(fc, ps); // process user
                             if (ps.getProcessClientId() > 0)
                             {
                                 fc.getClient().setId(ps.getProcessClientId());
                             }
-                            else
-                            {
-                                errorFlag = true;
-                            }
                         }
                         // insert new calendar event into database
-                        fc.setEventId(CalendarDB.insertAppointment(fc));
+                        ps = CalendarDB.insertAppointment(fc, ps);
+                        fc.setEventId(ps.getEventId());
 
                         if (fc.getEventId() != 0)
                         {
@@ -531,14 +528,10 @@ public class CalendarData
                     }
                     if (ps.isProcessAssociateCalendar() && fc.getRestoreTime() && !fc.isAllDay())
                     {
-                        boolean isAssoDateAvailable = AssociateDB.isAssociateAvailability(fc.getAssociate2().getId(), fc.sqlStartDate());
-                        if (!isAssoDateAvailable) // if Associate Date not available, restore Associate time frame
+                        ps.setProcessAssociateAvailabilty(AssociateDB.isAssociateAvailability(fc.getAssociate2().getId(), fc.sqlStartDate()));
+                        if (!ps.isProcessAssociateAvailabilty()) // if Associate Date not available, restore Associate time frame
                         {
-                            int insertAvailDate = AssociateDB.insertAvailableDate(fc.getAssociate2().getId(), fc.sqlStartDate());
-                            if (insertAvailDate == 0)
-                            {
-                                errorFlag = true;
-                            }
+                            ps.setInsertAssociateAvailability(AssociateDB.insertAvailableDate(fc.getAssociate2().getId(), fc.sqlStartDate()));
                         }
                         Calendar calStart = Calendar.getInstance();
                         // convert frequency to multiplier number
@@ -591,6 +584,7 @@ public class CalendarData
                     break;
                 case "updateStatus":
                     ps.setProcessClientCalendar(CalendarDB.updateStatus(fc));
+                    ps.processResults("Update of Client Calendar Status", ps.isProcessClientCalendar());
                     if (ps.isProcessClientCalendar())
                     {
                         LogFile.calendarLog("eventID " + fc.getEventId() + " " + ps.isProcessClientCalendar(), fc.getAction().toUpperCase() + " client " + fc.getClient().getFirstName()
@@ -601,7 +595,6 @@ public class CalendarData
                     {
                         LogFile.calendarLog("eventID " + fc.getEventId() + " FAILED " + ps.isProcessClientCalendar(), fc.getAction().toUpperCase() + " client " + fc.getClient().getFirstName()
                                 + " associateSession " + associateSession.getFirstName());
-                        errorFlag = true;
                     }
                     break;
             }
@@ -625,22 +618,16 @@ public class CalendarData
                     m.setMessage(fc.smsClientMessage());
                     // send client sms message
                     ps.setProcessClientSms(sendSMS(m, fc));
-                    if (ps.isProcessClientSms() == false)
-                    {
-                        errorFlag = true;
-                    }
+                    ps.processResults("Client Text Message", ps.isProcessClientSms());
                 }
                 if (fc.getClient().isEmailApptAlerts())
                 {
-
                     ec.setMessage(fc.emailClientMessage());
                     ec.setSubject(fc.emailClientSubject());
                     // email client
                     ec.setMessageSent(MailUtil.sendClientConfirmation(ec));
-                    if (ec.isMessageSent() == false)
-                    {
-                        errorFlag = true;
-                    }
+                    ps.setProcessClientEmail(ec.isMessageSent());
+                    ps.processResults("Client Email Message", ps.isProcessClientEmail());
                 }
             }
             if (fc.isNotifyAssociate())
@@ -650,10 +637,7 @@ public class CalendarData
                     m.setMessage(fc.smsAssociateMessage());
                     // send associate sms message
                     ps.setProcessAssociateSms(sendSMS(m, fc));
-                    if (ps.isProcessAssociateSms() == false)
-                    {
-                        errorFlag = true;
-                    }
+                    ps.processResults("Associate Text Message", ps.isProcessAssociateSms());
                 }
                 if (fc.getAssociate2().isEmailApptAlerts())
                 {
@@ -661,10 +645,7 @@ public class CalendarData
                     ec.setMessage(fc.emailAssociateMessage());
                     ec.setSubject(fc.emailAssociateSubject());
                     ps.setProcessAssociateEmail(MailUtil.sendAssociateConfirm(ec));
-                    if (ps.isProcessAssociateEmail() == false)
-                    {
-                        errorFlag = true;
-                    }
+                    ps.processResults("Associate Email Message", ps.isProcessAssociateEmail());
                 }
             }
             LogFile.associateLog("FullCalPostServlet postCalendarData", "client:" + fc.getClient().getFirstName() + " clientID:" + fc.getClient().getId() + " Event ID: " + fc.getEventId()
@@ -887,11 +868,6 @@ public class CalendarData
             LogFile.smsError("CalendarData sendSMS", ex.toString(), m);
         }
         return smsSent;
-    }
-
-    private static boolean processSuccessful(boolean b)
-    {
-        return b;
     }
 
 }

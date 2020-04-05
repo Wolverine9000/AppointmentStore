@@ -2075,7 +2075,7 @@ public class AssociateDB
         }
     }
 
-    public static int insertAvailableDate(int associateId, Date date)
+    public static boolean insertAvailableDate(int associateId, Date date)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
@@ -2092,12 +2092,13 @@ public class AssociateDB
             ps.setInt(1, associateId);
             ps.setDate(2, date);
 
-            return ps.executeUpdate();
+            ps.executeUpdate();
+            return true;
         }
         catch (SQLException e)
         {
             LogFile.databaseError("insertAvailableDate error ", e.getMessage(), e.toString());
-            return 0;
+            return false;
         }
         finally
         {

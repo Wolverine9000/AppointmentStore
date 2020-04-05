@@ -373,6 +373,54 @@ function doAjaxPost(data, url, id, async) {
     return ajaxPostSuccess;
 } // end doAjaxPost function
 
+// post FullCalendar Events to server via ajax
+function postEvents(evtsToPost, event) {
+//    $("#postDataSuccess").html(""); // clear postDataSuccess
+    $("#postDataError").html(""); // clear postDataError
+//    $("#postDataSuccess").html(""); // clear postDataSuccess
+    $.ajax({
+        type: "post",
+        url: '../FullCalPost',
+        beforeSend: function () {
+            $("#postDataError").html("");
+            openLoading();
+            $("#loading").dialog("open"); // open loading element
+            $("#loading h4").html("Processing request.  Please wait...");
+            spinner('loading', 'auto');
+        },
+        data: {calEvents: evtsToPost},
+        // timeout: 10000,
+        error: function (xhr, status, error) {
+
+            $('#loading').data('spinner').stop(); // Stop the spinner
+            $("#loading h4").html("ERROR!");
+            $("#loading").dialog("close"); // close loading element
+            // append error message to messages element
+            $("#postDataError").append("Error Posting Data: " + xhr.status + " - " + error);
+            alert("Error Posting Data: " + xhr.status + " - " + error);
+//            fadeInOutMessage("#messages");
+        },
+        success: function (data, textStatus, jqXHR) {
+            var p = new ProcessStatus(data);
+            $('#loading').data('spinner').stop(); // Stop the spinner
+            $("#loading h4").html("Done!");
+            $("#loading").dialog("close"); // close loading element
+            if (typeof event !== "undefined")
+            {
+                if (event.eventId === 1234)
+                {
+                    $('#calendar').fullCalendar('removeEvents', event.id);
+                }
+//                $('#calendar').fullCalendar("refetchEvents");
+            }
+            $('#calendar').fullCalendar("refetchEvents");
+            // append success message to messages element
+//            $("#postDataSuccess").append("Calendar Update Successful!");
+//            fadeInOutMessage("#messages");
+        }
+    });
+} // end postEvents function
+
 var statesList = function () {
     var states = [
         "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "LA", "ME", "MD", "MA",
@@ -1163,8 +1211,13 @@ var ProcessStatus = function (proObj) {
     this.processAdminEmail = proObj.processAdminEmail;
     this.processSuperAdminSms = proObj.processSuperAdminSms;
     this.processSuperAdminEmail = proObj.processSuperAdminEmail;
-    this.validateNewUser = proObj.validateNewUser;
-    this.processUserId = proObj.processUserId;
+    this.validateUser = proObj.validateUser;
+    this.processCurrentUserId = proObj.processCurrentUserId;
+    this.processNewUserId = proObj.processNewUserId;
+    this.processClientId = proObj.processClientId;
+    this.processErrorArray = proObj.processErrorArray;
+    this.processAssociateAvailabilty = proObj.processAssociateAvailabilty;
+    this.insertAssociateAvailability = proObj.insertAssociateAvailability;
 };
 
 var stripQuotes = function (msg) {
@@ -1743,54 +1796,6 @@ function postToServer(event) {
     }
 } // end postToServer function
 
-// post FullCalendar Events to server via ajax
-function postEvents(evtsToPost, event) {
-//    $("#postDataSuccess").html(""); // clear postDataSuccess
-    $("#postDataError").html(""); // clear postDataError
-//    $("#postDataSuccess").html(""); // clear postDataSuccess
-    $.ajax({
-        type: "post",
-        url: '../FullCalPost',
-        beforeSend: function () {
-            $("#postDataError").html("");
-            openLoading();
-            $("#loading").dialog("open"); // open loading element
-            $("#loading h4").html("Processing request.  Please wait...");
-            spinner('loading', 'auto');
-        },
-        data: {calEvents: evtsToPost},
-        // timeout: 10000,
-        error: function (xhr, status, error) {
-
-            $('#loading').data('spinner').stop(); // Stop the spinner
-            $("#loading h4").html("ERROR!");
-            $("#loading").dialog("close"); // close loading element
-            // append error message to messages element
-            $("#postDataError").append("Error Posting Data: " + xhr.status + " - " + error);
-            alert("Error Posting Data: " + xhr.status + " - " + error);
-//            fadeInOutMessage("#messages");
-        },
-        success: function (data, textStatus, jqXHR) {
-            var p = new ProcessStatus(data);
-            $('#loading').data('spinner').stop(); // Stop the spinner
-            $("#loading h4").html("Done!");
-            $("#loading").dialog("close"); // close loading element
-            if (typeof event !== "undefined")
-            {
-                if (event.eventId === 1234)
-                {
-                    $('#calendar').fullCalendar('removeEvents', event.id);
-                }
-//                $('#calendar').fullCalendar("refetchEvents");
-            }
-            $('#calendar').fullCalendar("refetchEvents");
-            // append success message to messages element
-//            $("#postDataSuccess").append("Calendar Update Successful!");
-//            fadeInOutMessage("#messages");
-        }
-    });
-} // end postEvents function
-
 // format phone number
 var formatPhone = function (phone) {
     if (phoneRegEx.test(phone))
@@ -1906,7 +1911,6 @@ var timeConverter = {
         return opts;
     }
 };
-
 
 var stripName = function (t) {
     if (typeof t !== "undefined")

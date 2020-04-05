@@ -33,7 +33,7 @@ public class UserUtil
         if (!clientExists)
         {
             ps.setProcessCurrentUserId(CustomerDB.insertNewClient(fc)); // if client does not exist, create in database
-            ps.processErrors("Process Current Client ID", ps.isProcessCurrentUserId());
+            ps.processResults("Process Current Client ID", ps.isProcessCurrentUserId());
             if (!ps.isProcessCurrentUserId())
             {
                 LogFile.generalLog("UserUtil processUserId", "add client FAILED clientName " + fc.getClient().getFirstName() + " " + fc.getClient().getLastName());
@@ -47,7 +47,7 @@ public class UserUtil
         else if (clientExists)
         {
             ps.setProcessNewUserId(CustomerDB.update(fc.getClient().getId(), fc.getClient()));
-            ps.processErrors("Process New Client ID", ps.isProcessNewUserId());
+            ps.processResults("Process New Client ID", ps.isProcessNewUserId());
             ps.setProcessClientId(fc.getClient().getId());
             if (!ps.isProcessNewUserId())
             {

@@ -12,7 +12,7 @@ import java.util.Map;
  *
  * @author whdobbs
  */
-public class ProcessStatus
+public class ProcessStatus implements Eventer
 {
 
     private boolean processClientCalendar;
@@ -25,14 +25,17 @@ public class ProcessStatus
     private boolean processAdminEmail;
     private boolean processSuperAdminSms;
     private boolean processSuperAdminEmail;
-    private boolean validateNewUser;
+    private boolean validateUser;
     private boolean processCurrentUserId;
     private boolean processNewUserId;
     private int processClientId;
+    private boolean processAssociateAvailabilty;
+    private boolean insertAssociateAvailability;
+    private int eventId;
     public Map<String, Boolean> processErrorArray;
 
     private static final String PROCESS_FAILED = "Process FAILED";
-    private static final String PROCESS_SUCCESSFUL = "Process UCCESSFUL";
+    private static final String PROCESS_SUCCESSFUL = "Process SUCCESSFUL";
 
     public ProcessStatus()
     {
@@ -46,10 +49,14 @@ public class ProcessStatus
         processAdminEmail = false;
         processSuperAdminSms = false;
         processSuperAdminEmail = false;
-        validateNewUser = false;
+        validateUser = false;
         processCurrentUserId = false;
         processNewUserId = false;
         processClientId = 0;
+        processAssociateAvailabilty = false;
+        insertAssociateAvailability = false;
+        eventId = 0;
+
         processErrorArray = new HashMap<>();
     }
 
@@ -153,14 +160,14 @@ public class ProcessStatus
         this.processSuperAdminEmail = processSuperAdminEmail;
     }
 
-    public boolean isValidateNewUser()
+    public boolean isValidateUser()
     {
-        return validateNewUser;
+        return validateUser;
     }
 
-    public void setValidateNewUser(boolean validateNewUser)
+    public void setValidateUser(boolean validateUser)
     {
-        this.validateNewUser = validateNewUser;
+        this.validateUser = validateUser;
     }
 
     public boolean isProcessCurrentUserId()
@@ -203,7 +210,39 @@ public class ProcessStatus
         this.processClientId = processClientId;
     }
 
-    public void processErrors(String process, boolean result)
+    @Override
+    public int getEventId()
+    {
+        return eventId;
+    }
+
+    @Override
+    public void setEventId(int eventId)
+    {
+        this.eventId = eventId;
+    }
+
+    public boolean isProcessAssociateAvailabilty()
+    {
+        return processAssociateAvailabilty;
+    }
+
+    public void setProcessAssociateAvailabilty(boolean processAssociateAvailabilty)
+    {
+        this.processAssociateAvailabilty = processAssociateAvailabilty;
+    }
+
+    public boolean isInsertAssociateAvailability()
+    {
+        return insertAssociateAvailability;
+    }
+
+    public void setInsertAssociateAvailability(boolean insertAssociateAvailability)
+    {
+        this.insertAssociateAvailability = insertAssociateAvailability;
+    }
+
+    public void processResults(String process, boolean result)
     {
 
         if (result == false)
@@ -215,4 +254,5 @@ public class ProcessStatus
             this.processErrorArray.put(process + " " + PROCESS_SUCCESSFUL, result);
         }
     }
+
 }
