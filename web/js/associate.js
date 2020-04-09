@@ -402,6 +402,16 @@ function postEvents(evtsToPost, event) {
         },
         success: function (data, textStatus, jqXHR) {
             var p = new ProcessStatus(data);
+//            const test = p.processResultsArray;
+//            for (const [key, value] of Object.entries(test)) {
+//                var e  = [];
+//                if (value === true)
+//                {
+//
+//                }
+//                console.log(key, value);
+//            }
+
             $('#loading').data('spinner').stop(); // Stop the spinner
             $("#loading h4").html("Done!");
             $("#loading").dialog("close"); // close loading element
@@ -1215,7 +1225,7 @@ var ProcessStatus = function (proObj) {
     this.processCurrentUserId = proObj.processCurrentUserId;
     this.processNewUserId = proObj.processNewUserId;
     this.processClientId = proObj.processClientId;
-    this.processErrorArray = proObj.processErrorArray;
+    this.processResultsArray = proObj.processResultsArray;
     this.processAssociateAvailabilty = proObj.processAssociateAvailabilty;
     this.insertAssociateAvailability = proObj.insertAssociateAvailability;
 };

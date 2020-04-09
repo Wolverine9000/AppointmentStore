@@ -32,7 +32,7 @@ public class ProcessStatus implements Eventer
     private boolean processAssociateAvailabilty;
     private boolean insertAssociateAvailability;
     private int eventId;
-    public Map<String, Boolean> processErrorArray;
+    public Map<String, Boolean> processResultsArray;
 
     private static final String PROCESS_FAILED = "Process FAILED";
     private static final String PROCESS_SUCCESSFUL = "Process SUCCESSFUL";
@@ -57,7 +57,7 @@ public class ProcessStatus implements Eventer
         insertAssociateAvailability = false;
         eventId = 0;
 
-        processErrorArray = new HashMap<>();
+        processResultsArray = new HashMap<>();
     }
 
     public boolean isProcessClientCalendar()
@@ -190,14 +190,14 @@ public class ProcessStatus implements Eventer
         this.processNewUserId = processNewUserId;
     }
 
-    public Map<String, Boolean> getProcessErrorArray()
+    public Map<String, Boolean> getProcessResultsArray()
     {
-        return processErrorArray;
+        return processResultsArray;
     }
 
-    public void setProcessErrorArray(Map<String, Boolean> processErrorArray)
+    public void setProcessResultsArray(Map<String, Boolean> processResultsArray)
     {
-        this.processErrorArray = processErrorArray;
+        this.processResultsArray = processResultsArray;
     }
 
     public int getProcessClientId()
@@ -247,11 +247,11 @@ public class ProcessStatus implements Eventer
 
         if (result == false)
         {
-            this.processErrorArray.put(process + " " + PROCESS_FAILED, result);
+            this.processResultsArray.put(process + " " + PROCESS_FAILED, result);
         }
         if (result == true)
         {
-            this.processErrorArray.put(process + " " + PROCESS_SUCCESSFUL, result);
+            this.processResultsArray.put(process + " " + PROCESS_SUCCESSFUL, result);
         }
     }
 
