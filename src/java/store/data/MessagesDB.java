@@ -602,7 +602,7 @@ public class MessagesDB
         }
         catch (SQLException e)
         {
-            LogFile.databaseError("MessagesDB selectSmsStatus FAILED ", e.getMessage(), e.toString());
+            LogFile.databaseError("MessagesDB selectMsgInviteRequest FAILED ", e.getMessage(), e.toString());
             return i;
         }
         finally
@@ -761,7 +761,7 @@ public class MessagesDB
         }
         catch (SQLException e)
         {
-            LogFile.databaseError("MessagesDB selectSmsStatus FAILED ", e.getMessage(), e.toString());
+            LogFile.databaseError("MessagesDB selectSmsMessage FAILED ", e.getMessage(), e.toString());
             return "database error";
         }
         finally
