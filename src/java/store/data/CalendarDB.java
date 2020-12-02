@@ -559,7 +559,7 @@ public class CalendarDB
         }
         catch (SQLException | NullPointerException e)
         {
-            LogFile.databaseError("CalendarDB - selectCalendar() ", e.toString(), " AllClients ");
+            LogFile.databaseError("CalendarDB - selectCalendar(associateId) ", e.toString(), " AllClients ");
             return null;
         }
         finally
@@ -633,7 +633,7 @@ public class CalendarDB
         }
         catch (SQLException | NullPointerException e)
         {
-            LogFile.databaseError("CalendarDB - selectCalendar() ", e.toString(), " AllClients ");
+            LogFile.databaseError("CalendarDB - selectClientCalendar() ", e.toString(), " AllClients ");
             return null;
         }
         finally

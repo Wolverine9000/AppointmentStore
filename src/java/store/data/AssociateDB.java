@@ -543,7 +543,7 @@ public class AssociateDB
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            LogFile.databaseError("AssociateDB selectAllServices ", e.getMessage(), e.toString());
             return null;
         }
         finally
@@ -643,7 +643,7 @@ public class AssociateDB
         }
         catch (SQLException e)
         {
-            LogFile.databaseError("AssociateDB selectAssociateSvcs error ", e.getMessage(), e.toString());
+            LogFile.databaseError("AssociateDB selectAssociateSvcs ", e.getMessage(), e.toString());
             return null;
         }
         finally
@@ -674,7 +674,7 @@ public class AssociateDB
         }
         catch (SQLException e)
         {
-            LogFile.databaseError("AssociateDB deleteAvailability FC error ", e.getMessage(), e.toString());
+            LogFile.databaseError("AssociateDB deleteAvailability FC ", e.getMessage(), e.toString());
         }
         finally
         {
@@ -1118,7 +1118,8 @@ public class AssociateDB
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            LogFile.associateLog("AssociateDB deleteDateRange FAILED " + "associate: "
+                    + associateId + " start " + start.toString() + " end " + end.toString(), e.toString(), e.getMessage());
             return 0;
         }
         finally
@@ -1160,7 +1161,7 @@ public class AssociateDB
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            LogFile.databaseError("AssociateDB selectAssociate error " + associateEmail, e.getMessage(), e.toString());
             return null;
         }
         finally
@@ -2065,7 +2066,7 @@ public class AssociateDB
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            LogFile.databaseError("AssociateDB insertAssociateSchedule error ", e.getMessage(), e.toString());
             return 0;
         }
         finally
@@ -2097,7 +2098,7 @@ public class AssociateDB
         }
         catch (SQLException e)
         {
-            LogFile.databaseError("insertAvailableDate error ", e.getMessage(), e.toString());
+            LogFile.databaseError("AssociateDB insertAvailableDate error ", e.getMessage(), e.toString());
             return false;
         }
         finally
@@ -2128,7 +2129,7 @@ public class AssociateDB
         }
         catch (SQLException e)
         {
-            LogFile.databaseError("insertAssociateSrv error ", e.getMessage(), e.toString());
+            LogFile.databaseError("AssociateDB insertAssociateSrv error ", e.getMessage(), e.toString());
             return 0;
         }
         finally
