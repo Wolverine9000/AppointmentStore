@@ -56,7 +56,7 @@ public class FullCalendarServlet extends HttpServlet
         String title = request.getParameter("title");
         String key = request.getParameter("key");
         String altKey = request.getParameter("altKey");
-        String jsonAppointment;
+        String jsonAppointment = null;
 
         Associate2 associate = (Associate2) session.getAttribute("associateRecord");
 
@@ -204,11 +204,17 @@ public class FullCalendarServlet extends HttpServlet
             jsonAppointment = gson.toJson(m1);
         }
         else
+            try
         {
-            //Convert FullCalendar from Java to JSON
-            jsonAppointment = gson.toJson(fc2);
+            {
+                //Convert FullCalendar from Java to JSON
+                jsonAppointment = gson.toJson(fc2);
+            }
         }
-
+        catch (Exception e)
+        {
+            LogFile.generalLog("FullCalendarServlet - gsonToJson error  " + e.toString(), e.getMessage());
+        }
         response.setContentType("application/json");
         response.setHeader("Cache-Control", "no-cache");
         try
